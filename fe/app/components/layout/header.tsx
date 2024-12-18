@@ -8,7 +8,7 @@ import { Link } from '@remix-run/react';
 import { DarkModeSwitch } from '@/components/dark-mode-switch';
 
 const Header = () => {
-  const [stickyClass, setStickyClass] = useState('');
+  const [isSticky, setIsSticky] = useState(true);
 
   useEffect(() => {
     window.addEventListener('scroll', stickyHeader);
@@ -21,20 +21,19 @@ const Header = () => {
   const stickyHeader = () => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const windowHeight = window?.scrollY as number | undefined;
-
-    if (windowHeight !== undefined && windowHeight > 0) {
-      setStickyClass('bg-white dark:bg-slate-900 lg:py-3 py-3');
-      return;
-    }
-
-    setStickyClass('');
+    setIsSticky(windowHeight !== undefined && windowHeight > 0);
   };
 
   return (
     <header className="fixed top-0 z-20 w-full">
-      <div className={cn('flex items-center px-4 py-5 transition-all lg:py-12 xl:px-20', stickyClass)}>
+      <div
+        className={cn(
+          'flex items-center px-4 py-5 transition-all xl:px-20',
+          isSticky && 'bg-white dark:bg-slate-900 lg:py-3 py-3',
+        )}
+      >
         <Link to="/" className="mr-12 shrink-0">
-          <SiteLogo lightClasses="dark:hidden" darkClasses="hidden dark:block" className="w-4/5 lg:w-[120px]" />
+          <SiteLogo lightClasses="dark:hidden" darkClasses="hidden dark:block" className={'w-[80px] lg:w-[120px]'} />
         </Link>
 
         <div className="relative flex w-full items-center justify-end lg:bg-transparent">

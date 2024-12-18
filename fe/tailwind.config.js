@@ -59,7 +59,17 @@ module.exports = {
         background: '#ffffff',
         foreground: '#333b69',
         primary: {
-          DEFAULT: '#fa6262',
+          DEFAULT: '#D45F88',
+          50: '#6A3044',
+          100: '#7F3952',
+          200: '#94435F',
+          300: '#AA4C6D',
+          400: '#BF567A',
+          500: '#D45F88',
+          600: '#D86F94',
+          700: '#DD7FA0',
+          800: '#E18FAC',
+          900: '#E59FB8',
           foreground: '#ffffff',
         },
         secondary: {

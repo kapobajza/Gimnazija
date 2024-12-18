@@ -53,9 +53,9 @@ export default function MainNav({ items }: MainNavProps) {
               MenuItemComponent = <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>;
             } else if (item.href) {
               MenuItemComponent = (
-                <Link to={item.href}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.title}</NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+                  <Link to={item.href}>{item.title}</Link>
+                </NavigationMenuLink>
               );
             }
 
