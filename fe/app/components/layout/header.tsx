@@ -8,7 +8,7 @@ import { Link } from '@remix-run/react';
 import { DarkModeSwitch } from '@/components/dark-mode-switch';
 
 const Header = () => {
-  const [isSticky, setIsSticky] = useState(true);
+  const [stickyClass, setStickyClass] = useState('');
 
   useEffect(() => {
     window.addEventListener('scroll', stickyHeader);
@@ -21,19 +21,28 @@ const Header = () => {
   const stickyHeader = () => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const windowHeight = window?.scrollY as number | undefined;
-    setIsSticky(windowHeight !== undefined && windowHeight > 0);
+
+    if (windowHeight !== undefined && windowHeight > 0) {
+      setStickyClass('bg-white dark:bg-slate-900 lg:py-3 py-3');
+      return;
+    }
+
+    setStickyClass('');
   };
 
   return (
     <header className="fixed top-0 z-20 w-full">
-      <div
-        className={cn(
-          'flex items-center px-4 py-5 transition-all xl:px-20',
-          isSticky && 'bg-white dark:bg-slate-900 lg:py-3 py-3',
-        )}
-      >
+      <div className={cn('flex items-center px-4 py-5 transition-all xl:px-20 lg:py-7', stickyClass)}>
         <Link to="/" className="mr-12 shrink-0">
-          <SiteLogo lightClasses="dark:hidden" darkClasses="hidden dark:block" className={'w-[80px] lg:w-[120px]'} />
+          <SiteLogo
+            lightClasses="dark:hidden"
+            darkClasses="hidden dark:block"
+            className={'w-[50px] lg:w-[75px]'}
+            src={{
+              light: '/logo/mssgb_logo_white.png',
+              dark: '/logo/mssgb_logo_dark.png',
+            }}
+          />
         </Link>
 
         <div className="relative flex w-full items-center justify-end lg:bg-transparent">

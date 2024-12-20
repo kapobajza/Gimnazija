@@ -62,7 +62,15 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
               setIsOpen(false);
             }}
           >
-            <SiteLogo lightClasses="dark:hidden" darkClasses="hidden dark:block" className="w-[100px]" />
+            <SiteLogo
+              lightClasses="dark:hidden"
+              darkClasses="hidden dark:block"
+              className="w-[100px]"
+              src={{
+                light: '/logo/mssgb_logo_white.png',
+                dark: '/logo/mssgb_logo_dark.png',
+              }}
+            />
           </Link>
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">

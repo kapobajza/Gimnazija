@@ -34,6 +34,7 @@ export default tseslint.config(
     },
     rules: {
       'react/display-name': 'error',
+      'react/jsx-no-leaked-render': 'error',
     },
   },
   {
@@ -47,6 +48,7 @@ export default tseslint.config(
     },
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/restrict-template-expressions': 'off',
     },
     settings: {
       'import/resolver': {

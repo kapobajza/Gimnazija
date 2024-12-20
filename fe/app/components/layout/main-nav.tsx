@@ -66,7 +66,7 @@ export default function MainNav({ items }: MainNavProps) {
                   <NavigationMenuContent>
                     <ul className="flex w-[220px] flex-col p-4">
                       {item.items.map((subItem) => (
-                        <ListItem key={subItem.title} href={subItem.href} title={subItem.title}></ListItem>
+                        <ListItem key={subItem.title} href={subItem.href} title={subItem.title} />
                       ))}
                     </ul>
                   </NavigationMenuContent>

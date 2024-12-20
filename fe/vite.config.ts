@@ -1,8 +1,9 @@
-import { vitePlugin as remix } from "@remix-run/dev";
-import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { vitePlugin as remix } from '@remix-run/dev';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-declare module "@remix-run/node" {
+declare module '@remix-run/node' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Future {
     v3_singleFetch: true;
   }
@@ -21,4 +22,10 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    port: parseInt(process.env.PORT ?? '3000', 10),
+    strictPort: true,
+    host: process.env.HOST ?? 'gimnazija.local',
+    open: false,
+  },
 });

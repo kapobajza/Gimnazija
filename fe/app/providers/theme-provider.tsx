@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-type Theme = 'light' | 'dark';
+import { Theme } from '@/types/theme';
+import React, { createContext, useContext, useState } from 'react';
 
 type ThemeContextType = {
   theme: Theme;
@@ -9,32 +8,34 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const isValidTheme = (theme: string | undefined) => Object.values(Theme).includes(theme as Theme);
+
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(
+    typeof window !== 'undefined' && localStorage.getItem('theme') === 'dark' ? 'dark' : 'light',
+  );
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme | undefined;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else if (prefersDark) {
-      setTheme('dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+  const updateTWTheme = (theme: Theme) => {
+    if (theme === Theme.Dark) {
+      document.documentElement.classList.add(Theme.Dark);
+      document.documentElement.classList.remove(Theme.Light);
     } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add(Theme.Light);
+      document.documentElement.classList.remove(Theme.Dark);
     }
-  }, [theme]);
+  };
 
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+  const updateTheme = (theme: Theme) => {
+    if (!isValidTheme(theme)) {
+      return;
+    }
+
+    localStorage.setItem('theme', theme);
+    updateTWTheme(theme);
+    setTheme(theme);
+  };
+
+  return <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = (): ThemeContextType => {
