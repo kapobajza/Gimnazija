@@ -17,4 +17,8 @@ export const mainNav = [
     title: 'O nama',
     href: '/o-nama',
   },
+  {
+    title: 'Naš tim',
+    href: '/nas-tim',
+  },
 ] satisfies MainNavItem[];

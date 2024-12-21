@@ -1,6 +1,6 @@
-import { motion, Variants } from 'framer-motion';
 import IconBox from '@/components/icon-box';
 import { AcademicCapIcon, UserGroupIcon, CalculatorIcon } from '@heroicons/react/24/solid';
+import FadeInItem from '@/components/fade-in-item';
 
 export const iconBoxes = [
   {
@@ -29,20 +29,6 @@ export const iconBoxes = [
   },
 ];
 
-const fadeInAnimationVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 60,
-  },
-  animate: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.05 * index,
-    },
-  }),
-};
-
 const SectionIconBoxes = () => {
   return (
     <section className="py-16 lg:py-24">
@@ -57,19 +43,9 @@ const SectionIconBoxes = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-10">
           {iconBoxes.map((iconBox, index) => {
             return (
-              <motion.div
-                key={`${iconBox.title}-${index}`}
-                variants={fadeInAnimationVariants}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true }}
-                transition={{
-                  delay: 0.5,
-                }}
-                custom={index}
-              >
+              <FadeInItem key={`${iconBox.title}-${index}`} custom={index}>
                 <IconBox {...iconBox} className="min-h-auto lg:min-h-[460px] xl:min-h-[380px]" />
-              </motion.div>
+              </FadeInItem>
             );
           })}
         </div>
