@@ -13,4 +13,8 @@ export const mainNav = [
     title: 'Početna',
     href: '/',
   },
+  {
+    title: 'O nama',
+    href: '/o-nama',
+  },
 ] satisfies MainNavItem[];

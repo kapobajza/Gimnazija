@@ -15,8 +15,8 @@ const SectionHeroLayout = () => {
                 <span>Gimnazija Bugojno</span>
               </span>
             </h1>
-            <p className="mx-auto mb-7 max-w-xs text-md text-white">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            <p className="mx-auto mb-7 max-w-sm text-md text-white">
+              Posvećeni smo pružanju znanja, razvijanju talenata i inspiraciji za uspjeh u životu i karijeri
             </p>
           </div>
         </div>

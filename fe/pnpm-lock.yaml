@@ -68,9 +68,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-      remixicon-react:
-        specifier: ^1.0.0
-        version: 1.0.0(react@18.3.1)
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -3394,11 +3391,6 @@ packages:
 
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
-
-  remixicon-react@1.0.0:
-    resolution: {integrity: sha512-KOXlc8EdKdujr2f/2idyFSQRjUB8p0HNiWZYBBzRsTRlTXFuSAFfnGq9culNjhCGmc92Jbtfr9OP0MXWvTMdsQ==}
-    peerDependencies:
-      react: '>=0.14.0'
 
   require-like@0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
@@ -7684,10 +7676,6 @@ snapshots:
       '@types/mdast': 3.0.15
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
-
-  remixicon-react@1.0.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
 
   require-like@0.1.2: {}
 

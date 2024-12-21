@@ -7,14 +7,16 @@ type IconBoxProps = {
   icon?: ReactNode;
   iconBase?: string;
   shadow?: string;
+  className?: string;
 };
 
-const IconBox = ({ icon, iconBase, title, description, shadow }: IconBoxProps) => {
+const IconBox = ({ icon, iconBase, title, description, shadow, className }: IconBoxProps) => {
   return (
     <div
       className={cn(
         'relative top-0 z-[1] overflow-hidden rounded-xl bg-white p-10 shadow-sm transition-all duration-200 hover:-top-[.125rem] hover:shadow-lg hover:shadow-slate-500/20 dark:bg-slate-800 dark:hover:shadow-slate-950/40',
         shadow,
+        className,
       )}
     >
       {icon ? (

@@ -34,13 +34,15 @@ const FooterLayout = () => {
               </div>
             </div>
             <a
-              className="col-span-4 lg:col-span-3 cursor-pointer"
+              className="block col-span-4 lg:col-span-3 cursor-pointer"
               href="https://maps.app.goo.gl/oySPXfXs6SZEy23f9"
               target="_blank"
             >
               <div className="flex space-x-4">
                 <Address width="32" height="32" className="h-8 w-8" />
-                <address className="-mt-px leading-6 max-w-[250px]">Zlatnih ljiljana b.b. 70230 Bugojno</address>
+                <address className="-mt-px leading-6 max-w-[170px] md:max-w-[250px]">
+                  Zlatnih ljiljana b.b. 70230 Bugojno
+                </address>
               </div>
             </a>
           </div>
@@ -48,7 +50,7 @@ const FooterLayout = () => {
       </div>
       <div className="border-t py-12">
         <div className="container text-center">
-          <span className="text-xs">© {new Date().getFullYear()} Mješovita srednja škola gimnazija Bugojno</span>
+          <span className="text-xs">© {new Date().getFullYear()} MSŠ „Gimnazija Bugojno“</span>
         </div>
       </div>
     </footer>
