@@ -1,4 +1,5 @@
 import { MetaDescriptor } from '@remix-run/react';
+import { QueryClient } from '@tanstack/react-query';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import sanitizeHtmlFn from 'xss';
@@ -26,19 +27,22 @@ export function generateCommonMetaTags({
   url,
 }: {
   title: string;
-  description: string;
+  description: string | undefined;
   image?: string;
   url?: string;
 }): MetaDescriptor[] {
   const commonTags: MetaDescriptor[] = [
     { title },
-    { name: 'description', content: description },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
   ];
+
+  if (description) {
+    commonTags.push({ name: 'description', content: description });
+  }
 
   if (url) {
     commonTags.push({ property: 'og:url', content: url });
@@ -51,3 +55,11 @@ export function generateCommonMetaTags({
 
   return commonTags;
 }
+
+export const QUERY_CLIENT = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});

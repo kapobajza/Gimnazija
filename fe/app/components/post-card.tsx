@@ -1,12 +1,21 @@
 import { getDateDay, getDateMonth } from '@/lib/date';
+import { getPostBySlugQueryOptions } from '@/query/posts.query';
 import { PostDTO } from '@/types/api/post.type';
 import { Link } from '@remix-run/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 type Props = {
   post: PostDTO;
 };
 
 const PostCard = ({ post }: Props) => {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    void queryClient.prefetchQuery(getPostBySlugQueryOptions(post.slug));
+  }, [post.slug]);
+
   return (
     <article
       className="overflow-hidden rounded-lg bg-white dark:bg-slate-850 shadow-sm shadow-slate-500/20 dark:shadow-white/5"

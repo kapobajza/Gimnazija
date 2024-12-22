@@ -8,21 +8,23 @@ export const siteConfig = {
   url: 'https://mjesovita-srednja-skola.bug.com',
 };
 
-export const mainNav = [
-  {
+export const MainNavEnum = {
+  Pocetna: {
     title: 'Početna',
     href: '/',
   },
-  {
+  OName: {
     title: 'O nama',
     href: '/o-nama',
   },
-  {
+  Uposlenici: {
     title: 'Uposlenici',
     href: '/uposlenici',
   },
-  {
+  Obavijesti: {
     title: 'Obavijesti',
     href: '/obavijesti',
   },
-] satisfies MainNavItem[];
+} as const satisfies Record<string, MainNavItem>;
+
+export const mainNav = Object.values(MainNavEnum);

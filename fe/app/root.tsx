@@ -1,15 +1,14 @@
 import '@/tailwind.css';
 
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
-import { ThemeProvider } from '@/providers/theme-provider';
-import { LinksFunction } from '@remix-run/node';
-import { useState } from 'react';
-import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Env, envSchema } from '@/env/env-schema';
 import { useDehydratedState } from '@/hooks/use-dehydrated-state';
-import Header from './components/layout/header';
-import FooterLayout from './components/layout/footer-layout';
-import { Button } from './components/ui/button';
+import { ThemeProvider } from '@/providers/theme-provider';
+import { LinksFunction } from '@remix-run/node';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
+import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
+import DefaultError from './components/default-error';
+import { QUERY_CLIENT } from './lib/utils';
 
 export const links: LinksFunction = () => [
   {
@@ -45,16 +44,7 @@ export function loader() {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<{ ENV: Env } | undefined>();
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 60 * 1000,
-          },
-        },
-      }),
-  );
+  const [queryClient] = useState(() => QUERY_CLIENT);
   const dehydratedState = useDehydratedState();
 
   return (
@@ -107,22 +97,5 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-  return (
-    <>
-      <Header />
-      <main className="relative">
-        <section className="bg-muted py-32 dark:bg-slate-900 mt-[88px] lg:mt-[112px]">
-          <div className="container text-center">
-            <img src="/not_found.png" width={340} height={340} alt="not found" className="mb-12 inline-block" />
-            <h1 className="mb-4">Stranica nije pronađena!</h1>
-            <p className="mb-12">Stranica koju ste tražili je premještena, izbrisana ili nije nikad ni postojala.</p>
-            <Button size="lg" asChild>
-              <a href="/">Idi na početnu</a>
-            </Button>
-          </div>
-        </section>
-      </main>
-      <FooterLayout />
-    </>
-  );
+  return <DefaultError subtitle="Stranica koju ste tražili je premještena, izbrisana ili nije nikad ni postojala." />;
 }

@@ -7,3 +7,7 @@ export function getDateDay(date: string) {
 export function getDateMonth(date: string) {
   return DateFns.format(date, 'MMM');
 }
+
+export function getFormattedDate(date: string) {
+  return DateFns.format(date, 'dd/MM/yyyy HH:mm');
+}

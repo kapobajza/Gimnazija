@@ -13,6 +13,7 @@ import {
 export const postsQueryKey = {
   all: ['posts'],
   home: ['posts', 'home'],
+  bySlug: (slug: string) => ['posts', { slug }],
 } as const;
 
 const HOME_POSTS_LIMIT = 3;
@@ -61,4 +62,13 @@ export async function prefetchAllPosts(limit: number) {
 
 export function useGetAllPosts(limit: number) {
   return useInfiniteQuery(getAllPostsOptions(limit));
+}
+
+export function getPostBySlugQueryOptions(slug: string) {
+  return {
+    queryKey: postsQueryKey.bySlug(slug),
+    queryFn() {
+      return apiInstance.postsApi.getBySlug(slug);
+    },
+  } satisfies FetchQueryOptions;
 }

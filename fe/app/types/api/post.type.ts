@@ -6,10 +6,10 @@ export type Post = {
   slug: string;
   title: {
     rendered: string;
+    stripped: string;
   };
   content: {
     rendered: string;
-    protected: false;
   };
   _links:
     | {
@@ -24,6 +24,7 @@ export type Post = {
   excerpt:
     | {
         rendered: string;
+        stripped: string;
       }
     | undefined;
 };
