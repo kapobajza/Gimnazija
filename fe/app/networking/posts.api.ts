@@ -1,3 +1,4 @@
+import { sanitizeHtml } from '@/lib/utils';
 import { createApi } from '@/networking/api';
 import { WPMedia } from '@/types/api/media.type';
 import { Post, PostDTO } from '@/types/api/post.type';
@@ -8,10 +9,11 @@ export const createPostsApi = () => {
   });
 
   return {
-    async get(limit = 10): Promise<PostDTO[]> {
+    async get(limit = 10, offset = 0): Promise<PostDTO[]> {
       const { data } = await postsApi.get<Post[]>('', {
         queryParams: {
           per_page: limit,
+          offset,
         },
       });
 
@@ -35,6 +37,14 @@ export const createPostsApi = () => {
 
         return {
           ...post,
+          title: {
+            ...post.title,
+            rendered: sanitizeHtml(post.title.rendered),
+          },
+          excerpt: {
+            ...post.excerpt,
+            rendered: sanitizeHtml(post.excerpt?.rendered),
+          },
           image: media,
         };
       });

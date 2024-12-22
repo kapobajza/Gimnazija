@@ -5,9 +5,13 @@ import SectionIconBoxes from '@/components/sections/section-icon-boxes';
 import { prefetchHomePosts } from '@/query/posts.query';
 import type { MetaFunction } from '@remix-run/node';
 import SectionLatestNews from './components/section-latest-news';
+import { generateCommonMetaTags } from '@/lib/utils';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Početna' }, { name: 'description', content: 'Dobrodošli u Mješovitu srednju školu Bugojno!' }];
+  return generateCommonMetaTags({
+    title: 'Početna',
+    description: 'Dobrodošli u Mješovitu srednju školu Bugojno!',
+  });
 };
 
 export async function loader() {

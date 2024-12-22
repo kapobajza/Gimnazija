@@ -1,8 +1,17 @@
 import Header from '@/components/layout/header';
 import SectionPageTitle from '@/components/sections/section-page-title';
 import FooterLayout from '@/components/layout/footer-layout';
-import StaffCard from './components/StaffCard';
+import StaffCard from './components/staff-card';
 import { TEAM_DATA } from './data';
+import { MetaFunction } from '@remix-run/react';
+import { generateCommonMetaTags } from '@/lib/utils';
+
+export const meta: MetaFunction = () => {
+  return generateCommonMetaTags({
+    title: 'Naši uposlenici',
+    description: 'Uposlenici MSŠ Gimnazije Bugojno',
+  });
+};
 
 export default function ProjectsPage() {
   return (
@@ -10,7 +19,7 @@ export default function ProjectsPage() {
       <Header />
       <main className="relative">
         <SectionPageTitle subtitle="Predani uposlenici koji svojim radom oblikuju obrazovanje i stvaraju inspirativno okruženje za učenike. Svaki član tima doprinosi uspjehu škole i budućim generacijama lidera.">
-          Naš tim
+          Naši uposlenici
         </SectionPageTitle>
         <section className="border-b py-24">
           <div className="container">

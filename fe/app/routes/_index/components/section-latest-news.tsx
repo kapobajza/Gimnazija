@@ -1,8 +1,8 @@
+import PostCard from '@/components/post-card';
 import SectionTitle from '@/components/sections/section-title';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetHomePosts } from '@/query/posts.query';
 import { motion } from 'framer-motion';
-import PostCard from './post-card';
 
 const SectionLatestNews = () => {
   const { data = [], isLoading } = useGetHomePosts();

@@ -77,7 +77,7 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
           <div className="pl-1 pr-7">
             <Accordion
               type="multiple"
-              defaultValue={mainNavItems && mainNavItems.map((item) => item.title)}
+              defaultValue={mainNavItems ? mainNavItems.map((item) => item.title) : undefined}
               className="w-full"
             >
               {mainNavItems?.map((item, index) => (

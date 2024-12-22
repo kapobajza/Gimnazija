@@ -1,16 +1,26 @@
 import { apiInstance } from '@/networking/instance';
-import { dehydrate, FetchQueryOptions, QueryClient, useQuery } from '@tanstack/react-query';
+import { PostDTO } from '@/types/api/post.type';
+import {
+  dehydrate,
+  FetchInfiniteQueryOptions,
+  FetchQueryOptions,
+  QueryClient,
+  QueryKey,
+  useInfiniteQuery,
+  useQuery,
+} from '@tanstack/react-query';
 
 export const postsQueryKey = {
-  all: (limit: number) => ['posts', limit],
+  all: ['posts'],
+  home: ['posts', 'home'],
 } as const;
 
 const HOME_POSTS_LIMIT = 3;
 
-function getPostsOptions(limit: number) {
+function getHomePostsOptions(limit: number) {
   return {
-    queryKey: postsQueryKey.all(limit),
-    queryFn: function getPosts() {
+    queryKey: postsQueryKey.home,
+    queryFn() {
       return apiInstance.postsApi.get(limit);
     },
   } satisfies FetchQueryOptions;
@@ -18,10 +28,37 @@ function getPostsOptions(limit: number) {
 
 export async function prefetchHomePosts() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(getPostsOptions(HOME_POSTS_LIMIT));
+  await queryClient.prefetchQuery(getHomePostsOptions(HOME_POSTS_LIMIT));
   return Response.json({ dehydratedState: dehydrate(queryClient) });
 }
 
 export function useGetHomePosts() {
-  return useQuery(getPostsOptions(HOME_POSTS_LIMIT));
+  return useQuery(getHomePostsOptions(HOME_POSTS_LIMIT));
+}
+
+function getAllPostsOptions(limit: number) {
+  return {
+    queryKey: postsQueryKey.all,
+    queryFn({ pageParam }) {
+      return apiInstance.postsApi.get(limit, pageParam ? (pageParam - 1) * limit : undefined);
+    },
+    initialPageParam: 1,
+    getNextPageParam(lastPage: PostDTO[], allPages: PostDTO[][]) {
+      if (lastPage.length < limit) {
+        return undefined;
+      }
+
+      return allPages.length + 1;
+    },
+  } satisfies FetchInfiniteQueryOptions<PostDTO[], Error, PostDTO[], QueryKey, number | undefined>;
+}
+
+export async function prefetchAllPosts(limit: number) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery(getAllPostsOptions(limit));
+  return Response.json({ dehydratedState: dehydrate(queryClient) });
+}
+
+export function useGetAllPosts(limit: number) {
+  return useInfiniteQuery(getAllPostsOptions(limit));
 }

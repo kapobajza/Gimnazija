@@ -1,9 +1,9 @@
-import { TeamMember } from '@/routes/nas-tim/data';
+import { TeamMember } from '@/routes/uposlenici/data';
 
 export default function StaffCard({ member }: { member: TeamMember }) {
   return (
     <article
-      className="shadow-sm dark:shadow-white/5 overflow-hidden rounded-lg bg-white dark:bg-slate-850"
+      className="shadow-sm shadow-slate-500/20 dark:shadow-white/5 overflow-hidden rounded-lg bg-white dark:bg-slate-850"
       itemType="https://schema.org/Article"
     >
       <figure className="relative overflow-hidden">

@@ -8,16 +8,21 @@ type Props = {
 
 const PostCard = ({ post }: Props) => {
   return (
-    <article className="overflow-hidden rounded-lg bg-white dark:bg-slate-850" itemType="https://schema.org/Article">
+    <article
+      className="overflow-hidden rounded-lg bg-white dark:bg-slate-850 shadow-sm shadow-slate-500/20 dark:shadow-white/5"
+      itemType="https://schema.org/Article"
+    >
       <figure className="after: relative overflow-hidden">
         <Link to={`/obavijesti/${post.slug}`} className="group">
           {post.image ? (
             <img
               src={post.image.url}
               alt={post.image.alt || `Obavijest ${post.title.rendered}`}
-              className="transition-transform duration-1600 will-change-transform group-hover:scale-105"
+              className="transition-transform duration-1600 will-change-transform group-hover:scale-105 h-[330px] w-full object-cover"
             />
-          ) : null}
+          ) : (
+            <div className="h-[330px] bg-slate-300"></div>
+          )}
           {post.modified ? (
             <div className="pointer-events-none absolute left-4 top-4 rounded bg-white px-4 py-3 text-center font-medium leading-none text-foreground">
               <span className="block text-md">{getDateDay(post.modified)}</span>

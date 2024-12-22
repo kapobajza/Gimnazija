@@ -18,7 +18,11 @@ export const mainNav = [
     href: '/o-nama',
   },
   {
-    title: 'Naš tim',
-    href: '/nas-tim',
+    title: 'Uposlenici',
+    href: '/uposlenici',
+  },
+  {
+    title: 'Obavijesti',
+    href: '/obavijesti',
   },
 ] satisfies MainNavItem[];
