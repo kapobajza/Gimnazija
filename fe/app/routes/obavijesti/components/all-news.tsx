@@ -35,8 +35,8 @@ export default function AllNews() {
             {hasNextPage ? (
               <div className="mt-10 text-center mx-auto">
                 <Button
-                  size={'lg'}
-                  disabled
+                  size="lg"
+                  disabled={isLoading || isFetchingNextPage}
                   onClick={() => {
                     void fetchNextPage();
                   }}
