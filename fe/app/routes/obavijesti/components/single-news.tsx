@@ -1,14 +1,14 @@
 import FooterLayout from '@/components/layout/footer-layout';
 import Header from '@/components/layout/header';
-import SocialIcon from '@/routes/obavijesti/components/social-icon';
+import { MainNavEnum, siteConfig } from '@/config/site';
 import { getFormattedDate } from '@/lib/date';
 import { getPostBySlugQueryOptions } from '@/query/posts.query';
-import { useQuery } from '@tanstack/react-query';
-import { faFacebook, faXTwitter, faLinkedin, faReddit, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import SocialIcon from '@/routes/obavijesti/components/social-icon';
+import { faFacebook, faLinkedin, faReddit, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { MainNavEnum, siteConfig } from '@/config/site';
+import { useQuery } from '@tanstack/react-query';
 
-export default function SingleNewsPage({ slug }: { slug: string }) {
+export default function SingleNews({ slug }: { slug: string }) {
   const { data: post } = useQuery({
     ...getPostBySlugQueryOptions(slug),
     throwOnError: true,
@@ -23,7 +23,7 @@ export default function SingleNewsPage({ slug }: { slug: string }) {
   return (
     <>
       <Header />
-      <main className="relative mt-[4.5rem] lg:mt-[161px]">
+      <main className="relative mt-header-spacing">
         <div className="relative flex flex-col items-center justify-center px-4 py-20 before:absolute before:inset-0 before:z-[1] before:bg-foreground/75 sm:h-96 lg:h-[30rem]">
           {post.image ? (
             <img
@@ -44,10 +44,14 @@ export default function SingleNewsPage({ slug }: { slug: string }) {
         </div>
         <section className="border-b pb-24 pt-16">
           <div className="container">
+            <article
+              className="post-content prose prose-lg mx-auto max-w-[50rem] dark:prose-invert prose-headings:text-foreground mb-6"
+              dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            ></article>
             <div className="mx-auto max-w-[50rem]">
+              <span className="mr-4 mb-2 block text-md font-medium">Podijelite</span>
               <div className="mb-4 flex items-center">
-                <span className="mb-2 mr-3 inline-block text-sm font-medium">Podijelite:</span>
-                <div className="flex space-x-3">
+                <div className="flex gap-3 flex-wrap">
                   <SocialIcon
                     icon={faXTwitter}
                     url={`https://twitter.com/intent/tweet?url=${postURL}&text=${encodeURI(post.title.rendered)}`}
@@ -76,10 +80,6 @@ export default function SingleNewsPage({ slug }: { slug: string }) {
                 </div>
               </div>
             </div>
-            <article
-              className="post-content prose prose-lg mx-auto max-w-[50rem] dark:prose-invert prose-headings:text-foreground"
-              dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-            ></article>
           </div>
         </section>
       </main>

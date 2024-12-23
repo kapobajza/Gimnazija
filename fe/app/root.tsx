@@ -8,7 +8,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import DefaultError from './components/default-error';
-import { QUERY_CLIENT } from './lib/utils';
+import GlobalProgressIndicator from './components/global-progress-indicator';
 
 export const links: LinksFunction = () => [
   {
@@ -44,7 +44,16 @@ export function loader() {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<{ ENV: Env } | undefined>();
-  const [queryClient] = useState(() => QUERY_CLIENT);
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+          },
+        },
+      }),
+  );
   const dehydratedState = useDehydratedState();
 
   return (
@@ -74,6 +83,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <HydrationBoundary state={dehydratedState}>
             <ThemeProvider>
+              <GlobalProgressIndicator />
               {children}
               <ScrollRestoration />
               <Scripts />

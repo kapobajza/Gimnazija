@@ -51,6 +51,7 @@ function getAllPostsOptions(limit: number) {
 
       return allPages.length + 1;
     },
+    staleTime: 3 * 60 * 1000,
   } satisfies FetchInfiniteQueryOptions<PostDTO[], Error, PostDTO[], QueryKey, number | undefined>;
 }
 

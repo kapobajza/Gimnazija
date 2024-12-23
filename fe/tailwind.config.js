@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -151,8 +154,14 @@ module.exports = {
         'fade-in': 'fade-in 0.2s ease-in-out',
         'fade-out': 'fade-out 0.2s ease-in-out',
       },
+      fontFamily: {
+        sans: ['Roboto', ...fontFamily.sans],
+      },
+      margin: {
+        'header-spacing': 'var(--header-spacing)',
+      },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 };

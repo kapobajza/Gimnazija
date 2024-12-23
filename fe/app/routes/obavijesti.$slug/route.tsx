@@ -1,33 +1,34 @@
 import { MainNavEnum, siteConfig } from '@/config/site';
-import { generateCommonMetaTags, QUERY_CLIENT } from '@/lib/utils';
+import { generateCommonMetaTags } from '@/lib/utils';
 import { getPostBySlugQueryOptions } from '@/query/posts.query';
 import { PostDTO } from '@/types/api/post.type';
-import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { LoaderFunctionArgs, MetaFunction, TypedResponse } from '@remix-run/node';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params }: LoaderFunctionArgs): Promise<TypedResponse<{ post: PostDTO | undefined }>> {
   invariant(params.slug, 'Expected a slug param');
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(getPostBySlugQueryOptions(params.slug));
-  return Response.json({ dehydratedState: dehydrate(queryClient) });
+  const options = getPostBySlugQueryOptions(params.slug);
+  await queryClient.prefetchQuery(options);
+  const post = queryClient.getQueryData<PostDTO | undefined>(options.queryKey);
+  return Response.json({ dehydratedState: dehydrate(queryClient), post });
 }
 
 export default function SingleNewsPage() {
   return null;
 }
 
-export const meta: MetaFunction = ({ params }) => {
-  const { queryKey } = getPostBySlugQueryOptions(params.slug ?? '');
-  const post = QUERY_CLIENT.getQueryData<PostDTO | undefined>(queryKey);
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const post = data?.post;
 
   if (post) {
     return generateCommonMetaTags({
       title: post.title.stripped,
       description: post.excerpt?.stripped,
       image: post.image?.url,
-      url: `${siteConfig.url}/${MainNavEnum.Obavijesti.href}/${post.slug}`,
+      url: `${siteConfig.url}${MainNavEnum.Obavijesti.href}/${post.slug}`,
     });
   }
 

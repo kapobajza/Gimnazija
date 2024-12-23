@@ -22,7 +22,7 @@ export default function Index() {
   return (
     <>
       <Header />
-      <main className="relative mt-[88px] lg:mt-[112px]">
+      <main className="relative mt-header-spacing">
         <SectionHeroLayout />
         <SectionIconBoxes />
         <SectionLatestNews />

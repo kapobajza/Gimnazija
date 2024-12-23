@@ -1,5 +1,4 @@
 import { MetaDescriptor } from '@remix-run/react';
-import { QueryClient } from '@tanstack/react-query';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import sanitizeHtmlFn from 'xss';
@@ -55,11 +54,3 @@ export function generateCommonMetaTags({
 
   return commonTags;
 }
-
-export const QUERY_CLIENT = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
