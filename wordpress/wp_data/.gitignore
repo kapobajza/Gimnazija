@@ -37,8 +37,7 @@ wp-content/wflogs/
 wp-content/debug.log
 
 # Ignore sensitive files
-wp-config.php
-wp-config-sample.php
+!wp-config.php
 .htaccess
 sftp-config.json
 ftpquota
