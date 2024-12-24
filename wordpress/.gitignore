@@ -1,2 +1,11 @@
-# WordPress
-/wp_data/
+# Ignore everything in wp_content
+wp_data/wp-content
+
+# Unignore the parent directories
+!wp_data/
+!wp_data/wp-content/
+!wp_data/wp-content/twentytwentyfive/
+
+# Unignore the specific files
+!wp_data/wp-content/wp-config.php
+!wp_data/wp-content/twentytwentyfive/functions.php

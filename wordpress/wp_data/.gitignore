@@ -1,0 +1,75 @@
+# Ignore everything
+/*
+
+# Except the wp-content directory
+!wp-content/
+
+# Ignore everything in the wp-content directory
+wp-content/*
+
+# Except these directories
+!wp-content/themes/
+!wp-content/plugins/
+!wp-content/mu-plugins/
+
+# Ignore all files in the themes and plugins directories
+wp-content/themes/*/*
+wp-content/plugins/*/*
+wp-content/mu-plugins/*/*
+
+# But not the files (allow only root files in themes and plugins)
+!wp-content/themes/*/*.php
+!wp-content/themes/*/*.css
+!wp-content/themes/*/*.js
+!wp-content/plugins/*/*.php
+!wp-content/plugins/*/*.css
+!wp-content/plugins/*/*.js
+!wp-content/mu-plugins/*/*.php
+!wp-content/mu-plugins/*/*.css
+!wp-content/mu-plugins/*/*.js
+
+# Ignore uploads, cache, and logs
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/upgrade/
+wp-content/wflogs/
+wp-content/debug.log
+
+# Ignore sensitive files
+wp-config.php
+wp-config-sample.php
+.htaccess
+sftp-config.json
+ftpquota
+*.sql
+*.tar.gz
+*.zip
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Ignore IDE/editor config files
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+
+# Ignore node modules and dependencies
+node_modules/
+bower_components/
+npm-debug.log
+yarn-error.log
+
+# Ignore other files
+*.log
+*.cache
+*.bak
+*.swp
+*~
+
+# Allow Git to track this .gitignore file
+!.gitignore
