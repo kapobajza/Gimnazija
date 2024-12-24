@@ -18,3 +18,7 @@ RUN chmod +x /usr/local/bin/update_local_hosts.sh
 ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
 
 CMD ["pnpm", "run", "dev"]
+
+FROM base AS production
+RUN pnpm build
+CMD ["pnpm", "run", "start"]

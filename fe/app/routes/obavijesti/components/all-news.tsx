@@ -41,7 +41,7 @@ export default function AllNews() {
                     void fetchNextPage();
                   }}
                 >
-                  Učitaj više
+                  Učitaj još
                 </Button>
               </div>
             ) : null}

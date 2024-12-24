@@ -10,7 +10,7 @@ const SectionHeroLayout = () => {
           <div className="mx-auto text-center">
             <h1 className="text-2xl text-white sm:text-5xl xl:text-6xl">
               <span className="block">Dobrodošli </span>
-              <span className="inline-block bg-gradient-to-l from-primary to-primary-600 bg-clip-text text-transparent">
+              <span className="inline-block bg-gradient-to-l from-primary to-primary-700 bg-clip-text text-transparent">
                 <span className="block">Mješovita srednja škola</span>
                 <span>Gimnazija Bugojno</span>
               </span>

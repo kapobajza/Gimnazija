@@ -40,7 +40,9 @@ const PostCard = ({ post }: Props) => {
           />
         </h2>
 
-        {post.excerpt?.rendered ? <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div> : null}
+        {post.excerpt?.rendered ? (
+          <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="line-clamp-3"></div>
+        ) : null}
       </div>
     </article>
   );

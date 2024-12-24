@@ -2,49 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Thin.ttf') format('ttf');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Light.ttf') format('ttf');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Regular.ttf') format('ttf');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Medium.ttf') format('ttf');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Bold.ttf') format('ttf');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('/font/Roboto-Black.ttf') format('ttf');
-  font-weight: 900;
-  font-style: normal;
-}
-
 @layer base {
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Thin.ttf') format('ttf');
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Light.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Medium.ttf') format('ttf');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto-Black.ttf') format('ttf');
+    font-weight: 900;
+    font-style: normal;
+  }
+
   :root {
     --radius: 0.5rem;
     --header-spacing: 88px;
@@ -146,15 +146,15 @@
 
   .swiper .swiper-pagination-bullet {
     @apply hover:bg-primary;
-    --swiper-theme-color: theme("colors.primary.DEFAULT");
-    --swiper-pagination-bullet-inactive-color: theme("colors.border");
+    --swiper-theme-color: theme('colors.primary.DEFAULT');
+    --swiper-pagination-bullet-inactive-color: theme('colors.border');
     --swiper-pagination-bullet-inactive-opacity: 1;
     --swiper-pagination-bullet-size: 14px;
     --swiper-pagination-bullet-horizontal-gap: 6px;
   }
 
   .dark .swiper .swiper-pagination-bullet {
-    --swiper-pagination-bullet-inactive-color: theme("colors.slate.700");
+    --swiper-pagination-bullet-inactive-color: theme('colors.slate.700');
   }
 
   .color-scheme-initial {

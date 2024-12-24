@@ -8,10 +8,10 @@ export type WPMediaSize = {
 };
 
 export type WPMediaSizes = {
-  medium: WPMediaSize;
-  thumbnail: WPMediaSize;
-  medium_large: WPMediaSize;
-  full: WPMediaSize;
+  medium: WPMediaSize | undefined;
+  thumbnail: WPMediaSize | undefined;
+  medium_large: WPMediaSize | undefined;
+  full: WPMediaSize | undefined;
 };
 
 export type WPMedia = {
@@ -20,4 +20,8 @@ export type WPMedia = {
     sizes: WPMediaSizes;
   };
   alt_text: string;
+  guid: {
+    rendered: string;
+  };
+  source_url: string;
 };

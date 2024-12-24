@@ -1,6 +1,6 @@
 import { sanitizeHtml } from '@/lib/utils';
 import { createApi } from '@/networking/api';
-import { WPMedia } from '@/types/api/media.type';
+import { WPMedia, WPMediaSizes } from '@/types/api/media.type';
 import { Post, PostDTO } from '@/types/api/post.type';
 import { ErrorResponseCode } from './error';
 
@@ -17,6 +17,10 @@ export const createPostsApi = () => {
     routePrefix: 'posts',
   });
 
+  function getMediaWidth(media: WPMediaSizes | undefined, size: keyof WPMediaSizes) {
+    return media?.[size]?.width ?? media?.full?.width ?? 0;
+  }
+
   async function getFormattedPost(post: Post): Promise<PostDTO> {
     const imageLink = post._links?.['wp:featuredmedia']?.[0];
     let media: PostDTO['image'] | undefined;
@@ -25,10 +29,11 @@ export const createPostsApi = () => {
       try {
         const res = await fetch(imageLink.href);
         const json = (await res.json()) as WPMedia;
+
         media = {
           alt: json.alt_text,
           sizes: json.media_details.sizes,
-          url: `/images?src=${json.link}&w=${json.media_details.sizes.medium_large.width}`,
+          url: `/images?w=${getMediaWidth(json.media_details.sizes, 'medium_large')}&src=${json.source_url}`,
         };
       } catch {
         media = undefined;

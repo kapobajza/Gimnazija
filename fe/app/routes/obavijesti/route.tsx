@@ -6,22 +6,6 @@ import { MetaFunction, useParams, useRouteError } from '@remix-run/react';
 import AllNews from './components/all-news';
 import SingleNews from './components/single-news';
 import { ALL_ROUTES_DATA_LIMIT } from './constants';
-import wpBlockCSS from '@/routes/obavijesti/css/wp-block.min.css?url';
-import wpCustomBlockCSS from '@/routes/obavijesti/css/wp-custom-block.css?url';
-import { LinksFunction } from '@remix-run/node';
-
-export const links: LinksFunction = () => [
-  {
-    rel: 'stylesheet',
-    href: wpBlockCSS,
-    type: 'text/css',
-  },
-  {
-    rel: 'stylesheet',
-    href: wpCustomBlockCSS,
-    type: 'text/css',
-  },
-];
 
 export async function loader() {
   return prefetchAllPosts(ALL_ROUTES_DATA_LIMIT);
