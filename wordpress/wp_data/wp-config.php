@@ -23,21 +23,7 @@
 // IMPORTANT: this file needs to stay in-sync with https://github.com/WordPress/WordPress/blob/master/wp-config-sample.php
 // (it gets parsed by the upstream wizard in https://github.com/WordPress/WordPress/blob/f27cb65e1ef25d11b535695a660e7282b98eb742/wp-admin/setup-config.php#L356-L392)
 
-// a helper function to lookup "env_FILE", "env", then fallback
-if (!function_exists('getenv_docker')) {
-	// https://github.com/docker-library/wordpress/issues/588 (WP-CLI will load this file 2x)
-	function getenv_docker($env, $default) {
-		if ($fileEnv = getenv($env . '_FILE')) {
-			return rtrim(file_get_contents($fileEnv), "\r\n");
-		}
-		else if (($val = getenv($env)) !== false) {
-			return $val;
-		}
-		else {
-			return $default;
-		}
-	}
-}
+require_once __DIR__ . '/getenv-docker.php';
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -138,6 +124,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
 
-define('WP_HOME', getenv_docker('WORDPRESS_HOME_URL', 'http://gimnazija.local:3000'));
-define('WP_HOME_ADMIN', getenv_docker('WORDPRESS_ADMIN_URL', 'http://api.gimnazija.local'));
+define('WP_HOME', getenv_docker('WORDPRESS_HOME_URL', 'http://example.com'));
+define('WP_HOME_ADMIN', getenv_docker('WORDPRESS_ADMIN_URL', 'http://admin.example.com'));
 define('WP_CONTENT_URL', WP_HOME_ADMIN . '/wp-content');

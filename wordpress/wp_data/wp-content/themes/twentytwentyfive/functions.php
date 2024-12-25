@@ -9,6 +9,8 @@
  * @since Twenty Twenty-Five 1.0
  */
 
+require_once get_template_directory() . '/../../../getenv-docker.php';
+
 // Adds theme support for post formats.
 if ( ! function_exists( 'twentytwentyfive_post_format_setup' ) ) :
 	/**
@@ -163,3 +165,17 @@ add_filter('rest_url', function($url) {
 
 // Disable canonical redirects
 add_filter('redirect_canonical', '__return_false');
+
+add_action('template_redirect', function () {
+	// Define the front-end URL
+	$frontend_url = getenv_docker('WORDPRESS_HOME_URL', 'http://example.com');
+
+	// Check if the current request is for the WordPress admin or an API endpoint
+	if (is_admin() || strpos($_SERVER['REQUEST_URI'], '/wp-json/') === 0) {
+			return; // Do nothing for admin or REST API requests
+	}
+
+	// Redirect all other requests to the front-end URL
+	wp_redirect($frontend_url);
+	exit;
+});

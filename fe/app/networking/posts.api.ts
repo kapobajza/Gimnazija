@@ -2,7 +2,7 @@ import { sanitizeHtml } from '@/lib/utils';
 import { createApi } from '@/networking/api';
 import { WPMedia, WPMediaSizes } from '@/types/api/media.type';
 import { Post, PostDTO } from '@/types/api/post.type';
-import { ErrorResponseCode } from './error';
+import { AppErrorCode } from './error';
 
 function stripHtmlTags(html: string | undefined) {
   if (!html) {
@@ -76,7 +76,7 @@ export const createPostsApi = () => {
 
       if (!data[0]) {
         throw {
-          code: ErrorResponseCode.NOT_FOUND,
+          code: AppErrorCode.POST_NOT_FOUND,
         };
       }
 

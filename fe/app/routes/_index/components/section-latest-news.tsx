@@ -1,11 +1,11 @@
+import Container from '@/components/layout/container';
 import PostCard from '@/components/post-card';
 import SectionTitle from '@/components/sections/section-title';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useGetHomePosts } from '@/query/posts.query';
 import { motion } from 'framer-motion';
 
 const SectionLatestNews = () => {
-  const { data = [], isLoading } = useGetHomePosts();
+  const { data = [], isLoading, isError } = useGetHomePosts();
 
   return (
     <section className="bg-muted py-16 dark:bg-slate-900 lg:py-24">
@@ -26,13 +26,17 @@ const SectionLatestNews = () => {
           >
             Posljednje obavijesti
           </SectionTitle>
-          <div className={'grid grid-cols-1 gap-10 lg:grid-cols-3'}>
-            {isLoading
-              ? Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-[33rem] w-full" />)
-              : data.map((post) => {
-                  return <PostCard post={post} key={post.id} />;
-                })}
-          </div>
+          <Container
+            isLoading={isLoading}
+            isError={isError}
+            isEmpty={data.length === 0}
+            emptyMessage="Trenutno nema obavijesti"
+            className="grid grid-cols-1 gap-10 lg:grid-cols-3"
+          >
+            {data.map((post) => {
+              return <PostCard post={post} key={post.id} />;
+            })}
+          </Container>
         </motion.div>
       </div>
     </section>

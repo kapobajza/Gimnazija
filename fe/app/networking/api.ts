@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { getEnv } from '@/env/get';
-import { ErrorResponse, ErrorResponseCode } from '@/networking/error';
+import { AppError, AppErrorCode } from '@/networking/error';
 
 type ApiMethodAdditionalOptions = {
   queryParams?: Record<string, string | number | boolean>;
@@ -52,13 +52,13 @@ export const createApi = ({ routePrefix }: CreateApiOptions) => {
     });
 
     if (!res.ok) {
-      let errorToThrow: ErrorResponse;
+      let errorToThrow: AppError;
 
       try {
-        errorToThrow = await (res.json() as Promise<ErrorResponse>);
+        errorToThrow = await (res.json() as Promise<AppError>);
       } catch {
         errorToThrow = {
-          code: ErrorResponseCode.UNKNOWN,
+          code: AppErrorCode.UNKNOWN,
         };
       }
 

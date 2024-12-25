@@ -1,18 +1,23 @@
 import { z } from 'zod';
 
-export const errorResponseLiteralSchema = z.union([z.literal('unknown'), z.literal('not_found')]);
+export const appErrorLiteralSchema = z.union([z.literal('unknown'), z.literal('post_not_found')]);
 
-export type ErrorResponseLiteral = z.infer<typeof errorResponseLiteralSchema>;
+export type AppErrorLiteral = z.infer<typeof appErrorLiteralSchema>;
 
-export const errorResponseSchema = z.object({
-  code: errorResponseLiteralSchema,
+export const appErrorSchema = z.object({
+  code: appErrorLiteralSchema,
 });
 
-export type ErrorResponse = z.infer<typeof errorResponseSchema>;
+export type AppError = z.infer<typeof appErrorSchema>;
 
-export const ErrorResponseCode = {
+export const AppErrorCode = {
   UNKNOWN: 'unknown',
-  NOT_FOUND: 'not_found',
+  POST_NOT_FOUND: 'post_not_found',
 } as const satisfies {
-  [key in Uppercase<ErrorResponseLiteral>]: ErrorResponseLiteral;
+  [key in Uppercase<AppErrorLiteral>]: AppErrorLiteral;
 };
+
+export const responseErrorSchema = z.object({
+  status: z.number(),
+  statusText: z.string(),
+});

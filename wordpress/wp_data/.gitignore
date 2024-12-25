@@ -38,6 +38,7 @@ wp-content/debug.log
 
 # Ignore sensitive files
 !wp-config.php
+!getenv-docker.php
 .htaccess
 sftp-config.json
 ftpquota

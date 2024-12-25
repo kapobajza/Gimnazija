@@ -18,12 +18,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.wordpress.rule=Host(`api.gimnazija.local`)"
       - "traefik.http.routers.wordpress.entrypoints=web"
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_TABLE_PREFIX: lcl_
+    env_file: ./wordpress/.env
     volumes:
       - "./wordpress/wp_data:/var/www/html"
 
@@ -47,8 +42,7 @@ services:
       - "3000"
     environment:
       - HOST=0.0.0.0
-    env_file:
-      - ./fe/.env
+    env_file: ./fe/.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`gimnazija.local`)"

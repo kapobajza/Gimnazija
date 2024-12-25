@@ -7,8 +7,8 @@ import { LinksFunction } from '@remix-run/node';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import DefaultError from './components/default-error';
 import GlobalProgressIndicator from './components/global-progress-indicator';
+import RouteError from './components/route-error';
 
 export const links: LinksFunction = () => [
   {
@@ -107,5 +107,5 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-  return <DefaultError subtitle="Stranica koju ste tražili je premještena, izbrisana ili nije nikad ni postojala." />;
+  return <RouteError />;
 }
