@@ -19,6 +19,16 @@ ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
 
 CMD ["pnpm", "run", "dev"]
 
+FROM base AS prod-local
+COPY ./scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
+RUN chmod +x /usr/local/bin/update_local_hosts.sh
+
+# Set the entrypoint to run the script
+ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
+
+RUN pnpm build
+CMD ["pnpm", "run", "start"]
+
 FROM base AS production
 RUN pnpm build
 CMD ["pnpm", "run", "start"]

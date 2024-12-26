@@ -2,14 +2,14 @@ import { cn } from '@/lib/utils';
 import { ComponentPropsWithoutRef } from 'react';
 
 function Paragraph({ className, ...props }: ComponentPropsWithoutRef<'p'>) {
-  return <p className={cn('text-md', className)} {...props} />;
+  return <p className={cn('text-md leading-7', className)} {...props} />;
 }
 
 export default function SectionHistory() {
   return (
-    <section className="px-6 pb-24">
+    <section className="px-6 pb-24 border-b">
       <div className="container">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-2xl">
           <div className="text-center">
             <h2 className="mb-8">Kratka historija o našoj školi</h2>
           </div>

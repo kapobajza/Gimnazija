@@ -17,6 +17,7 @@ const FooterLayout = () => {
                     dark: '/logo/mssgb_logo_full_dark.png',
                     light: '/logo/mssgb_logo_full_white.png',
                   }}
+                  className="max-w-[150px] lg:max-w-[180px]"
                 />
               </Link>
             </div>

@@ -37,7 +37,7 @@ services:
     build:
       context: ./fe
       dockerfile: Dockerfile
-      target: production
+      target: prod-local
     ports:
       - "3000"
     environment:

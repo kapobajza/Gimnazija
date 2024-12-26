@@ -44,7 +44,7 @@ const Header = () => {
           <SiteLogo
             lightClasses="dark:hidden"
             darkClasses="hidden dark:block"
-            className={'w-[50px] lg:w-[75px]'}
+            className={'w-[70px] lg:w-[90px]'}
             src={{
               light: '/logo/mssgb_logo_white.png',
               dark: '/logo/mssgb_logo_dark.png',
