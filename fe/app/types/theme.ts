@@ -1,6 +1,6 @@
-export const Theme = {
+export const ThemeAppearance = {
   Dark: 'dark',
   Light: 'light',
 } as const;
 
-export type Theme = (typeof Theme)[keyof typeof Theme];
+export type ThemeAppearance = (typeof ThemeAppearance)[keyof typeof ThemeAppearance];

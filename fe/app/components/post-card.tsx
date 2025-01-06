@@ -24,7 +24,7 @@ const PostCard = ({ post }: Props) => {
             <div className="h-[330px] bg-slate-300"></div>
           )}
           {post.modified ? (
-            <div className="pointer-events-none absolute left-4 top-4 rounded bg-white px-4 py-3 text-center font-medium leading-none text-foreground">
+            <div className="pointer-events-none absolute left-4 top-4 rounded bg-white px-4 py-3 text-center font-medium leading-none text-foreground shadow-md shadow-foreground/15">
               <span className="block text-md">{getDateDay(post.modified)}</span>
               <span className="text-[0.625rem] uppercase tracking-wider">{getDateMonth(post.modified)}</span>
             </div>

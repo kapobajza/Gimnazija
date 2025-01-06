@@ -11,7 +11,7 @@ export const DarkModeSwitch = ({ className }: { className?: string }) => {
         className,
       )}
       onClick={() => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
+        setTheme(theme.appearance === 'dark' ? 'light' : 'dark');
       }}
     >
       <svg

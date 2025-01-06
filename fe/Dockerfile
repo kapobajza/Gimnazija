@@ -17,15 +17,10 @@ RUN chmod +x /usr/local/bin/update_local_hosts.sh
 # Set the entrypoint to run the script
 ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
 
+FROM local AS dev-local
 CMD ["pnpm", "run", "dev"]
 
-FROM base AS prod-local
-COPY ./scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
-RUN chmod +x /usr/local/bin/update_local_hosts.sh
-
-# Set the entrypoint to run the script
-ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
-
+FROM local AS prod-local
 RUN pnpm build
 CMD ["pnpm", "run", "start"]
 

@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { fontFamily } = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
+import { Config } from 'tailwindcss/types/config';
+import tailwindAnimatePlugin from 'tailwindcss-animate';
+import tailwindTypographyPlugin from '@tailwindcss/typography';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const { fontFamily } = defaultTheme;
+
+export default {
   darkMode: ['class'],
   content: ['./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
   theme: {
@@ -23,13 +26,13 @@ module.exports = {
       lg: '0 20px 40px rgba(61,65,84,.15)',
     },
     fontSize: {
-      xxs: ['0.75rem'],
-      xs: ['0.875rem'],
-      sm: ['0.9375rem'],
-      base: ['1rem'],
-      md: ['1.125rem'],
-      lg: ['1.25rem'],
-      xl: ['1.5rem'],
+      xxs: '0.75rem',
+      xs: '0.875rem',
+      sm: '0.9375rem',
+      base: '1rem',
+      md: '1.125rem',
+      lg: '1.25rem',
+      xl: '1.5rem',
       '2xl': ['1.75rem', { lineHeight: 'normal' }],
       '3xl': ['2.125rem', { lineHeight: 'normal' }],
       '4xl': ['2.5rem', { lineHeight: 'normal' }],
@@ -102,7 +105,7 @@ module.exports = {
           foreground: 'hsl(222.2 84% 4.9%)',
         },
       },
-      typography: ({ theme }) => ({
+      typography: ({ theme }: { theme: (param: string) => string }) => ({
         DEFAULT: {
           css: {
             a: {
@@ -131,20 +134,20 @@ module.exports = {
           '50%': { transform: 'translateY(0)' },
         },
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
         'fade-in': {
-          '0%': { opacity: 0, transform: 'translateY(-4px)' },
-          to: { opacity: 100, transform: 'translateY(0)' },
+          '0%': { opacity: '0', transform: 'translateY(-4px)' },
+          to: { opacity: '100', transform: 'translateY(0)' },
         },
         'fade-out': {
-          from: { opacity: 100, transform: 'translateY(0)' },
-          to: { opacity: 0, transform: 'translateY(-4px)' },
+          from: { opacity: '100', transform: 'translateY(0)' },
+          to: { opacity: '0', transform: 'translateY(-4px)' },
         },
       },
       animation: {
@@ -162,6 +165,5 @@ module.exports = {
       },
     },
   },
-
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
-};
+  plugins: [tailwindAnimatePlugin, tailwindTypographyPlugin],
+} satisfies Config;
