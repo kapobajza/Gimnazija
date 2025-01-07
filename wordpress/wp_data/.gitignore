@@ -13,7 +13,6 @@ wp-content/*
 !wp-content/mu-plugins/
 
 # Ignore all files in the themes and plugins directories
-wp-content/themes/*/*
 wp-content/plugins/*/*
 wp-content/mu-plugins/*/*
 
