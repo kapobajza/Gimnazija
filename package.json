@@ -1,0 +1,24 @@
+{
+  "name": "gimnazija-bugojno",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dashboard:dev": "pnpm --filter dashboard dev",
+    "app:dev": "pnpm --filter app dev"
+  },
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": [
+        "current"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ]
+    }
+  },
+  "dependencies": {
+    "typescript": "5.7.2"
+  }
+}

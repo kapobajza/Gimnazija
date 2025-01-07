@@ -11,38 +11,36 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/traefik_local.yml:/etc/traefik/traefik.yml"
 
-  wordpress:
-    image: wordpress:6.7.1-php8.1-apache
-    container_name: wordpress
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+      target: prod-local
+    env_file: ./dashboard/.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wordpress.rule=Host(`api.gimnazija.local`)"
       - "traefik.http.routers.wordpress.entrypoints=web"
-    env_file: ./wordpress/.env
-    volumes:
-      - "./wordpress/wp_data:/var/www/html"
 
   db:
-    image: mysql:8
-    container_name: db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+    image: postgres:17.2
+    env_file:
+      - ./dashboard/.env
+    ports:
+      - "5436:5432"
     volumes:
-      - db_data:/var/lib/mysql
+      - pg-db-data:/var/lib/postgresql/data
 
   web:
     build:
-      context: ./fe
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: web/Dockerfile
       target: prod-local
     ports:
       - "3000"
     environment:
       - HOST=0.0.0.0
-    env_file: ./fe/.env
+    env_file: ./web/.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`gimnazija.local`)"
@@ -50,15 +48,15 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: ./fe/package.json
+          path: ./web/package.json
           target: /app/fe
         - action: sync
-          path: ./fe
+          path: ./web
           target: /app/fe
           ignore:
-            - ./fe/node_modules/
-            - ./fe/build/
+            - ./web/node_modules/
+            - ./web/build/
 
 
 volumes:
-  db_data:
+  pg-db-data:
