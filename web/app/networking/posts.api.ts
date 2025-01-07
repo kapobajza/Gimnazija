@@ -54,6 +54,7 @@ export const createPostsApi = () => {
       } = await postsApi.get<ApiResponse<Post[]>>('', {
         queryParams: {
           'filters[slug][$eq]': slug,
+          'pagination[limit]': 1,
           ...commontPostFieldsQueryParams,
           'populate[cover][fields][1]': 'url',
         },
