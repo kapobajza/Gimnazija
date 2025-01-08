@@ -3,7 +3,7 @@ import SectionPageTitle from '@/components/sections/section-page-title';
 import FooterLayout from '@/components/layout/footer-layout';
 import StaffCard from './components/staff-card';
 import { TEAM_DATA } from './data';
-import { MetaFunction } from '@remix-run/react';
+import { MetaFunction } from 'react-router';
 import { generateCommonMetaTags } from '@/lib/utils';
 
 export const meta: MetaFunction = () => {

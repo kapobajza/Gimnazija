@@ -1,6 +1,6 @@
 import { getDateDay, getDateMonth } from '@/lib/date';
 import { PostDTO } from '@/types/api/post.types';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 
 type Props = {
   post: PostDTO;

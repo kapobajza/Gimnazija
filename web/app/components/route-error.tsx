@@ -1,7 +1,7 @@
 import Header from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import FooterLayout from '@/components/layout/footer-layout';
-import { useRouteError } from '@remix-run/react';
+import { useRouteError } from 'react-router';
 import { AppErrorCode, appErrorSchema, responseErrorSchema } from '@/networking/error';
 
 function getErrorSummary(error: unknown): {

@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction } from 'react-router';
 import type { ComponentPropsWithoutRef } from 'react';
 import sharp from 'sharp';
 

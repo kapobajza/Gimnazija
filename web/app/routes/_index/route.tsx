@@ -3,7 +3,7 @@ import Header from '@/components/layout/header';
 import SectionHeroLayout from '@/components/sections/section-hero-layout';
 import SectionIconBoxes from '@/components/sections/section-icon-boxes';
 import { prefetchHomePosts } from '@/query/posts.query';
-import type { MetaFunction } from '@remix-run/node';
+import type { MetaFunction } from 'react-router';
 import SectionLatestNews from './components/section-latest-news';
 import { generateCommonMetaTags } from '@/lib/utils';
 

@@ -1,4 +1,4 @@
-import { MetaDescriptor } from '@remix-run/react';
+import { MetaDescriptor } from 'react-router';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

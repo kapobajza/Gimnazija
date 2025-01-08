@@ -12,7 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { MainNavItem } from '@/types/nav';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 
 type MainNavProps = {
   items?: MainNavItem[];

@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 import SiteLogo from '@/components/layout/site-logo';
 import { Email, Address } from '@/components/icons/icons';
 

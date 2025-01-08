@@ -4,7 +4,7 @@ import MainNav from '@/components/layout/main-nav';
 import { mainNav } from '@/config/site';
 import { cn, isBrowser } from '@/lib/utils';
 import { MobileNav } from '@/components/layout/mobile-nav';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 import { DarkModeSwitch } from '@/components/dark-mode-switch';
 
 function shouldSetStickyHeader() {

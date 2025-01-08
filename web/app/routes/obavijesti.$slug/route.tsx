@@ -2,11 +2,11 @@ import { MainNavEnum, siteConfig } from '@/config/site';
 import { generateCommonMetaTags } from '@/lib/utils';
 import { getPostBySlugQueryOptions } from '@/query/posts.query';
 import { PostDTO } from '@/types/api/post.types';
-import { LoaderFunctionArgs, MetaFunction, TypedResponse } from '@remix-run/node';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
+import type { Route } from './+types/route';
 
-export async function loader({ params }: LoaderFunctionArgs): Promise<TypedResponse<{ post: PostDTO | undefined }>> {
+export async function loader({ params }: Route.LoaderArgs) {
   invariant(params.slug, 'Expected a slug param');
 
   const queryClient = new QueryClient();
@@ -20,8 +20,8 @@ export default function SingleNewsPage() {
   return null;
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const post = data?.post;
+export const meta = ({ data }: { data: { post: PostDTO | undefined } }) => {
+  const post = data.post;
 
   if (post) {
     return generateCommonMetaTags({

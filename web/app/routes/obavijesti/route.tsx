@@ -1,7 +1,7 @@
 import RouteError from '@/components/route-error';
 import { generateCommonMetaTags } from '@/lib/utils';
 import { prefetchAllPosts } from '@/query/posts.query';
-import { MetaFunction, useParams } from '@remix-run/react';
+import { MetaFunction, useParams } from 'react-router';
 import AllNews from './components/all-news';
 import SingleNews from './components/single-news';
 import { ALL_ROUTES_DATA_LIMIT } from './constants';

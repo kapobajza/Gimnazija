@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { useNavigation } from '@remix-run/react';
+import { useNavigation } from 'react-router';
 import { useRef, useState, useEffect } from 'react';
 import * as Portal from '@radix-ui/react-portal';
 

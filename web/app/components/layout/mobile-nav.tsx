@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { MainNavItem } from '@/types/nav';
-import { Link, useLocation } from '@remix-run/react';
+import { Link, useLocation } from 'react-router';
 
 type MobileNavProps = {
   mainNavItems?: MainNavItem[];
