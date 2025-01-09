@@ -1,7 +1,7 @@
 import { createApi } from '@/networking/api';
 import { Post, PostDTO } from '@/types/api/post.types';
 import { ApiResponse } from '@/types/api/response.types';
-import { AppErrorCode } from './error';
+import { AppError, AppErrorCode } from './error';
 import { getEnvKey } from '@/env/get';
 import { generateImageWithBaseUrl } from '@/lib/image';
 import { generateFieldsQueryParams } from '@/lib/utils';
@@ -61,9 +61,7 @@ export const createPostsApi = () => {
       });
 
       if (!data[0]) {
-        throw {
-          code: AppErrorCode.POST_NOT_FOUND,
-        };
+        throw new AppError({ code: AppErrorCode.POST_NOT_FOUND });
       }
 
       return getFormattedPost(data[0]);

@@ -1,13 +1,20 @@
 import '@/tailwind.css';
 
-import { Env, envSchema } from '@/env/env-schema';
+import { envSchema } from '@/env/env-schema';
 import { useDehydratedState } from '@/hooks/use-dehydrated-state';
 import { ThemeProvider } from '@/providers/theme-provider';
-import { LinksFunction, Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+import { Links, LinksFunction, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
+import type { Route } from './+types/root';
+import { ClientHintCheck } from './components/client-hint-check';
 import GlobalProgressIndicator from './components/global-progress-indicator';
 import RouteError from './components/route-error';
+import { useRequestInfo } from './hooks/use-request-info';
+import { getThemeCookie } from './lib/cookie.server';
+import { getHints } from './lib/utils';
+import { RootLoaderData } from './types/loader';
+import { ThemeAppearance } from './types/theme';
 
 export const links: LinksFunction = () => [
   {
@@ -33,16 +40,21 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export function loader() {
+export function loader({ request }: Route.LoaderArgs) {
   const publicEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith('PUBLIC_GMNZ_')));
   const env = envSchema.parse(publicEnv);
+  const theme = getThemeCookie(request) ?? ThemeAppearance.Light;
+
   return Response.json({
-    ENV: env,
-  });
+    env,
+    theme,
+    requestInfo: {
+      hints: getHints(request),
+    },
+  } satisfies RootLoaderData);
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData<{ ENV: Env } | undefined>();
+function Document({ children, env, theme, head }: { children: ReactNode; head?: ReactNode } & Partial<RootLoaderData>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -56,27 +68,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const dehydratedState = useDehydratedState();
 
   return (
-    <html lang="ba">
+    <html lang="ba" className={theme}>
       <head>
+        <ClientHintCheck />
+        {head}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function() {
-              const theme = localStorage.getItem('theme') ?? 'light';
-
-              if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-              } else {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-              }
-            })();`,
-          }}
-        />
       </head>
       <body className="dark:bg-slate-850 dark:text-slate-400">
         <QueryClientProvider client={queryClient}>
@@ -89,10 +88,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </ThemeProvider>
           </HydrationBoundary>
         </QueryClientProvider>
-        {data?.ENV ? (
+        {env ? (
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+              __html: `window.ENV = ${JSON.stringify(env)}`,
             }}
           />
         ) : null}
@@ -102,9 +101,37 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const data = useLoaderData<RootLoaderData | undefined>();
+  const requestInfo = useRequestInfo();
+
+  return (
+    <Document env={data?.env} theme={data?.theme ?? requestInfo.hints.theme}>
+      <Outlet />
+    </Document>
+  );
 }
 
 export function ErrorBoundary() {
-  return <RouteError />;
+  return (
+    <Document
+      head={
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            const cookieTheme = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('theme='))
+            ?.split('=')[1]
+
+            if (cookieTheme) {
+              document.documentElement.classList.add(cookieTheme === '${ThemeAppearance.Dark}' ? '${ThemeAppearance.Dark}' : '${ThemeAppearance.Light}');
+            }
+          `,
+          }}
+        />
+      }
+    >
+      <RouteError />
+    </Document>
+  );
 }

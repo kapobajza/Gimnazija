@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { getEnv } from '@/env/get';
 import { AppError, AppErrorCode } from '@/networking/error';
 
@@ -55,11 +54,10 @@ export const createApi = ({ routePrefix }: CreateApiOptions) => {
       let errorToThrow: AppError;
 
       try {
-        errorToThrow = await (res.json() as Promise<AppError>);
+        const errorRes = await (res.json() as Promise<AppError>);
+        errorToThrow = new AppError(errorRes);
       } catch {
-        errorToThrow = {
-          code: AppErrorCode.UNKNOWN,
-        };
+        errorToThrow = new AppError({ code: AppErrorCode.UNKNOWN });
       }
 
       throw errorToThrow;

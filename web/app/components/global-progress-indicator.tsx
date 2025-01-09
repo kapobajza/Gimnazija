@@ -35,12 +35,12 @@ export default function GlobalProgressIndicator() {
         role="progressbar"
         aria-hidden={!active}
         aria-valuetext={active ? 'Loading' : undefined}
-        className="fixed inset-x-0 top-0 left-0 z-[999] h-0.5 animate-pulse"
+        className="fixed inset-x-0 left-0 top-0 z-[999] h-1 animate-pulse"
       >
         <div
           ref={ref}
           className={cn(
-            'h-full bg-gradient-to-r from-primary to-primary-600 transition-all duration-500 ease-in-out',
+            'h-full bg-gradient-to-r from-primary to-primary-700 transition-all duration-500 ease-in-out',
             navigation.state === 'idle' && animationComplete && 'w-0 opacity-0 transition-none',
             navigation.state === 'submitting' && 'w-4/12',
             navigation.state === 'loading' && 'w-10/12',

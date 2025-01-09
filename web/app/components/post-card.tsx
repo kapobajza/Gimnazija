@@ -9,7 +9,7 @@ type Props = {
 const PostCard = ({ post }: Props) => {
   return (
     <article
-      className="overflow-hidden rounded-lg bg-white dark:bg-slate-850 shadow-sm shadow-slate-500/20 dark:shadow-white/5"
+      className="dark:shadow-white/8 overflow-hidden rounded-lg bg-white shadow-sm shadow-slate-500/20 dark:bg-slate-850"
       itemType="https://schema.org/Article"
     >
       <figure className="after: relative overflow-hidden">
@@ -18,7 +18,7 @@ const PostCard = ({ post }: Props) => {
             <img
               src={post.cover.formats.medium.url}
               alt={post.cover.alternativeText || `Obavijest ${post.title}`}
-              className="transition-transform duration-1600 will-change-transform group-hover:scale-105 h-[330px] w-full object-cover"
+              className="h-[330px] w-full object-cover transition-transform duration-1600 will-change-transform group-hover:scale-105"
             />
           ) : (
             <div className="h-[330px] bg-slate-300"></div>
@@ -33,12 +33,12 @@ const PostCard = ({ post }: Props) => {
       </figure>
       <div className="rounded-b-lg p-10">
         <h2 className="mb-4 text-xl font-bold">
-          <Link className="hover:text-primary" to={`/obavijesti/${post.slug}`}>
+          <Link className="hover:text-primary-50 dark:hover:text-primary" to={`/obavijesti/${post.slug}`}>
             {post.title}
           </Link>
         </h2>
 
-        {post.excerpt ? <p className="text-md leading-relaxed break-words line-clamp-3">{post.excerpt}</p> : null}
+        {post.excerpt ? <p className="line-clamp-3 break-words text-md leading-relaxed">{post.excerpt}</p> : null}
       </div>
     </article>
   );

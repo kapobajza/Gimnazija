@@ -16,19 +16,19 @@ export const generateImgSrcSet = (baseSrc: string, options?: { includeQuotes: bo
 export function generateImageWithBaseUrl(baseUrl: string, media: ImageMedia): ImageMedia {
   return {
     ...media,
-    url: `${baseUrl}${media.url}`,
+    url: `/images?src=${baseUrl}${media.url}`,
     formats: {
       thumbnail: {
         ...media.formats.thumbnail,
-        url: `${baseUrl}${media.formats.thumbnail.url}`,
+        url: `/images?src=${baseUrl}${media.formats.thumbnail.url}`,
       },
       small: {
         ...media.formats.small,
-        url: `${baseUrl}${media.formats.small.url}`,
+        url: `/images?src=${baseUrl}${media.formats.small.url}&w=${media.formats.small.width}`,
       },
       medium: {
         ...media.formats.medium,
-        url: `${baseUrl}${media.formats.medium.url}`,
+        url: `/images?src=${baseUrl}${media.formats.medium.url}&w=${media.formats.medium.width}`,
       },
     },
   };

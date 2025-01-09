@@ -3,20 +3,18 @@ import { LocalImage } from '@/components/image/local-image';
 import { cn } from '@/lib/utils';
 
 type SiteLogoProps = {
-  lightClasses?: string;
-  darkClasses?: string;
   className?: string;
-  src: {
-    light: string;
-    dark: string;
-  };
 };
 
-export default function SiteLogo({ lightClasses, darkClasses, className, src }: SiteLogoProps) {
+export default function SiteLogo({ className }: SiteLogoProps) {
   return (
     <>
-      <LocalImage src={src.light} className={cn(className, lightClasses)} alt={siteConfig.name} />
-      <LocalImage src={src.dark} className={cn(className, darkClasses)} alt={siteConfig.name} />
+      <LocalImage src="/logo/mssgb_logo_white.png" className={cn(className, 'dark:hidden')} alt={siteConfig.name} />
+      <LocalImage
+        src="/logo/mssgb_logo_dark.png"
+        className={cn(className, 'hidden dark:block')}
+        alt={siteConfig.name}
+      />
     </>
   );
 }

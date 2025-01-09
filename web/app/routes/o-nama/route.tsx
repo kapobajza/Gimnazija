@@ -1,5 +1,5 @@
 import Header from '@/components/layout/header';
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import SectionPageTitle from '@/components/sections/section-page-title';
 import SectionChecklist from './components/section-checklist';
 import SectionHistory from './components/section-history';
@@ -24,7 +24,7 @@ export default function About() {
         <SectionChecklist />
         <SectionHistory />
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

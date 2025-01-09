@@ -4,7 +4,7 @@ import FadeInItem from '@/components/fade-in-item';
 
 export const iconBoxes = [
   {
-    icon: <UserGroupIcon className="fill-primary size-8" />,
+    icon: <UserGroupIcon className="size-8 fill-primary-200" />,
     iconBase: 'bg-[#FEE8E8]',
     title: 'Prvi nastavnici nosili su teret cijele nastave',
     description:
@@ -12,7 +12,7 @@ export const iconBoxes = [
     shadow: 'shadow-[0_1px_6px_rgba(61,65,84,.15),0_5px_0_0_#FA6262]',
   },
   {
-    icon: <AcademicCapIcon className="fill-[#44D88D] size-8" />,
+    icon: <AcademicCapIcon className="size-8 fill-[#44D88D]" />,
     iconBase: 'bg-[#E3F9EE]',
     title: 'Prva generacija maturanata',
     description:
@@ -20,7 +20,7 @@ export const iconBoxes = [
     shadow: 'shadow-[0_1px_6px_rgba(61,65,84,.15),0_5px_0_0_#44D88D]',
   },
   {
-    icon: <CalculatorIcon className="fill-[#7444FF] size-8" />,
+    icon: <CalculatorIcon className="size-8 fill-[#7444FF]" />,
     iconBase: 'bg-[#EAE3FF]',
     title: 'Organizacija državnog takmičenja',
     description:
@@ -36,7 +36,7 @@ const SectionIconBoxes = () => {
         <div className="flex justify-center">
           <div className="text-center lg:w-3/5">
             <h2 className="mb-12">
-              Zanimljive <span className="text-primary">činjenice</span> o našoj školi
+              Zanimljive <span className="text-primary-50 dark:text-primary">činjenice</span> o našoj školi
             </h2>
           </div>
         </div>

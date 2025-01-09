@@ -50,6 +50,7 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/only-throw-error': 'off',
+      '@typescript-eslint/no-unnecessary-type-parameters': 'off',
     },
     settings: {
       'import/resolver': {

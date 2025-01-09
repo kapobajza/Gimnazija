@@ -1,6 +1,7 @@
 import type { LoaderFunction } from 'react-router';
 import type { ComponentPropsWithoutRef } from 'react';
 import sharp from 'sharp';
+import { HttpError } from '@/networking/error';
 
 const BadImageResponse = () => {
   const buffer = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
@@ -30,7 +31,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   try {
     const image = await fetch(src);
     if (!image.ok || !image.body) {
-      throw new Error(`fetching image failed. src: ${src}, status: ${image.status}`);
+      throw new HttpError({
+        status: image.status,
+        statusText: image.statusText,
+        message: `fetching image failed. src: ${src}`,
+      });
     }
     const imageBuffer = Buffer.from(await image.arrayBuffer());
     const resizedImage = await sharp(imageBuffer)
@@ -58,7 +63,7 @@ export const RemoteImage = (
   },
 ) => {
   if (!props.src) {
-    throw new Error('no src provided to Img component');
+    throw new HttpError({ status: 400, statusText: 'Missing src' });
   }
   const srcSetParts = IMAGE_WIDTHS.map((width) => `/images?src=${props.src}&w=${width}&q=${DEFAULT_QUALITY} ${width}w`);
   return <img {...props} srcSet={srcSetParts.join(', ')} src={srcSetParts[0]} />;

@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { MainNavItem } from '@/types/nav';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 type MobileNavProps = {
   mainNavItems?: MainNavItem[];
@@ -16,6 +16,13 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
   const location = useLocation();
   const segment = location.pathname;
   const [isOpen, setIsOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  const onLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, to: string) => {
+    event.preventDefault();
+    setIsOpen(false);
+    void navigate(to);
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +52,7 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
               viewBox="0 0 24 24"
               width="24"
               height="24"
-              className="h-6 w-6 fill-foreground transition-colors group-hover:fill-primary group-focus:fill-primary dark:fill-white"
+              className="h-6 w-6 fill-foreground transition-colors group-hover:fill-primary-200 group-focus:fill-primary-200 dark:fill-white group-hover:dark:fill-primary group-focus:dark:fill-primary"
             >
               <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
             </svg>
@@ -58,19 +65,11 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
           <Link
             to="/"
             className="mr-12 block shrink-0"
-            onClick={() => {
-              setIsOpen(false);
+            onClick={(event) => {
+              onLinkClick(event, '/');
             }}
           >
-            <SiteLogo
-              lightClasses="dark:hidden"
-              darkClasses="hidden dark:block"
-              className="w-[100px]"
-              src={{
-                light: '/logo/mssgb_logo_white.png',
-                dark: '/logo/mssgb_logo_dark.png',
-              }}
-            />
+            <SiteLogo className="w-[100px]" />
           </Link>
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
@@ -93,7 +92,9 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
                                 key={index}
                                 href={String(subItem.href)}
                                 segment={String(segment)}
-                                setIsOpen={setIsOpen}
+                                onClick={(event) => {
+                                  onLinkClick(event, String(subItem.href));
+                                }}
                                 disabled={subItem.disabled}
                               >
                                 {subItem.title}
@@ -112,7 +113,10 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
                       <div>
                         <Link
                           to={item.href}
-                          className="block border-b py-4 text-sm transition-colors hover:text-primary focus:text-primary"
+                          className="block border-b py-4 text-sm transition-colors hover:text-primary-50 focus:text-primary-50 dark:hover:text-primary dark:focus:text-primary"
+                          onClick={(event) => {
+                            onLinkClick(event, String(item.href));
+                          }}
                         >
                           {item.title}
                         </Link>
@@ -133,10 +137,10 @@ type MobileLinkProps = {
   href: string;
   disabled?: boolean;
   segment: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 } & React.PropsWithChildren;
 
-function MobileLink({ children, href, disabled, segment, setIsOpen }: MobileLinkProps) {
+function MobileLink({ children, href, disabled, segment, onClick }: MobileLinkProps) {
   return (
     <Link
       to={href}
@@ -145,9 +149,7 @@ function MobileLink({ children, href, disabled, segment, setIsOpen }: MobileLink
         href.includes(segment) && 'text-foreground',
         disabled && 'pointer-events-none opacity-60',
       )}
-      onClick={() => {
-        setIsOpen(false);
-      }}
+      onClick={onClick}
     >
       {children}
     </Link>

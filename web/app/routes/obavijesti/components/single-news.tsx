@@ -1,4 +1,4 @@
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { MainNavEnum, siteConfig } from '@/config/site';
 import { getFormattedDate } from '@/lib/date';
@@ -80,7 +80,7 @@ export default function SingleNews({ slug }: { slug: string }) {
           </div>
         </section>
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

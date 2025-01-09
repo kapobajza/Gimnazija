@@ -1,11 +1,12 @@
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import SectionHeroLayout from '@/components/sections/section-hero-layout';
 import SectionIconBoxes from '@/components/sections/section-icon-boxes';
-import { prefetchHomePosts } from '@/query/posts.query';
+import { generateCommonMetaTags } from '@/lib/utils';
+import { getHomePostsOptions } from '@/query/posts.query';
+import { dehydrateQueryOnServer } from '@/query/util';
 import type { MetaFunction } from 'react-router';
 import SectionLatestNews from './components/section-latest-news';
-import { generateCommonMetaTags } from '@/lib/utils';
 
 export const meta: MetaFunction = () => {
   return generateCommonMetaTags({
@@ -15,7 +16,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader() {
-  return prefetchHomePosts();
+  return dehydrateQueryOnServer(getHomePostsOptions());
 }
 
 export default function Index() {
@@ -27,7 +28,7 @@ export default function Index() {
         <SectionIconBoxes />
         <SectionLatestNews />
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

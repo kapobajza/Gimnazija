@@ -1,6 +1,6 @@
 import Header from '@/components/layout/header';
 import SectionPageTitle from '@/components/sections/section-page-title';
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import StaffCard from './components/staff-card';
 import { TEAM_DATA } from './data';
 import { MetaFunction } from 'react-router';
@@ -31,7 +31,7 @@ export default function ProjectsPage() {
           </div>
         </section>
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

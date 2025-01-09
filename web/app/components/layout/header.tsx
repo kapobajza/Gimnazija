@@ -41,15 +41,7 @@ const Header = () => {
         )}
       >
         <Link to="/" className="mr-12 shrink-0">
-          <SiteLogo
-            lightClasses="dark:hidden"
-            darkClasses="hidden dark:block"
-            className={'w-[70px] lg:w-[90px]'}
-            src={{
-              light: '/logo/mssgb_logo_white.png',
-              dark: '/logo/mssgb_logo_dark.png',
-            }}
-          />
+          <SiteLogo className={'w-[70px] lg:w-[90px]'} />
         </Link>
 
         <div className="relative flex w-full items-center justify-end lg:bg-transparent">

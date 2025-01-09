@@ -68,7 +68,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
             viewBox="0 0 24 24"
             width="24"
             height="24"
-            className="h-4 w-4 transition-colors group-hover:fill-white group-focus:fill-white dark:fill-white"
+            className="h-4 w-4 transition-colors group-hover:fill-slate-800 group-focus:fill-slate-800 dark:fill-white dark:group-hover:fill-slate-800 dark:group-focus:fill-white"
           >
             <path fill="none" d="M0 0h24v24H0z"></path>
             <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"></path>
@@ -76,7 +76,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
         <VisuallyHidden.Root asChild>
-          <SheetPrimitive.DialogTitle>
+          <SheetPrimitive.DialogTitle asChild>
             <SheetTitle className="text-lg font-semibold">Settings</SheetTitle>
           </SheetPrimitive.DialogTitle>
         </VisuallyHidden.Root>

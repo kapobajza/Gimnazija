@@ -1,8 +1,8 @@
 import Header from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import { useRouteError } from 'react-router';
-import { AppErrorCode, appErrorSchema, responseErrorSchema } from '@/networking/error';
+import { AppErrorCode, appErrorSchema, httpErrorSchema } from '@/networking/error';
 
 function getErrorSummary(error: unknown): {
   title: string;
@@ -17,7 +17,7 @@ function getErrorSummary(error: unknown): {
     };
   }
 
-  const responseError = responseErrorSchema.safeParse(error);
+  const responseError = httpErrorSchema.safeParse(error);
 
   if (responseError.success && responseError.data.status === 404) {
     return {
@@ -40,7 +40,7 @@ export default function RouteError() {
     <>
       <Header />
       <main className="relative">
-        <section className="bg-muted py-32 dark:bg-slate-900 mt-[88px] lg:mt-[112px]">
+        <section className="mt-[88px] bg-muted py-32 dark:bg-slate-900 lg:mt-[112px]">
           <div className="container text-center">
             <img src="/not_found.png" width={340} height={340} alt="not found" className="mb-12 inline-block" />
             <h1 className="mb-4">{title}</h1>
@@ -51,7 +51,7 @@ export default function RouteError() {
           </div>
         </section>
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

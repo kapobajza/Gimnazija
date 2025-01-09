@@ -1,17 +1,23 @@
 import { cn } from '@/lib/utils';
-import { useTheme } from '@/providers/theme-provider';
+import { useFetcher } from 'react-router';
 
 export const DarkModeSwitch = ({ className }: { className?: string }) => {
-  const { theme, setTheme } = useTheme();
+  const fetcher = useFetcher();
 
   return (
     <button
       className={cn(
-        'group mr-2 flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors hover:border-transparent hover:bg-primary focus:border-transparent focus:bg-primary dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary lg:ml-5',
+        'group mr-2 flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors hover:border-transparent hover:bg-primary-200 focus:border-transparent focus:bg-primary-200 dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary-200 lg:ml-5',
         className,
       )}
       onClick={() => {
-        setTheme(theme.appearance === 'dark' ? 'light' : 'dark');
+        void fetcher.submit(
+          {},
+          {
+            method: 'POST',
+            action: '/toggle-theme',
+          },
+        );
       }}
     >
       <svg

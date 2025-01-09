@@ -1,6 +1,8 @@
 import { MetaDescriptor } from 'react-router';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { getHintUtils } from '@epic-web/client-hints';
+import { clientHint as colorSchemeHint } from '@epic-web/client-hints/color-scheme';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -55,3 +57,9 @@ export function generateFieldsQueryParams<TObject extends Record<string, unknown
     {},
   );
 }
+
+export const hintsUtils = getHintUtils({
+  theme: colorSchemeHint,
+});
+
+export const { getHints } = hintsUtils;

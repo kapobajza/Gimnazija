@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * By default, Remix will handle generating the HTTP Response for you.
  * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
@@ -6,11 +7,12 @@
 
 import { PassThrough } from 'node:stream';
 
-import type { EntryContext } from 'react-router';
+import type { EntryContext, HandleErrorFunction } from 'react-router';
 import { createReadableStreamFromReadable } from '@react-router/node';
 import { ServerRouter } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
+import { getThemeCookie } from './lib/cookie.server';
 
 const ABORT_DELAY = 5_000;
 
@@ -59,7 +61,6 @@ function handleBotRequest(
         // errors encountered during initial shell rendering since they'll
         // reject and get logged in handleDocumentRequest.
         if (shellRendered) {
-          // eslint-disable-next-line no-console
           console.error(error);
         }
       },
@@ -103,7 +104,6 @@ function handleBrowserRequest(
         // errors encountered during initial shell rendering since they'll
         // reject and get logged in handleDocumentRequest.
         if (shellRendered) {
-          // eslint-disable-next-line no-console
           console.error(error);
         }
       },
@@ -112,3 +112,13 @@ function handleBrowserRequest(
     setTimeout(abort, ABORT_DELAY);
   });
 }
+
+export const handleError: HandleErrorFunction = (error, { request }) => {
+  if (!request.signal.aborted) {
+    const theme = getThemeCookie(request);
+    console.log('-------theme-handleError-------');
+    console.log(theme);
+    console.log('-------theme-handleError-------\n');
+    console.error(error);
+  }
+};

@@ -1,15 +1,13 @@
 import Container from '@/components/layout/container';
-import FooterLayout from '@/components/layout/footer-layout';
+import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import PostCard from '@/components/post-card';
 import SectionPageTitle from '@/components/sections/section-page-title';
 import { Button } from '@/components/ui/button';
 import { useGetAllPosts } from '@/query/posts.query';
-import { ALL_ROUTES_DATA_LIMIT } from '@/routes/obavijesti/constants';
 
 export default function AllNews() {
-  const { isLoading, isFetchingNextPage, fetchNextPage, data, hasNextPage, isError } =
-    useGetAllPosts(ALL_ROUTES_DATA_LIMIT);
+  const { isLoading, isFetchingNextPage, fetchNextPage, data, hasNextPage, isError } = useGetAllPosts();
 
   return (
     <>
@@ -49,7 +47,7 @@ export default function AllNews() {
           </div>
         </section>
       </main>
-      <FooterLayout />
+      <Footer />
     </>
   );
 }

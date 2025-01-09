@@ -1,24 +1,16 @@
+import { Address, Email } from '@/components/icons/icons';
 import { Link } from 'react-router';
-import SiteLogo from '@/components/layout/site-logo';
-import { Email, Address } from '@/components/icons/icons';
+import { LocalImage } from '@/components/image/local-image';
 
-const FooterLayout = () => {
+const Footer = () => {
   return (
     <footer>
       <div className="py-9">
         <div className="container">
           <div className="gap-10 space-y-5 md:grid md:grid-cols-12 md:space-y-0 md:items-center">
-            <div className="col-span-3 self-center">
+            <div className="flex col-span-3 self-center">
               <Link to="/" className="shrink-0">
-                <SiteLogo
-                  lightClasses="dark:hidden"
-                  darkClasses="hidden dark:block"
-                  src={{
-                    dark: '/logo/mssgb_logo_full_dark.png',
-                    light: '/logo/mssgb_logo_full_white.png',
-                  }}
-                  className="max-w-[150px] lg:max-w-[180px]"
-                />
+                <LocalImage src="/logo/circle_logo.png" className="max-w-[150px] lg:max-w-[180px]" />
               </Link>
             </div>
             <div className="col-span-4 col-start-4 lg:col-span-3 lg:col-start-7">
@@ -58,4 +50,4 @@ const FooterLayout = () => {
   );
 };
 
-export default FooterLayout;
+export default Footer;

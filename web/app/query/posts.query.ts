@@ -1,10 +1,8 @@
 import { api } from '@/networking/instance';
 import { Post } from '@/types/api/post.types';
 import {
-  dehydrate,
   FetchInfiniteQueryOptions,
   FetchQueryOptions,
-  QueryClient,
   QueryKey,
   useInfiniteQuery,
   useQuery,
@@ -18,34 +16,30 @@ export const postsQueryKey = {
 
 const HOME_POSTS_LIMIT = 3;
 
-function getHomePostsOptions(limit: number) {
+export function getHomePostsOptions() {
   return {
     queryKey: postsQueryKey.home,
     queryFn() {
-      return api.postsApi.get(limit);
+      return api.postsApi.get(HOME_POSTS_LIMIT);
     },
   } satisfies FetchQueryOptions;
 }
 
-export async function prefetchHomePosts() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(getHomePostsOptions(HOME_POSTS_LIMIT));
-  return Response.json({ dehydratedState: dehydrate(queryClient) });
-}
-
 export function useGetHomePosts() {
-  return useQuery(getHomePostsOptions(HOME_POSTS_LIMIT));
+  return useQuery(getHomePostsOptions());
 }
 
-function getAllPostsOptions(limit: number) {
+const ALL_POSTS_LIMIT = 6;
+
+export function getAllPostsOptions() {
   return {
     queryKey: postsQueryKey.all,
     async queryFn({ pageParam }) {
-      return api.postsApi.get(limit, pageParam);
+      return api.postsApi.get(ALL_POSTS_LIMIT, pageParam);
     },
     initialPageParam: 0,
     getNextPageParam(lastPage: Post[], allPages: Post[][]) {
-      if (lastPage.length < limit) {
+      if (lastPage.length < ALL_POSTS_LIMIT) {
         return undefined;
       }
 
@@ -55,14 +49,8 @@ function getAllPostsOptions(limit: number) {
   } satisfies FetchInfiniteQueryOptions<Post[], Error, Post[], QueryKey, number | undefined>;
 }
 
-export async function prefetchAllPosts(limit: number) {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery(getAllPostsOptions(limit));
-  return Response.json({ dehydratedState: dehydrate(queryClient) });
-}
-
-export function useGetAllPosts(limit: number) {
-  return useInfiniteQuery(getAllPostsOptions(limit));
+export function useGetAllPosts() {
+  return useInfiniteQuery(getAllPostsOptions());
 }
 
 export function getPostBySlugQueryOptions(slug: string) {
