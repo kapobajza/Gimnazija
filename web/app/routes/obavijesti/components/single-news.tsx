@@ -1,4 +1,4 @@
-import { ImageGallery } from '@/components/image/image-gallery';
+import { ImageGallery } from '@/components/image/image-lightbox';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { MainNavEnum, siteConfig } from '@/config/site';

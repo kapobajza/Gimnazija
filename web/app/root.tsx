@@ -10,7 +10,6 @@ import type { Route } from './+types/root';
 import { ClientHintCheck } from './components/client-hint-check';
 import GlobalProgressIndicator from './components/global-progress-indicator';
 import RouteError from './components/route-error';
-import { useRequestInfo } from './hooks/use-request-info';
 import { getThemeCookie } from './lib/cookie.server';
 import { getHints } from './lib/utils';
 import { RootLoaderData } from './types/loader';
@@ -43,7 +42,7 @@ export const links: LinksFunction = () => [
 export function loader({ request }: Route.LoaderArgs) {
   const publicEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith('PUBLIC_GMNZ_')));
   const env = envSchema.parse(publicEnv);
-  const theme = getThemeCookie(request) ?? ThemeAppearance.Light;
+  const theme = getThemeCookie(request);
 
   return Response.json({
     env,
@@ -102,10 +101,9 @@ function Document({ children, env, theme, head }: { children: ReactNode; head?: 
 
 export default function App() {
   const data = useLoaderData<RootLoaderData | undefined>();
-  const requestInfo = useRequestInfo();
 
   return (
-    <Document env={data?.env} theme={data?.theme ?? requestInfo.hints.theme}>
+    <Document env={data?.env} theme={data?.theme ?? data?.requestInfo.hints.theme}>
       <Outlet />
     </Document>
   );
@@ -125,6 +123,8 @@ export function ErrorBoundary() {
 
             if (cookieTheme) {
               document.documentElement.classList.add(cookieTheme === '${ThemeAppearance.Dark}' ? '${ThemeAppearance.Dark}' : '${ThemeAppearance.Light}');
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              document.documentElement.classList.add('${ThemeAppearance.Dark}');
             }
           `,
           }}

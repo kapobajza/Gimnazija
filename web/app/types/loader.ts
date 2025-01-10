@@ -4,6 +4,6 @@ import { getHints } from '@/lib/utils';
 
 export type RootLoaderData = {
   env: Env;
-  theme: ThemeAppearance;
+  theme: ThemeAppearance | undefined;
   requestInfo: { hints: ReturnType<typeof getHints> };
 };
