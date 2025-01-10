@@ -9,17 +9,16 @@ export default function SectionHistory() {
   return (
     <section className="border-b px-6 pb-24">
       <div className="container">
-        <div className="mx-auto max-w-2xl">
+        <div className="mx-auto max-w-[50rem]">
           <div className="text-center">
             <h2 className="mb-8">Obraćanje direktora</h2>
           </div>
-          <div className="mx-auto text-center">
+          <div className="mx-auto text-justify">
             <div className="space-y-3">
               <Paragraph>
                 Zgrada Gimnazije je <span className="text-primary-50 dark:text-primary">izgrađena 1901. godine</span> u
-                pseudo-maurskom stilu.
-                <br />
-                Projektant je bio arhitekta Miloš Komadina. Prvobitna namjena joj je bila općinska zgrada.
+                pseudo-maurskom stilu. Projektant je bio arhitekta Miloš Komadina. Prvobitna namjena joj je bila
+                općinska zgrada.
               </Paragraph>
               <Paragraph>
                 Kasnije je bila Carska i kraljevska vojna pošta i telegraf, Razdjel finansijske straže, Čitaonica,
@@ -46,7 +45,7 @@ export default function SectionHistory() {
                 u mnogim zemljama širom svijeta.
               </Paragraph>
             </div>
-            <Paragraph className="mt-8 text-lg font-bold">
+            <Paragraph className="mt-8 text-center text-lg font-bold">
               Direktor škole: <span className="text-primary-50 dark:text-primary">Nedžad Milanović, prof.</span>
             </Paragraph>
           </div>

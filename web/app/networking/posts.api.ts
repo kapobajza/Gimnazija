@@ -25,6 +25,7 @@ export const createPostsApi = () => {
       ...post,
       cover: post.cover ? generateImageWithBaseUrl(apiUrl, post.cover) : undefined,
       excerpt,
+      images: post.images ? post.images.map((image) => generateImageWithBaseUrl(apiUrl, image)) : undefined,
     };
   };
 
@@ -57,6 +58,8 @@ export const createPostsApi = () => {
           'pagination[limit]': 1,
           ...commontPostFieldsQueryParams,
           'populate[cover][fields][1]': 'url',
+          'populate[images][fields][0]': 'url',
+          'populate[images][fields][1]': 'formats',
         },
       });
 

@@ -10,6 +10,7 @@ export type Post = {
   categories: Category[];
   cover: ImageMedia | undefined;
   updatedAt: string;
+  images: ImageMedia[] | undefined;
 };
 
 export type PostDTO = Post & {
