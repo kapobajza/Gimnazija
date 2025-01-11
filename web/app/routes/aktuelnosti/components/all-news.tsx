@@ -20,7 +20,7 @@ export default function AllNews() {
               isLoading={isLoading || isFetchingNextPage}
               isError={isError}
               isEmpty={data?.pages[0]?.length === 0}
-              emptyMessage="Trenutno nema obavijesti"
+              emptyMessage="Trenutno nema aktuelnosti"
               className="grid grid-cols-1 gap-10 lg:grid-cols-3"
             >
               {data?.pages.map((page) => {
@@ -32,7 +32,7 @@ export default function AllNews() {
             </Container>
 
             {hasNextPage ? (
-              <div className="mt-10 text-center mx-auto">
+              <div className="mx-auto mt-10 text-center">
                 <Button
                   size="lg"
                   disabled={isLoading || isFetchingNextPage}

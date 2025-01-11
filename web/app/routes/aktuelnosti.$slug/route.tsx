@@ -28,12 +28,12 @@ export const meta = ({ data }: { data: { post: PostDTO | undefined } }) => {
       title: post.title,
       description: post.excerpt,
       image: post.cover?.formats.medium.url,
-      url: `${siteConfig.url}${MainNavEnum.Obavijesti.href}/${post.slug}`,
+      url: `${siteConfig.url}${MainNavEnum.Aktuelnosti.href}/${post.slug}`,
     });
   }
 
   return generateCommonMetaTags({
     title: 'Obavijest',
-    description: 'Obavijesti MSŠ Gimnazije Bugojno',
+    description: 'Aktuelnosti MSŠ Gimnazije Bugojno',
   });
 };

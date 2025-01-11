@@ -13,7 +13,7 @@ const PostCard = ({ post }: Props) => {
       itemType="https://schema.org/Article"
     >
       <figure className="after: relative overflow-hidden">
-        <Link to={`/obavijesti/${post.slug}`} className="group" prefetch="viewport">
+        <Link to={`/aktuelnosti/${post.slug}`} className="group" prefetch="viewport">
           {post.cover ? (
             <img
               src={post.cover.formats.medium.url}
@@ -33,7 +33,7 @@ const PostCard = ({ post }: Props) => {
       </figure>
       <div className="rounded-b-lg p-10">
         <h2 className="mb-4 text-xl font-bold">
-          <Link className="hover:text-primary-50 dark:hover:text-primary" to={`/obavijesti/${post.slug}`}>
+          <Link className="hover:text-primary-50 dark:hover:text-primary" to={`/aktuelnosti/${post.slug}`}>
             {post.title}
           </Link>
         </h2>

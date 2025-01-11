@@ -24,13 +24,13 @@ const SectionLatestNews = () => {
             titleClasses="mb-3 text-center"
             subtitleClasses="text-md font-medium"
           >
-            Posljednje obavijesti
+            Posljednje aktuelnosti
           </SectionTitle>
           <Container
             isLoading={isLoading}
             isError={isError}
             isEmpty={data.length === 0}
-            emptyMessage="Trenutno nema obavijesti"
+            emptyMessage="Trenutno nema aktuelnosti"
             className="grid grid-cols-1 gap-10 lg:grid-cols-3"
           >
             {data.map((post) => {

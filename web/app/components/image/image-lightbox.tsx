@@ -6,31 +6,35 @@ import { ImageMedia } from '@/types/api/media.types';
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, forwardRef, useEffect, useRef, useState } from 'react';
 
-function ChangeImageButton({
-  containerClasses,
-  className,
-  ...props
-}: ComponentProps<'button'> & {
-  containerClasses?: string;
-}) {
+const ChangeImageButton = forwardRef<
+  HTMLButtonElement,
+  ComponentProps<'button'> & {
+    containerClasses?: string;
+  }
+>(({ containerClasses, className, ...props }, ref) => {
   return (
     <div className={cn('absolute top-1/2 z-10 -translate-y-1/2', containerClasses)}>
       <Button
         size="icon"
         variant="ghost"
         className={cn('rounded-full bg-white text-slate-800 shadow-sm focus-visible:ring-primary', className)}
+        ref={ref}
         {...props}
       />
     </div>
   );
-}
+});
+
+ChangeImageButton.displayName = 'ChangeImageButton';
 
 export function ImageGallery({ images, className }: { images: ImageMedia[]; className?: string }) {
   const imageCount = images.length;
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const previousButtonRef = useRef<HTMLButtonElement>(null);
 
   if (imageCount === 0) {
     return null;
@@ -47,10 +51,12 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
   };
 
   const handlePrevious = () => {
+    previousButtonRef.current?.focus();
     handleImageChange('previous');
   };
 
   const handleNext = () => {
+    nextButtonRef.current?.focus();
     handleImageChange('next');
   };
 
@@ -66,6 +72,7 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
     };
 
     window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -113,7 +120,13 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
           </DialogTrigger>
         ))}
       </div>
-      <DialogContent className={cn('h-[70vh] max-w-4xl')}>
+      <DialogContent
+        className={cn('h-[70vh] max-w-4xl')}
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          nextButtonRef.current?.focus();
+        }}
+      >
         <VisuallyHidden>
           <DialogTitle>Image lightbox</DialogTitle>
         </VisuallyHidden>
@@ -127,23 +140,26 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
             className="absolute inset-0 size-full object-contain"
           />
         </AspectRatio>
-        <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2">
-          <Button
-            size="icon"
-            variant="ghost"
+        {imageCount > 1 ? (
+          <ChangeImageButton
             onClick={handlePrevious}
+            containerClasses="left-4"
             aria-label="Previous image"
-            className="rounded-full bg-white text-slate-800 shadow-sm focus-visible:ring-primary"
+            ref={previousButtonRef}
           >
             <ChevronLeft className="h-6 w-6" />
-          </Button>
-        </div>
-        <ChangeImageButton onClick={handlePrevious} containerClasses="left-4">
-          <ChevronLeft className="h-6 w-6" />
-        </ChangeImageButton>
-        <ChangeImageButton onClick={handleNext} containerClasses="right-4">
-          <ChevronRight className="h-6 w-6" />
-        </ChangeImageButton>
+          </ChangeImageButton>
+        ) : null}
+        {imageCount > 1 ? (
+          <ChangeImageButton
+            onClick={handleNext}
+            containerClasses="right-4"
+            aria-label="Next image"
+            ref={nextButtonRef}
+          >
+            <ChevronRight className="h-6 w-6" />
+          </ChangeImageButton>
+        ) : null}
       </DialogContent>
     </Dialog>
   );

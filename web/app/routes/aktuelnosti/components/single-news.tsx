@@ -4,7 +4,7 @@ import Header from '@/components/layout/header';
 import { MainNavEnum, siteConfig } from '@/config/site';
 import { getFormattedDate } from '@/lib/date';
 import { getPostBySlugQueryOptions } from '@/query/posts.query';
-import SocialIcon from '@/routes/obavijesti/components/social-icon';
+import SocialIcon from '@/routes/aktuelnosti/components/social-icon';
 import { faFacebook, faLinkedin, faReddit, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
@@ -20,7 +20,7 @@ export default function SingleNews({ slug }: { slug: string }) {
     return null;
   }
 
-  const postURL = `${siteConfig.url}/${MainNavEnum.Obavijesti.href}/${post.slug}`;
+  const postURL = `${siteConfig.url}/${MainNavEnum.Aktuelnosti.href}/${post.slug}`;
 
   return (
     <>
