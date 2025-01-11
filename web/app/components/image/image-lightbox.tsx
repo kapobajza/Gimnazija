@@ -121,7 +121,7 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
         ))}
       </div>
       <DialogContent
-        className={cn('h-[70vh] max-w-4xl')}
+        className={cn('h-[100vh] w-full max-w-full rounded-none bg-muted dark:bg-foreground sm:rounded-none')}
         onOpenAutoFocus={(e) => {
           e.preventDefault();
           nextButtonRef.current?.focus();
@@ -133,17 +133,17 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
         <VisuallyHidden>
           <DialogDescription>Image lightbox</DialogDescription>
         </VisuallyHidden>
-        <AspectRatio ratio={16 / 9} className="size-full">
+        <AspectRatio ratio={16 / 4} className="mx-auto size-full max-w-5xl">
           <img
             src={images[currentIndex]?.url}
-            alt={images[currentIndex]?.alternativeText ?? 'Image'}
-            className="absolute inset-0 size-full object-contain"
+            alt={images[currentIndex]?.alternativeText ?? `Gallery image ${currentIndex + 1}`}
+            className="pointer-events-none absolute inset-0 size-full object-contain"
           />
         </AspectRatio>
         {imageCount > 1 ? (
           <ChangeImageButton
             onClick={handlePrevious}
-            containerClasses="left-4"
+            containerClasses="left-8"
             aria-label="Previous image"
             ref={previousButtonRef}
           >
@@ -153,7 +153,7 @@ export function ImageGallery({ images, className }: { images: ImageMedia[]; clas
         {imageCount > 1 ? (
           <ChangeImageButton
             onClick={handleNext}
-            containerClasses="right-4"
+            containerClasses="right-8"
             aria-label="Next image"
             ref={nextButtonRef}
           >
