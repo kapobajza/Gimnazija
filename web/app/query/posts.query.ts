@@ -1,17 +1,17 @@
-import { api } from '@/networking/instance';
-import { Post } from '@/types/api/post.types';
-import {
+import type {
   FetchInfiniteQueryOptions,
   FetchQueryOptions,
   QueryKey,
-  useInfiniteQuery,
-  useQuery,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+
+import { api } from "@/networking/instance";
+import type { Post } from "@/types/api/post.types";
 
 export const postsQueryKey = {
-  all: ['posts'],
-  home: ['posts', 'home'],
-  bySlug: (slug: string) => ['posts', { slug }],
+  all: ["posts"],
+  home: ["posts", "home"],
+  bySlug: (slug: string) => ["posts", { slug }],
 } as const;
 
 const HOME_POSTS_LIMIT = 3;
@@ -46,7 +46,13 @@ export function getAllPostsOptions() {
       return allPages.length + 1;
     },
     staleTime: 3 * 60 * 1000,
-  } satisfies FetchInfiniteQueryOptions<Post[], Error, Post[], QueryKey, number | undefined>;
+  } satisfies FetchInfiniteQueryOptions<
+    Post[],
+    Error,
+    Post[],
+    QueryKey,
+    number | undefined
+  >;
 }
 
 export function useGetAllPosts() {

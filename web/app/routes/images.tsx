@@ -1,16 +1,20 @@
-import type { LoaderFunction } from 'react-router';
-import type { ComponentPropsWithoutRef } from 'react';
-import sharp from 'sharp';
-import { HttpError } from '@/networking/error';
+import type { LoaderFunction } from "react-router";
+import type { ComponentPropsWithoutRef } from "react";
+import sharp from "sharp";
+
+import { HttpError } from "@/networking/error";
 
 const BadImageResponse = () => {
-  const buffer = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
+  const buffer = Buffer.from(
+    "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+    "base64",
+  );
   return new Response(buffer, {
     status: 500,
     headers: {
-      'Cache-Control': 'max-age=0',
-      'Content-Type': 'image/gif;base64',
-      'Content-Length': buffer.length.toFixed(0),
+      "Cache-Control": "max-age=0",
+      "Content-Type": "image/gif;base64",
+      "Content-Length": buffer.length.toFixed(0),
     },
   });
 };
@@ -20,9 +24,9 @@ const DEFAULT_QUALITY = 75;
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const src = url.searchParams.get('src');
-  const width = url.searchParams.get('w') ?? `${IMAGE_WIDTHS[0]}`;
-  const quality = url.searchParams.get('q') ?? `${DEFAULT_QUALITY}`;
+  const src = url.searchParams.get("src");
+  const width = url.searchParams.get("w") ?? `${IMAGE_WIDTHS[0]}`;
+  const quality = url.searchParams.get("q") ?? `${DEFAULT_QUALITY}`;
 
   if (!src) {
     return BadImageResponse();
@@ -47,9 +51,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     return new Response(resizedImage, {
       status: 200,
       headers: {
-        'Cache-Control': `max-age=${60 * 60 * 24 * 365}, public`,
-        'Content-Type': 'image/webp',
-        'Content-Length': resizedImage.length.toFixed(0),
+        "Cache-Control": `max-age=${60 * 60 * 24 * 365}, public`,
+        "Content-Type": "image/webp",
+        "Content-Length": resizedImage.length.toFixed(0),
       },
     });
   } catch {
@@ -58,13 +62,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const RemoteImage = (
-  props: Omit<ComponentPropsWithoutRef<'img'>, 'src'> & {
+  props: Omit<ComponentPropsWithoutRef<"img">, "src"> & {
     src: string;
   },
 ) => {
   if (!props.src) {
-    throw new HttpError({ status: 400, statusText: 'Missing src' });
+    throw new HttpError({ status: 400, statusText: "Missing src" });
   }
-  const srcSetParts = IMAGE_WIDTHS.map((width) => `/images?src=${props.src}&w=${width}&q=${DEFAULT_QUALITY} ${width}w`);
-  return <img {...props} srcSet={srcSetParts.join(', ')} src={srcSetParts[0]} />;
+  const srcSetParts = IMAGE_WIDTHS.map(
+    (width) =>
+      `/images?src=${props.src}&w=${width}&q=${DEFAULT_QUALITY} ${width}w`,
+  );
+  return (
+    <img {...props} srcSet={srcSetParts.join(", ")} src={srcSetParts[0]} />
+  );
 };

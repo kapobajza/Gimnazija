@@ -1,21 +1,25 @@
-import { createThemeCookie } from '@/lib/cookie.server';
-import { getHints } from '@/lib/utils';
-import { ThemeAppearance } from '@/types/theme';
-import { ActionFunction } from 'react-router';
+import type { ActionFunction } from "react-router";
+
+import { createThemeCookie } from "@/lib/cookie.server";
+import { getHints } from "@/lib/utils";
+import { ThemeAppearance } from "@/types/theme";
 
 export const action: ActionFunction = async ({ request }) => {
   const hints = getHints(request);
-  let value = (await request.formData()).get('theme');
+  let value = (await request.formData()).get("theme");
 
   if (!value) {
-    value = hints.theme === ThemeAppearance.Dark ? ThemeAppearance.Light : ThemeAppearance.Dark;
+    value =
+      hints.theme === ThemeAppearance.Dark
+        ? ThemeAppearance.Light
+        : ThemeAppearance.Dark;
   }
 
   return Response.json(
     { theme: value },
     {
       headers: {
-        'Set-Cookie': createThemeCookie(value as ThemeAppearance),
+        "Set-Cookie": createThemeCookie(value as ThemeAppearance),
       },
     },
   );

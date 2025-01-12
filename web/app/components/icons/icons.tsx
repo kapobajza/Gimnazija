@@ -1,6 +1,7 @@
-import { cn } from '@/lib/utils';
-import { useTheme } from '@/providers/theme-provider';
-import { useId } from 'react';
+import { useId } from "react";
+
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/theme-provider";
 
 type IconProps = {
   className?: string;
@@ -20,7 +21,7 @@ function LinearGradientColorStop() {
   );
 }
 
-const Email = ({ className, width = '24', height = '24' }: IconProps) => {
+const Email = ({ className, width = "24", height = "24" }: IconProps) => {
   const patternId = useId();
 
   return (
@@ -29,7 +30,7 @@ const Email = ({ className, width = '24', height = '24' }: IconProps) => {
       viewBox="0 0 24 24"
       width={width}
       height={height}
-      className={cn('h-6 w-6 shrink-0', className)}
+      className={cn("h-6 w-6 shrink-0", className)}
     >
       <path
         fill={`url(#${patternId})`}
@@ -42,7 +43,7 @@ const Email = ({ className, width = '24', height = '24' }: IconProps) => {
   );
 };
 
-const Address = ({ className, width = '24', height = '24' }: IconProps) => {
+const Address = ({ className, width = "24", height = "24" }: IconProps) => {
   const patternId = useId();
 
   return (
@@ -51,7 +52,7 @@ const Address = ({ className, width = '24', height = '24' }: IconProps) => {
       viewBox="0 0 24 24"
       width={width}
       height={height}
-      className={cn('h-6 w-6 shrink-0', className)}
+      className={cn("h-6 w-6 shrink-0", className)}
     >
       <path
         fill={`url(#${patternId})`}

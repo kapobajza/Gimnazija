@@ -1,6 +1,7 @@
-import { getDateDay, getDateMonth } from '@/lib/date';
-import { PostDTO } from '@/types/api/post.types';
-import { Link } from 'react-router';
+import { Link } from "react-router";
+
+import { getDateDay, getDateMonth } from "@/lib/date";
+import type { PostDTO } from "@/types/api/post.types";
 
 type Props = {
   post: PostDTO;
@@ -13,7 +14,11 @@ const PostCard = ({ post }: Props) => {
       itemType="https://schema.org/Article"
     >
       <figure className="after: relative overflow-hidden">
-        <Link to={`/aktuelnosti/${post.slug}`} className="group" prefetch="viewport">
+        <Link
+          to={`/aktuelnosti/${post.slug}`}
+          className="group"
+          prefetch="viewport"
+        >
           {post.cover ? (
             <img
               src={post.cover.formats.medium.url}
@@ -25,20 +30,31 @@ const PostCard = ({ post }: Props) => {
           )}
           {post.updatedAt ? (
             <div className="pointer-events-none absolute left-4 top-4 rounded bg-white px-4 py-3 text-center font-medium leading-none text-foreground shadow-md shadow-foreground/15">
-              <span className="block text-md">{getDateDay(post.updatedAt)}</span>
-              <span className="text-[0.625rem] uppercase tracking-wider">{getDateMonth(post.updatedAt)}</span>
+              <span className="block text-md">
+                {getDateDay(post.updatedAt)}
+              </span>
+              <span className="text-[0.625rem] uppercase tracking-wider">
+                {getDateMonth(post.updatedAt)}
+              </span>
             </div>
           ) : null}
         </Link>
       </figure>
       <div className="rounded-b-lg p-10">
         <h2 className="mb-4 text-xl font-bold">
-          <Link className="hover:text-primary-50 dark:hover:text-primary" to={`/aktuelnosti/${post.slug}`}>
+          <Link
+            className="hover:text-primary-50 dark:hover:text-primary"
+            to={`/aktuelnosti/${post.slug}`}
+          >
             {post.title}
           </Link>
         </h2>
 
-        {post.excerpt ? <p className="line-clamp-3 break-words text-md leading-relaxed">{post.excerpt}</p> : null}
+        {post.excerpt ? (
+          <p className="line-clamp-3 break-words text-md leading-relaxed">
+            {post.excerpt}
+          </p>
+        ) : null}
       </div>
     </article>
   );

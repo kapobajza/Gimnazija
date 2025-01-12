@@ -1,15 +1,17 @@
-import Header from '@/components/layout/header';
-import SectionPageTitle from '@/components/sections/section-page-title';
-import Footer from '@/components/layout/footer';
-import StaffCard from './components/staff-card';
-import { TEAM_DATA } from './data';
-import { MetaFunction } from 'react-router';
-import { generateCommonMetaTags } from '@/lib/utils';
+import type { MetaFunction } from "react-router";
+
+import Header from "@/components/layout/header";
+import SectionPageTitle from "@/components/sections/section-page-title";
+import Footer from "@/components/layout/footer";
+import { generateCommonMetaTags } from "@/lib/utils";
+
+import StaffCard from "./components/staff-card";
+import { TEAM_DATA } from "./data";
 
 export const meta: MetaFunction = () => {
   return generateCommonMetaTags({
-    title: 'Naši uposlenici',
-    description: 'Uposlenici MSŠ Gimnazije Bugojno',
+    title: "Naši uposlenici",
+    description: "Uposlenici MSŠ Gimnazije Bugojno",
   });
 };
 
@@ -25,7 +27,10 @@ export default function ProjectsPage() {
           <div className="container">
             <div className="grid grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {TEAM_DATA.map((member) => (
-                <StaffCard member={member} key={`${member.name}-${member.image}`} />
+                <StaffCard
+                  member={member}
+                  key={`${member.name}-${member.image}`}
+                />
               ))}
             </div>
           </div>

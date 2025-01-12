@@ -1,18 +1,21 @@
-import cookie from 'cookie';
-import { ThemeAppearance } from '@/types/theme';
+import cookie from "cookie";
 
-const THEME_COOKIE_NAME = 'theme';
+import type { ThemeAppearance } from "@/types/theme";
+
+const THEME_COOKIE_NAME = "theme";
 
 export function createThemeCookie(value: ThemeAppearance) {
   return cookie.serialize(THEME_COOKIE_NAME, value, {
     maxAge: 60 * 60 * 24 * 30 * 365, // 1 year
     secure: false,
-    path: '/',
+    path: "/",
     httpOnly: false,
   });
 }
 
 export function getThemeCookie(request: Request) {
-  const cookieHeader = request.headers.get('Cookie');
-  return cookieHeader ? (cookie.parse(cookieHeader)[THEME_COOKIE_NAME] as ThemeAppearance) : undefined;
+  const cookieHeader = request.headers.get("Cookie");
+  return cookieHeader
+    ? (cookie.parse(cookieHeader)[THEME_COOKIE_NAME] as ThemeAppearance)
+    : undefined;
 }

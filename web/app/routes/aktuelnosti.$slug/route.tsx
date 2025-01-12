@@ -1,13 +1,15 @@
-import { MainNavEnum, siteConfig } from '@/config/site';
-import { generateCommonMetaTags } from '@/lib/utils';
-import { getPostBySlugQueryOptions } from '@/query/posts.query';
-import { PostDTO } from '@/types/api/post.types';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import invariant from 'tiny-invariant';
-import type { Route } from './+types/route';
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import invariant from "tiny-invariant";
+
+import { MainNavEnum, siteConfig } from "@/config/site";
+import { generateCommonMetaTags } from "@/lib/utils";
+import { getPostBySlugQueryOptions } from "@/query/posts.query";
+import type { PostDTO } from "@/types/api/post.types";
+
+import type { Route } from "./+types/route";
 
 export async function loader({ params }: Route.LoaderArgs) {
-  invariant(params.slug, 'Expected a slug param');
+  invariant(params.slug, "Expected a slug param");
 
   const queryClient = new QueryClient();
   const options = getPostBySlugQueryOptions(params.slug);
@@ -33,7 +35,7 @@ export const meta = ({ data }: { data: { post: PostDTO | undefined } }) => {
   }
 
   return generateCommonMetaTags({
-    title: 'Obavijest',
-    description: 'Aktuelnosti MSŠ Gimnazije Bugojno',
+    title: "Obavijest",
+    description: "Aktuelnosti MSŠ Gimnazije Bugojno",
   });
 };

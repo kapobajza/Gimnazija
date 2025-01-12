@@ -1,6 +1,7 @@
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
-import { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 type Props = {
   isLoading: boolean;
@@ -10,16 +11,16 @@ type Props = {
   skeletonClasses?: string;
   isEmpty: boolean;
   emptyMessage?: string;
-} & ComponentPropsWithoutRef<'div'>;
+} & ComponentPropsWithoutRef<"div">;
 
 export default function Container({
   isLoading,
   isError,
-  errorMessage = 'Desila se greška',
+  errorMessage = "Desila se greška",
   skeletonCount = 3,
   skeletonClasses,
   isEmpty,
-  emptyMessage = 'Nema podataka',
+  emptyMessage = "Nema podataka",
   className,
   ...props
 }: Props) {
@@ -27,7 +28,10 @@ export default function Container({
     return (
       <div className={className}>
         {Array.from({ length: skeletonCount }).map((_, i) => (
-          <Skeleton key={i} className={cn('h-[33rem] w-full', skeletonClasses)} />
+          <Skeleton
+            key={i}
+            className={cn("h-[33rem] w-full", skeletonClasses)}
+          />
         ))}
       </div>
     );
@@ -35,7 +39,7 @@ export default function Container({
 
   if (isError) {
     return (
-      <div className="text-center mx-auto">
+      <div className="mx-auto text-center">
         <p className="text-lg font-bold">{errorMessage}</p>
       </div>
     );
@@ -43,7 +47,7 @@ export default function Container({
 
   if (isEmpty) {
     return (
-      <div className="text-center mx-auto">
+      <div className="mx-auto text-center">
         <p className="text-lg font-bold">{emptyMessage}</p>
       </div>
     );

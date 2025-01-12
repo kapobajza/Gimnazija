@@ -1,24 +1,37 @@
-import * as React from 'react';
-import SiteLogo from './site-logo';
-import { cn } from '@/lib/utils';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { MainNavItem } from '@/types/nav';
-import { Link, useLocation, useNavigate } from 'react-router';
+import * as React from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+
+import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import type { MainNavItem } from "@/types/nav";
+
+import SiteLogo from "./site-logo";
 
 type MobileNavProps = {
   mainNavItems?: MainNavItem[];
   triggerIcon?: string;
 };
 
-export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavProps) {
+export function MobileNav({
+  mainNavItems,
+  triggerIcon = "default",
+}: MobileNavProps) {
   const location = useLocation();
   const segment = location.pathname;
   const [isOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const onLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, to: string) => {
+  const onLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    to: string,
+  ) => {
     event.preventDefault();
     setIsOpen(false);
     void navigate(to);
@@ -26,7 +39,7 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      {triggerIcon === 'default' && (
+      {triggerIcon === "default" && (
         <SheetTrigger asChild>
           <button className="group flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-transparent hover:bg-primary focus:border-transparent focus:bg-primary dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary lg:ml-5 lg:hidden">
             <svg
@@ -44,7 +57,7 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
         </SheetTrigger>
       )}
 
-      {triggerIcon === 'style-2' && (
+      {triggerIcon === "style-2" && (
         <SheetTrigger asChild>
           <button className="group ml-2 flex h-8 w-8 items-center justify-center rounded-full transition-colors lg:ml-5 lg:hidden">
             <svg
@@ -66,7 +79,7 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
             to="/"
             className="mr-12 block shrink-0"
             onClick={(event) => {
-              onLinkClick(event, '/');
+              onLinkClick(event, "/");
             }}
           >
             <SiteLogo className="w-[100px]" />
@@ -76,14 +89,20 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
           <div className="pl-1 pr-7">
             <Accordion
               type="multiple"
-              defaultValue={mainNavItems ? mainNavItems.map((item) => item.title) : undefined}
+              defaultValue={
+                mainNavItems
+                  ? mainNavItems.map((item) => item.title)
+                  : undefined
+              }
               className="w-full"
             >
               {mainNavItems?.map((item, index) => (
                 <React.Fragment key={index}>
                   {item.items ? (
                     <AccordionItem value={item.title}>
-                      <AccordionTrigger className="text-sm">{item.title}</AccordionTrigger>
+                      <AccordionTrigger className="text-sm">
+                        {item.title}
+                      </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col space-y-2">
                           {item.items.map((subItem, index) =>
@@ -100,7 +119,10 @@ export function MobileNav({ mainNavItems, triggerIcon = 'default' }: MobileNavPr
                                 {subItem.title}
                               </MobileLink>
                             ) : (
-                              <div key={index} className="text-muted-foreground transition-colors">
+                              <div
+                                key={index}
+                                className="text-muted-foreground transition-colors"
+                              >
                                 {item.title}
                               </div>
                             ),
@@ -140,14 +162,20 @@ type MobileLinkProps = {
   onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 } & React.PropsWithChildren;
 
-function MobileLink({ children, href, disabled, segment, onClick }: MobileLinkProps) {
+function MobileLink({
+  children,
+  href,
+  disabled,
+  segment,
+  onClick,
+}: MobileLinkProps) {
   return (
     <Link
       to={href}
       className={cn(
-        'transition-colors hover:text-primary',
-        href.includes(segment) && 'text-foreground',
-        disabled && 'pointer-events-none opacity-60',
+        "transition-colors hover:text-primary",
+        href.includes(segment) && "text-foreground",
+        disabled && "pointer-events-none opacity-60",
       )}
       onClick={onClick}
     >

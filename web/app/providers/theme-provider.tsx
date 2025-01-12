@@ -1,6 +1,7 @@
-import defaultTwConfig from '$/tailwind.config';
-import React, { createContext, useContext, useMemo } from 'react';
-import resolveTailwindConfig from 'tailwindcss/resolveConfig';
+import React, { createContext, useContext, useMemo } from "react";
+import resolveTailwindConfig from "tailwindcss/resolveConfig";
+
+import defaultTwConfig from "$/tailwind.config";
 
 const twConfig = resolveTailwindConfig(defaultTwConfig);
 
@@ -22,14 +23,18 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     [],
   );
 
-  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
 
   return context;

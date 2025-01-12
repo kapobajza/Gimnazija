@@ -1,5 +1,5 @@
-import { Env } from '@/env/env-schema';
-import { isBrowser } from '@/lib/utils';
+import type { Env } from "@/env/env-schema";
+import { isBrowser } from "@/lib/utils";
 
 export function getEnv(): Env {
   if (isBrowser()) {

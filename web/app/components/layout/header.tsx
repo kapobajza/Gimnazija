@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
-import SiteLogo from '@/components/layout/site-logo';
-import MainNav from '@/components/layout/main-nav';
-import { mainNav } from '@/config/site';
-import { cn, isBrowser } from '@/lib/utils';
-import { MobileNav } from '@/components/layout/mobile-nav';
-import { Link } from 'react-router';
-import { DarkModeSwitch } from '@/components/dark-mode-switch';
+import { useState, useEffect } from "react";
+import { Link } from "react-router";
+
+import SiteLogo from "@/components/layout/site-logo";
+import MainNav from "@/components/layout/main-nav";
+import { mainNav } from "@/config/site";
+import { cn, isBrowser } from "@/lib/utils";
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { DarkModeSwitch } from "@/components/dark-mode-switch";
 
 function shouldSetStickyHeader() {
   if (!isBrowser()) {
@@ -21,10 +22,10 @@ const Header = () => {
 
   useEffect(() => {
     stickyHeader();
-    window.addEventListener('scroll', stickyHeader);
+    window.addEventListener("scroll", stickyHeader);
 
     return () => {
-      window.removeEventListener('scroll', stickyHeader);
+      window.removeEventListener("scroll", stickyHeader);
     };
   }, []);
 
@@ -36,12 +37,12 @@ const Header = () => {
     <header className="fixed top-0 z-20 w-full">
       <div
         className={cn(
-          'flex items-center px-4 py-5 transition-all xl:px-20 lg:py-7',
-          isSticky && 'bg-white dark:bg-slate-900 lg:py-3 py-3',
+          "flex items-center px-4 py-5 transition-all lg:py-7 xl:px-20",
+          isSticky && "bg-white py-3 dark:bg-slate-900 lg:py-3",
         )}
       >
         <Link to="/" className="mr-12 shrink-0">
-          <SiteLogo className={'w-[70px] lg:w-[90px]'} />
+          <SiteLogo className={"w-[70px] lg:w-[90px]"} />
         </Link>
 
         <div className="relative flex w-full items-center justify-end lg:bg-transparent">

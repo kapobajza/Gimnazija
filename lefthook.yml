@@ -1,0 +1,32 @@
+pre-commit:
+  parallel: true
+  commands:
+    prettier:
+      files: git diff --name-only --staged
+      glob: "*.{js,ts,jsx,tsx,json}"
+      run: |
+        set -e
+        npx prettier --write {files}
+        git add {files}
+    lint:
+      files: git diff --name-only --staged
+      glob: "*.{js,ts,jsx,tsx}"
+      run: |
+        set -e
+        npx lefthook run lint
+        git add {files}
+
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: npx commitlint --edit
+
+lint:
+  parallel: true
+  commands:
+    web:
+      files: git diff --name-only --staged
+      run: |
+        set -e
+        node ./scripts/lint_relative_paths.js --path "./web"

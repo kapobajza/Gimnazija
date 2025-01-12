@@ -1,8 +1,9 @@
-import Container from '@/components/layout/container';
-import PostCard from '@/components/post-card';
-import SectionTitle from '@/components/sections/section-title';
-import { useGetHomePosts } from '@/query/posts.query';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+
+import Container from "@/components/layout/container";
+import PostCard from "@/components/post-card";
+import SectionTitle from "@/components/sections/section-title";
+import { useGetHomePosts } from "@/query/posts.query";
 
 const SectionLatestNews = () => {
   const { data = [], isLoading, isError } = useGetHomePosts();

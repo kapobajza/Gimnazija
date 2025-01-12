@@ -1,8 +1,9 @@
-import { cn } from '@/lib/utils';
-import { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
 
-function Paragraph({ className, ...props }: ComponentPropsWithoutRef<'p'>) {
-  return <p className={cn('text-md leading-7', className)} {...props} />;
+import { cn } from "@/lib/utils";
+
+function Paragraph({ className, ...props }: ComponentPropsWithoutRef<"p">) {
+  return <p className={cn("text-md leading-7", className)} {...props} />;
 }
 
 export default function SectionHistory() {
@@ -16,37 +17,68 @@ export default function SectionHistory() {
           <div className="mx-auto text-justify">
             <div className="space-y-3">
               <Paragraph>
-                Zgrada Gimnazije je <span className="text-primary-50 dark:text-primary">izgrađena 1901. godine</span> u
-                pseudo-maurskom stilu. Projektant je bio arhitekta Miloš Komadina. Prvobitna namjena joj je bila
-                općinska zgrada.
+                Zgrada Gimnazije je{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  izgrađena 1901. godine
+                </span>{" "}
+                u pseudo-maurskom stilu. Projektant je bio arhitekta Miloš
+                Komadina. Prvobitna namjena joj je bila općinska zgrada.
               </Paragraph>
               <Paragraph>
-                Kasnije je bila Carska i kraljevska vojna pošta i telegraf, Razdjel finansijske straže, Čitaonica,
-                Kotarski ured Bugojno, Kasarna. Prvi pokušaj otvaranja gimnazije je bio{' '}
-                <span className="text-primary-50 dark:text-primary">1924. godine</span>. Odlukom Vlade za Bosnu i
-                Hercegovinu broj:8636/45 od{' '}
-                <span className="text-primary-50 dark:text-primary">17.11.1945. godine</span>, osnovana je Državna
-                realna gimnazija, a njen utemeljitelj i prvi direktor je bio{' '}
-                <span className="text-primary-50 dark:text-primary">Fehim Efendić</span>.
+                Kasnije je bila Carska i kraljevska vojna pošta i telegraf,
+                Razdjel finansijske straže, Čitaonica, Kotarski ured Bugojno,
+                Kasarna. Prvi pokušaj otvaranja gimnazije je bio{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  1924. godine
+                </span>
+                . Odlukom Vlade za Bosnu i Hercegovinu broj:8636/45 od{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  17.11.1945. godine
+                </span>
+                , osnovana je Državna realna gimnazija, a njen utemeljitelj i
+                prvi direktor je bio{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  Fehim Efendić
+                </span>
+                .
               </Paragraph>
               <Paragraph>
-                <span className="text-primary-50 dark:text-primary">10.01.1946. godine</span> je otvorena i počela je
-                nastava sa dva odjeljenja prvih razreda. Nekada se zvala Centar za srednjoškolsko obrazovanje{' '}
-                <span className="text-primary-50 dark:text-primary">„Mahmut Bušatlija“</span>, potom Gimnazija Bugojno,
-                pa Mješovita srednja škola Bugojno, a od ove školske godine (2023./2024.) nosi naziv{' '}
-                <span className="text-primary-50 dark:text-primary">MSŠ „Gimnazija Bugojno“</span>.
+                <span className="text-primary-50 dark:text-primary">
+                  10.01.1946. godine
+                </span>{" "}
+                je otvorena i počela je nastava sa dva odjeljenja prvih razreda.
+                Nekada se zvala Centar za srednjoškolsko obrazovanje{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  „Mahmut Bušatlija“
+                </span>
+                , potom Gimnazija Bugojno, pa Mješovita srednja škola Bugojno, a
+                od ove školske godine (2023./2024.) nosi naziv{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  MSŠ „Gimnazija Bugojno“
+                </span>
+                .
               </Paragraph>
               <Paragraph>
-                Trenutno broji <span className="text-primary-50 dark:text-primary">24 odjeljenja</span>; 12 odjeljenja
-                opće gimnazije i 12 odjeljenja medicinske struke- smjer medicinska sestra/tehničar. Gimnazija je odavno
-                postala brend grada Bugojna, a kroz nju su prošli mnogi danas{' '}
-                <span className="text-primary-50 dark:text-primary">znameniti ljudi</span>: doktori nauka, naučnici,
-                ljekari, profesori, inženjeri, umjetnici i ostali koji danas obavljaju poslove u Bosni i Hercegovini, te
-                u mnogim zemljama širom svijeta.
+                Trenutno broji{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  24 odjeljenja
+                </span>
+                ; 12 odjeljenja opće gimnazije i 12 odjeljenja medicinske
+                struke- smjer medicinska sestra/tehničar. Gimnazija je odavno
+                postala brend grada Bugojna, a kroz nju su prošli mnogi danas{" "}
+                <span className="text-primary-50 dark:text-primary">
+                  znameniti ljudi
+                </span>
+                : doktori nauka, naučnici, ljekari, profesori, inženjeri,
+                umjetnici i ostali koji danas obavljaju poslove u Bosni i
+                Hercegovini, te u mnogim zemljama širom svijeta.
               </Paragraph>
             </div>
             <Paragraph className="mt-8 text-center text-lg font-bold">
-              Direktor škole: <span className="text-primary-50 dark:text-primary">Nedžad Milanović, prof.</span>
+              Direktor škole:{" "}
+              <span className="text-primary-50 dark:text-primary">
+                Nedžad Milanović, prof.
+              </span>
             </Paragraph>
           </div>
         </div>

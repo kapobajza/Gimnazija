@@ -1,9 +1,9 @@
-import { TeamMember } from '@/routes/uposlenici/data';
+import type { TeamMember } from "@/routes/uposlenici/data";
 
 export default function StaffCard({ member }: { member: TeamMember }) {
   return (
     <article
-      className="shadow-sm shadow-slate-500/20 dark:shadow-white/5 overflow-hidden rounded-lg bg-white dark:bg-slate-850"
+      className="overflow-hidden rounded-lg bg-white shadow-sm shadow-slate-500/20 dark:bg-slate-850 dark:shadow-white/5"
       itemType="https://schema.org/Article"
     >
       <figure className="relative overflow-hidden">
@@ -15,9 +15,13 @@ export default function StaffCard({ member }: { member: TeamMember }) {
           />
         </div>
       </figure>
-      <div className="rounded-b-lg p-6 border-t border-slate-200">
-        <h2 className="mb-2 md:text-xl text-lg font-bold">{member.name}</h2>
-        {member.title ? <span className="text-sm md:text-md text-primary font-bold">{member.title}</span> : null}
+      <div className="rounded-b-lg border-t border-slate-200 p-6">
+        <h2 className="mb-2 text-lg font-bold md:text-xl">{member.name}</h2>
+        {member.title ? (
+          <span className="text-sm font-bold text-primary md:text-md">
+            {member.title}
+          </span>
+        ) : null}
       </div>
     </article>
   );

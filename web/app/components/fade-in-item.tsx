@@ -1,5 +1,6 @@
-import { HTMLMotionProps, motion, Variants } from 'framer-motion';
-import { ReactNode } from 'react';
+import type { HTMLMotionProps, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 const fadeInAnimationVariants: Variants = {
   initial: {
@@ -18,7 +19,7 @@ const fadeInAnimationVariants: Variants = {
 export default function FadeInItem({
   children,
   ...props
-}: HTMLMotionProps<'div'> & {
+}: HTMLMotionProps<"div"> & {
   children: ReactNode;
 }) {
   return (

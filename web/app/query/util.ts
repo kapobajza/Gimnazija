@@ -1,11 +1,10 @@
-import {
+import type {
   DefaultError,
-  dehydrate,
   FetchInfiniteQueryOptions,
   FetchQueryOptions,
-  QueryClient,
   QueryKey,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 export async function dehydrateQueryOnServer<
   TQueryFnData = unknown,
@@ -21,7 +20,10 @@ export async function dehydrateQueryOnServer<
   const { additionalData, ...queryOptions } = options;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryOptions);
-  return Response.json({ dehydratedState: dehydrate(queryClient), ...additionalData });
+  return Response.json({
+    dehydratedState: dehydrate(queryClient),
+    ...additionalData,
+  });
 }
 
 export async function dehydrateInfiniteQueryOnServer<
@@ -32,12 +34,21 @@ export async function dehydrateInfiniteQueryOnServer<
   TPageParam = unknown,
   TAdditionalData extends Record<string, unknown> = Record<string, unknown>,
 >(
-  options: FetchInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey, TPageParam> & {
+  options: FetchInfiniteQueryOptions<
+    TQueryFnData,
+    TError,
+    TData,
+    TQueryKey,
+    TPageParam
+  > & {
     additionalData?: TAdditionalData;
   },
 ) {
   const { additionalData, ...queryOptions } = options;
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery(queryOptions);
-  return Response.json({ dehydratedState: dehydrate(queryClient), ...additionalData });
+  return Response.json({
+    dehydratedState: dehydrate(queryClient),
+    ...additionalData,
+  });
 }

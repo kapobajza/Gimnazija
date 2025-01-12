@@ -1,46 +1,65 @@
-import '@/tailwind.css';
+import "@/tailwind.css";
 
-import { envSchema } from '@/env/env-schema';
-import { useDehydratedState } from '@/hooks/use-dehydrated-state';
-import { ThemeProvider } from '@/providers/theme-provider';
-import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
-import { Links, LinksFunction, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
-import type { Route } from './+types/root';
-import { ClientHintCheck } from './components/client-hint-check';
-import GlobalProgressIndicator from './components/global-progress-indicator';
-import RouteError from './components/route-error';
-import { getThemeCookie } from './lib/cookie.server';
-import { getHints } from './lib/utils';
-import { RootLoaderData } from './types/loader';
-import { ThemeAppearance } from './types/theme';
+import {
+  HydrationBoundary,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import type { ReactNode } from "react";
+import { useState } from "react";
+import type { LinksFunction } from "react-router";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router";
+
+import { envSchema } from "@/env/env-schema";
+import { useDehydratedState } from "@/hooks/use-dehydrated-state";
+import { ThemeProvider } from "@/providers/theme-provider";
+
+import type { Route } from "./+types/root";
+import { ClientHintCheck } from "./components/client-hint-check";
+import GlobalProgressIndicator from "./components/global-progress-indicator";
+import RouteError from "./components/route-error";
+import { getThemeCookie } from "./lib/cookie.server";
+import { getHints } from "./lib/utils";
+import type { RootLoaderData } from "./types/loader";
+import { ThemeAppearance } from "./types/theme";
 
 export const links: LinksFunction = () => [
   {
-    rel: 'apple-touch-icon',
-    sizes: '180x180',
-    href: '/favicon/apple-touch-icon.png',
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: "/favicon/apple-touch-icon.png",
   },
   {
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '32x32',
-    href: '/favicon/favicon-32x32.png',
+    rel: "icon",
+    type: "image/png",
+    sizes: "32x32",
+    href: "/favicon/favicon-32x32.png",
   },
   {
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '16x16',
-    href: '/favicon/favicon-16x16.png',
+    rel: "icon",
+    type: "image/png",
+    sizes: "16x16",
+    href: "/favicon/favicon-16x16.png",
   },
   {
-    rel: 'manifest',
-    href: '/favicon/site.webmanifest',
+    rel: "manifest",
+    href: "/favicon/site.webmanifest",
   },
 ];
 
 export function loader({ request }: Route.LoaderArgs) {
-  const publicEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith('PUBLIC_GMNZ_')));
+  const publicEnv = Object.fromEntries(
+    Object.entries(process.env).filter(([key]) =>
+      key.startsWith("PUBLIC_GMNZ_"),
+    ),
+  );
   const env = envSchema.parse(publicEnv);
   const theme = getThemeCookie(request);
 
@@ -53,7 +72,12 @@ export function loader({ request }: Route.LoaderArgs) {
   } satisfies RootLoaderData);
 }
 
-function Document({ children, env, theme, head }: { children: ReactNode; head?: ReactNode } & Partial<RootLoaderData>) {
+function Document({
+  children,
+  env,
+  theme,
+  head,
+}: { children: ReactNode; head?: ReactNode } & Partial<RootLoaderData>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -103,7 +127,10 @@ export default function App() {
   const data = useLoaderData<RootLoaderData | undefined>();
 
   return (
-    <Document env={data?.env} theme={data?.theme ?? data?.requestInfo.hints.theme}>
+    <Document
+      env={data?.env}
+      theme={data?.theme ?? data?.requestInfo.hints.theme}
+    >
       <Outlet />
     </Document>
   );

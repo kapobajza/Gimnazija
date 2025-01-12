@@ -1,77 +1,22 @@
-/**
- * This is intended to be a basic starting point for linting in your app.
- * It relies on recommended configs out of the box for simplicity, but you can
- * and should modify this configuration to best suit your team's needs.
- */
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
-import tseslint from 'typescript-eslint';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import react from 'eslint-plugin-react';
-import importPlugin from 'eslint-plugin-import';
-import eslintConfigPrettier from 'eslint-config-prettier';
+import baseConfig, {
+  generateTSLanguageOptions,
+} from "../eslint.config.base.mjs";
 
-export default tseslint.config(
+/** @type {import('typescript-eslint').ConfigArray} */
+export default [
+  ...baseConfig,
+  ...pluginQuery.configs["flat/recommended"],
+  generateTSLanguageOptions(),
   {
-    extends: [tseslint.configs.recommended],
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'jsx-a11y': jsxA11y,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      formComponents: ['Form'],
-      linkComponents: [
-        { name: 'Link', linkAttribute: 'to' },
-        { name: 'NavLink', linkAttribute: 'to' },
-      ],
-    },
+    files: ["**/*.{ts,tsx}"],
     rules: {
-      'react/display-name': 'error',
-      'react/jsx-no-leaked-render': 'error',
+      "@typescript-eslint/consistent-type-imports": "error",
+      "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
     },
   },
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [tseslint.configs.strictTypeChecked, importPlugin.flatConfigs.recommended],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: '.',
-      },
-    },
-    rules: {
-      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      '@typescript-eslint/restrict-template-expressions': 'off',
-      '@typescript-eslint/only-throw-error': 'off',
-      '@typescript-eslint/no-unnecessary-type-parameters': 'off',
-    },
-    settings: {
-      'import/resolver': {
-        typescript: true,
-        node: true,
-      },
-    },
+    ignores: ["**/.react-router/**", "**/build/**"],
   },
-  eslintConfigPrettier,
-  {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    rules: {
-      'no-nested-ternary': 'error',
-      'no-void': ['error', { allowAsStatement: true }],
-      'no-else-return': [
-        'error',
-        {
-          allowElseIf: false,
-        },
-      ],
-      'no-console': 'error',
-    },
-  },
-);
+];

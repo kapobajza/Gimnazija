@@ -1,6 +1,7 @@
-import { cn } from '@/lib/utils';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { cn } from "@/lib/utils";
 
 type SocialIconProps = {
   url: string;
@@ -15,7 +16,7 @@ const SocialIcon = ({ className, url, icon }: SocialIconProps) => {
       target="_blank"
       rel="noopener nofollow"
       className={cn(
-        'mb-2 flex size-10 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-foreground hover:text-white',
+        "mb-2 flex size-10 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-foreground hover:text-white",
         className,
       )}
     >

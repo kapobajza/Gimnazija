@@ -1,15 +1,18 @@
-import { cn } from '@/lib/utils';
-import { ThemeAppearance } from '@/types/theme';
-import { useMutation } from '@tanstack/react-query';
-import { useFetcher } from 'react-router';
+import { useMutation } from "@tanstack/react-query";
+import { useFetcher } from "react-router";
+
+import { cn } from "@/lib/utils";
+import { ThemeAppearance } from "@/types/theme";
 
 function getCookieTheme() {
   const cookieTheme = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('theme='))
-    ?.split('=')[1];
+    .split("; ")
+    .find((row) => row.startsWith("theme="))
+    ?.split("=")[1];
 
-  return cookieTheme === ThemeAppearance.Light ? ThemeAppearance.Dark : ThemeAppearance.Light;
+  return cookieTheme === ThemeAppearance.Light
+    ? ThemeAppearance.Dark
+    : ThemeAppearance.Light;
 }
 
 export const DarkModeSwitch = ({ className }: { className?: string }) => {
@@ -18,7 +21,10 @@ export const DarkModeSwitch = ({ className }: { className?: string }) => {
     async mutationFn() {
       const newTheme = getCookieTheme();
 
-      document.documentElement.classList.remove(ThemeAppearance.Light, ThemeAppearance.Dark);
+      document.documentElement.classList.remove(
+        ThemeAppearance.Light,
+        ThemeAppearance.Dark,
+      );
       document.documentElement.classList.add(newTheme);
 
       return fetcher.submit(
@@ -26,15 +32,18 @@ export const DarkModeSwitch = ({ className }: { className?: string }) => {
           theme: newTheme,
         },
         {
-          method: 'POST',
-          action: '/toggle-theme',
+          method: "POST",
+          action: "/toggle-theme",
         },
       );
     },
     onError() {
       const newTheme = getCookieTheme();
 
-      document.documentElement.classList.remove(ThemeAppearance.Light, ThemeAppearance.Dark);
+      document.documentElement.classList.remove(
+        ThemeAppearance.Light,
+        ThemeAppearance.Dark,
+      );
       document.documentElement.classList.add(newTheme);
     },
   });
@@ -42,7 +51,7 @@ export const DarkModeSwitch = ({ className }: { className?: string }) => {
   return (
     <button
       className={cn(
-        'group mr-2 flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors hover:border-transparent hover:bg-primary-200 focus:border-transparent focus:bg-primary-200 disabled:pointer-events-none dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary-200 lg:ml-5',
+        "group mr-2 flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors hover:border-transparent hover:bg-primary-200 focus:border-transparent focus:bg-primary-200 disabled:pointer-events-none dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary-200 lg:ml-5",
         className,
       )}
       onClick={() => {

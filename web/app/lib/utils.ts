@@ -1,15 +1,16 @@
-import { MetaDescriptor } from 'react-router';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { getHintUtils } from '@epic-web/client-hints';
-import { clientHint as colorSchemeHint } from '@epic-web/client-hints/color-scheme';
+import type { MetaDescriptor } from "react-router";
+import { clsx } from "clsx";
+import type { ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { getHintUtils } from "@epic-web/client-hints";
+import { clientHint as colorSchemeHint } from "@epic-web/client-hints/color-scheme";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function isBrowser() {
-  return typeof window !== 'undefined';
+  return typeof window !== "undefined";
 }
 
 export function generateCommonMetaTags({
@@ -25,30 +26,32 @@ export function generateCommonMetaTags({
 }): MetaDescriptor[] {
   const commonTags: MetaDescriptor[] = [
     { title },
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
   ];
 
   if (description) {
-    commonTags.push({ name: 'description', content: description });
+    commonTags.push({ name: "description", content: description });
   }
 
   if (url) {
-    commonTags.push({ property: 'og:url', content: url });
+    commonTags.push({ property: "og:url", content: url });
   }
 
   if (image) {
-    commonTags.push({ property: 'og:image', content: image });
-    commonTags.push({ name: 'twitter:image', content: image });
+    commonTags.push({ property: "og:image", content: image });
+    commonTags.push({ name: "twitter:image", content: image });
   }
 
   return commonTags;
 }
 
-export function generateFieldsQueryParams<TObject extends Record<string, unknown>>(fields: (keyof TObject)[]) {
+export function generateFieldsQueryParams<
+  TObject extends Record<string, unknown>,
+>(fields: (keyof TObject)[]) {
   return fields.reduce<Record<string, string>>(
     (obj, field, index) => ({
       ...obj,

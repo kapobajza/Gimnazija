@@ -1,6 +1,7 @@
-import { BlocksContent } from '@strapi/blocks-react-renderer';
-import { Category } from './category.types';
-import { ImageMedia } from './media.types';
+import type { BlocksContent } from "@strapi/blocks-react-renderer";
+
+import type { Category } from "./category.types";
+import type { ImageMedia } from "./media.types";
 
 export type Post = {
   documentId: string;

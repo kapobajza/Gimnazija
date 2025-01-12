@@ -1,28 +1,28 @@
-import { MainNavItem } from '@/types/nav';
+import type { MainNavItem } from "@/types/nav";
 
 export const siteConfig = {
-  name: 'Mješovita srednja škola Bugojno',
+  name: "Mješovita srednja škola Bugojno",
   description:
-    'Mješovita srednja škola Bugojno je jedna od najstarih obrazovnih ustanova na području SBK koja je osnovana 17.11.1945. i od tada je uveliko utjecala na privredni i kulturni razvoj grada Bugojna',
-  url: 'https://mjesovita-srednja-skola.bug.com',
+    "Mješovita srednja škola Bugojno je jedna od najstarih obrazovnih ustanova na području SBK koja je osnovana 17.11.1945. i od tada je uveliko utjecala na privredni i kulturni razvoj grada Bugojna",
+  url: "https://mjesovita-srednja-skola.bug.com",
 };
 
 export const MainNavEnum = {
   Pocetna: {
-    title: 'Početna',
-    href: '/',
+    title: "Početna",
+    href: "/",
   },
   OName: {
-    title: 'O nama',
-    href: '/o-nama',
+    title: "O nama",
+    href: "/o-nama",
   },
   Uposlenici: {
-    title: 'Uposlenici',
-    href: '/uposlenici',
+    title: "Uposlenici",
+    href: "/uposlenici",
   },
   Aktuelnosti: {
-    title: 'Aktuelnosti',
-    href: '/aktuelnosti',
+    title: "Aktuelnosti",
+    href: "/aktuelnosti",
   },
 } as const satisfies Record<string, MainNavItem>;
 

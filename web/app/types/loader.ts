@@ -1,6 +1,7 @@
-import { Env } from '@/env/env-schema';
-import { ThemeAppearance } from './theme';
-import { getHints } from '@/lib/utils';
+import type { Env } from "@/env/env-schema";
+import type { getHints } from "@/lib/utils";
+
+import type { ThemeAppearance } from "./theme";
 
 export type RootLoaderData = {
   env: Env;

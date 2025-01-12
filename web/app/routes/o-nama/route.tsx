@@ -1,15 +1,17 @@
-import Header from '@/components/layout/header';
-import Footer from '@/components/layout/footer';
-import SectionPageTitle from '@/components/sections/section-page-title';
-import SectionChecklist from './components/section-checklist';
-import SectionHistory from './components/section-history';
-import { MetaFunction } from 'react-router';
-import { generateCommonMetaTags } from '@/lib/utils';
+import type { MetaFunction } from "react-router";
+
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+import SectionPageTitle from "@/components/sections/section-page-title";
+import { generateCommonMetaTags } from "@/lib/utils";
+
+import SectionChecklist from "./components/section-checklist";
+import SectionHistory from "./components/section-history";
 
 export const meta: MetaFunction = () => {
   return generateCommonMetaTags({
-    title: 'O nama',
-    description: 'Kratki osvrt na MSŠ Gimnaziju Bugojno',
+    title: "O nama",
+    description: "Kratki osvrt na MSŠ Gimnaziju Bugojno",
   });
 };
 

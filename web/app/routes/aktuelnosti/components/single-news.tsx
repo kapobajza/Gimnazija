@@ -1,14 +1,21 @@
-import { ImageGallery } from '@/components/image/image-lightbox';
-import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/header';
-import { MainNavEnum, siteConfig } from '@/config/site';
-import { getFormattedDate } from '@/lib/date';
-import { getPostBySlugQueryOptions } from '@/query/posts.query';
-import SocialIcon from '@/routes/aktuelnosti/components/social-icon';
-import { faFacebook, faLinkedin, faReddit, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
-import { useQuery } from '@tanstack/react-query';
+import {
+  faFacebook,
+  faLinkedin,
+  faReddit,
+  faWhatsapp,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { useQuery } from "@tanstack/react-query";
+
+import { ImageGallery } from "@/components/image/image-lightbox";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import { MainNavEnum, siteConfig } from "@/config/site";
+import { getFormattedDate } from "@/lib/date";
+import { getPostBySlugQueryOptions } from "@/query/posts.query";
+import SocialIcon from "@/routes/aktuelnosti/components/social-icon";
 
 export default function SingleNews({ slug }: { slug: string }) {
   const { data: post } = useQuery({
@@ -35,7 +42,9 @@ export default function SingleNews({ slug }: { slug: string }) {
             />
           ) : null}
           <div className="relative z-[1] mx-auto max-w-4xl text-center">
-            <h1 className="mb-5 text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] lg:text-5xl">{post.title}</h1>
+            <h1 className="mb-5 text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] lg:text-5xl">
+              {post.title}
+            </h1>
             <span className="block text-md text-slate-300 drop-shadow-[0_0.5px_0.5px_rgba(0,0,0,0.2)] lg:text-lg">
               {getFormattedDate(post.updatedAt)}
             </span>
@@ -47,9 +56,13 @@ export default function SingleNews({ slug }: { slug: string }) {
               <article className="post-content prose prose-lg mb-6 dark:prose-invert prose-headings:text-foreground">
                 <BlocksRenderer content={post.content} />
               </article>
-              {post.images ? <ImageGallery images={post.images} className="mb-6" /> : null}
+              {post.images ? (
+                <ImageGallery images={post.images} className="mb-6" />
+              ) : null}
               <div>
-                <span className="mb-2 mr-4 block text-md font-medium">Podijelite</span>
+                <span className="mb-2 mr-4 block text-md font-medium">
+                  Podijelite
+                </span>
                 <div className="mb-4 flex items-center">
                   <div className="flex flex-wrap gap-3">
                     <SocialIcon
@@ -71,7 +84,11 @@ export default function SingleNews({ slug }: { slug: string }) {
                       url={`https://www.reddit.com/submit?url=${postURL}`}
                       className="bg-[#ff4500]"
                     />
-                    <SocialIcon icon={faWhatsapp} url={`whatsapp://send?text=${postURL}`} className="bg-[#25d366]" />
+                    <SocialIcon
+                      icon={faWhatsapp}
+                      url={`whatsapp://send?text=${postURL}`}
+                      className="bg-[#25d366]"
+                    />
                     <SocialIcon
                       icon={faEnvelope}
                       url={`mailto:?subject=${post.title}&body=${postURL}`}
