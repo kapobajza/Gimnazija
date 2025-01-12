@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "post_categories",
   "info": {
-    "singularName": "category",
-    "pluralName": "categories",
-    "displayName": "Category",
+    "singularName": "post-category",
+    "pluralName": "post-categories",
+    "displayName": "Post Category",
     "description": ""
   },
   "options": {

@@ -12,8 +12,8 @@ export async function loader() {
 
 export const meta: MetaFunction = () => {
   return generateCommonMetaTags({
-    title: 'AKtuelnosti',
-    description: 'AKtuelnosti MSŠ Gimnazije Bugojno',
+    title: 'Aktuelnosti',
+    description: 'Aktuelnosti MSŠ Gimnazije Bugojno',
   });
 };
 

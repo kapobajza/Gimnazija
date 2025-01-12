@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employee_groups",
+  "info": {
+    "singularName": "employee-group",
+    "pluralName": "employee-groups",
+    "displayName": "Employee Group"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

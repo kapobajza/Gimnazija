@@ -4,7 +4,8 @@
   "info": {
     "singularName": "employee",
     "pluralName": "employees",
-    "displayName": "Employee"
+    "displayName": "Employee",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -16,11 +17,21 @@
       "required": true
     },
     "picture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "group": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employee-group.employee-group"
+    },
+    "title": {
+      "type": "string",
+      "required": true
     }
   }
 }
