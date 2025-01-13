@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 type SectionTitleProps = {
   children: React.ReactNode;
@@ -8,7 +8,13 @@ type SectionTitleProps = {
   subtitleClasses?: string;
 };
 
-const SectionTitle = ({ children, subtitle, sectionClasses, titleClasses, subtitleClasses }: SectionTitleProps) => {
+const SectionTitle = ({
+  children,
+  subtitle,
+  sectionClasses,
+  titleClasses,
+  subtitleClasses,
+}: SectionTitleProps) => {
   return (
     <div className={sectionClasses}>
       <h2 className={titleClasses}>{children}</h2>

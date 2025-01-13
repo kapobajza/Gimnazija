@@ -1,19 +1,28 @@
-import Container from '@/components/layout/container';
-import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/header';
-import PostCard from '@/components/post-card';
-import SectionPageTitle from '@/components/sections/section-page-title';
-import { Button } from '@/components/ui/button';
-import { useGetAllPosts } from '@/query/posts.query';
+import Container from "@/components/layout/container";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import PostCard from "@/components/post-card";
+import SectionPageTitle from "@/components/sections/section-page-title";
+import { Button } from "@/components/ui/button";
+import { useGetAllPosts } from "@/query/posts.query";
 
 export default function AllNews() {
-  const { isLoading, isFetchingNextPage, fetchNextPage, data, hasNextPage, isError } = useGetAllPosts();
+  const {
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    data,
+    hasNextPage,
+    isError,
+  } = useGetAllPosts();
 
   return (
     <>
       <Header />
       <main className="relative">
-        <SectionPageTitle>Najnovije vijesti i informacije iz škole</SectionPageTitle>
+        <SectionPageTitle>
+          Najnovije vijesti i informacije iz škole
+        </SectionPageTitle>
         <section className="border-b py-24">
           <div className="container">
             <Container
