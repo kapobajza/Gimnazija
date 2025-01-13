@@ -8,16 +8,22 @@ import {
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
-import { ImageGallery } from "@/components/image/image-lightbox";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { MainNavEnum, siteConfig } from "@/config/site";
 import { getFormattedDate } from "@/lib/date";
 import { getPostBySlugQueryOptions } from "@/query/posts.query";
 import SocialIcon from "@/routes/aktuelnosti/components/social-icon";
+import { cn } from "@/lib/utils";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import ImageLightboxContent from "@/components/image/image-lightbox-content";
 
 export default function SingleNews({ slug }: { slug: string }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [open, setOpen] = useState(false);
   const { data: post } = useQuery({
     ...getPostBySlugQueryOptions(slug),
     throwOnError: true,
@@ -28,6 +34,7 @@ export default function SingleNews({ slug }: { slug: string }) {
   }
 
   const postURL = `${siteConfig.url}/${MainNavEnum.Aktuelnosti.href}/${post.slug}`;
+  const imageCount = post.images?.length ?? 0;
 
   return (
     <>
@@ -57,7 +64,57 @@ export default function SingleNews({ slug }: { slug: string }) {
                 <BlocksRenderer content={post.content} />
               </article>
               {post.images ? (
-                <ImageGallery images={post.images} className="mb-6" />
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <div
+                    className={cn(
+                      "relative mb-6 grid",
+                      imageCount === 2 && "grid-cols-2 gap-1",
+                      imageCount === 3 && "grid-cols-2 gap-2 lg:grid-cols-3",
+                      imageCount >= 4 && "grid-cols-2 gap-1",
+                    )}
+                  >
+                    {post.images.slice(0, 4).map((img, index) => (
+                      <DialogTrigger
+                        key={`${img.url}-${index}`}
+                        onClick={() => {
+                          setCurrentIndex(index);
+                        }}
+                        asChild
+                      >
+                        <div
+                          className={cn(
+                            "cursor-pointer",
+                            imageCount === 3 &&
+                              index === 2 &&
+                              "col-span-2 lg:col-auto",
+                            imageCount >= 4 && index === 3 && "relative",
+                          )}
+                        >
+                          <AspectRatio ratio={1}>
+                            <img
+                              src={img.formats.medium.url}
+                              alt="Gallery image"
+                              className="absolute inset-0 h-full w-full rounded-md object-cover"
+                            />
+                          </AspectRatio>
+                          {index === 3 && imageCount > 4 ? (
+                            <div className="absolute inset-0 flex items-center justify-center rounded-md bg-black bg-opacity-60">
+                              <span className="text-2xl font-bold text-white">
+                                +{imageCount - 4}
+                              </span>
+                            </div>
+                          ) : null}
+                        </div>
+                      </DialogTrigger>
+                    ))}
+                  </div>
+                  <ImageLightboxContent
+                    currentIndex={currentIndex}
+                    setCurrentIndex={setCurrentIndex}
+                    images={post.images}
+                    open={open}
+                  />
+                </Dialog>
               ) : null}
               <div>
                 <span className="mb-2 mr-4 block text-md font-medium">
