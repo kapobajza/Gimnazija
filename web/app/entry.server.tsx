@@ -12,8 +12,35 @@ import { createReadableStreamFromReadable } from "@react-router/node";
 import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import winston from "winston";
 
-import { getThemeCookie } from "./lib/cookie.server";
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.combine(
+    winston.format((info) => {
+      if (info instanceof Error) {
+        return Object.assign({}, info, {
+          stack: info.stack,
+          message: info.message,
+        });
+      }
+
+      return info;
+    })(),
+    winston.format.timestamp(),
+    winston.format.printf(({ level, message, timestamp, stack }) => {
+      return `${timestamp} ${level}: ${message}${stack ? `\n${stack as string}` : ""}`;
+    }),
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: "logs/combined.log",
+      maxFiles: 10,
+      maxsize: 10485760,
+    }),
+  ],
+});
 
 const ABORT_DELAY = 5_000;
 
@@ -66,6 +93,7 @@ function handleBotRequest(
           pipe(body);
         },
         onShellError(error: unknown) {
+          logger.error(error);
           reject(error as Error);
         },
         onError(error: unknown) {
@@ -74,6 +102,7 @@ function handleBotRequest(
           // errors encountered during initial shell rendering since they'll
           // reject and get logged in handleDocumentRequest.
           if (shellRendered) {
+            logger.error(error);
             console.error(error);
           }
         },
@@ -100,6 +129,12 @@ function handleBrowserRequest(
           const body = new PassThrough();
           const stream = createReadableStreamFromReadable(body);
 
+          if (responseStatusCode < 400) {
+            logger.log(request.method, `${responseStatusCode}`, request.url);
+          } else {
+            logger.error(request.method, `${responseStatusCode}`, request.url);
+          }
+
           responseHeaders.set("Content-Type", "text/html");
 
           resolve(
@@ -112,6 +147,7 @@ function handleBrowserRequest(
           pipe(body);
         },
         onShellError(error: unknown) {
+          logger.error(error);
           reject(error as Error);
         },
         onError(error: unknown) {
@@ -120,6 +156,7 @@ function handleBrowserRequest(
           // errors encountered during initial shell rendering since they'll
           // reject and get logged in handleDocumentRequest.
           if (shellRendered) {
+            logger.error(error);
             console.error(error);
           }
         },
@@ -132,10 +169,7 @@ function handleBrowserRequest(
 
 export const handleError: HandleErrorFunction = (error, { request }) => {
   if (!request.signal.aborted) {
-    const theme = getThemeCookie(request);
-    console.log("-------theme-handleError-------");
-    console.log(theme);
-    console.log("-------theme-handleError-------\n");
+    logger.error(error);
     console.error(error);
   }
 };

@@ -21,9 +21,9 @@ FROM local AS dev-local
 CMD ["pnpm", "run", "dev"]
 
 FROM local AS prod-local
-RUN pnpm build
-CMD ["pnpm", "run", "start"]
+RUN pnpm --filter dashboard run build
+CMD ["pnpm", "run", "dashboard:start"]
 
 FROM base AS production
-RUN pnpm build
-CMD ["pnpm", "run", "start"]
+RUN pnpm --filter dashboard run build
+CMD ["pnpm", "run", "dashboard:start"]

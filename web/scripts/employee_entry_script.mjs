@@ -4,9 +4,42 @@ import fetch, { blobFrom } from "node-fetch";
 
 const imagePath = "public/team";
 
+const GroupEnum = {
+  UpravaSkole: { name: "Uprava škole", id: 1 },
+  Saradnici: { name: "Saradnici", id: 2 },
+  AktivBosanskogJezikaIKnjizevnosti: {
+    name: "Aktiv Bosanskog jezika i književnosti",
+    id: 3,
+  },
+  AktivMatematikeFizikeInformatike: {
+    name: "Aktiv matematike, fizike i informatike",
+    id: 4,
+  },
+  AktivHemijeIBiologije: { name: "Aktiv hemije i biologije", id: 5 },
+  AktivStranihJezika: { name: "Aktiv stranih jezika", id: 6 },
+  AktivHistorijeIGeografije: {
+    name: "Aktiv historije i geografije",
+    id: 7,
+  },
+  AktivDrustveneGrupePredmeta: {
+    name: "Aktiv društvene grupe predmeta",
+    id: 8,
+  },
+  AktivTjelesnogIZdravstvenogOdgoja: {
+    name: "Aktiv tjelesnog i zdravstvenog odgoja",
+    id: 9,
+  },
+  AktivUmjetnosti: { name: "Aktiv umjetnosti", id: 10 },
+  AktivMedicinskeGrupePredmeta: {
+    name: "Aktiv medicinske grupe predmeta",
+    id: 11,
+  },
+  NenastavnoOsoblje: { name: "Nenastavno osoblje", id: 12 },
+};
+
 const employee_groups = [
   {
-    group: { name: "Uprava škole", id: 1 },
+    group: { ...GroupEnum.UpravaSkole },
     employees: [
       {
         name: "Nedžad Milanović",
@@ -16,7 +49,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Saradnici", id: 2 },
+    group: { ...GroupEnum.Saradnici },
     employees: [
       {
         name: "Amna Haljeta",
@@ -41,7 +74,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv Bosanskog jezika i književnosti", id: 3 },
+    group: { ...GroupEnum.AktivBosanskogJezikaIKnjizevnosti },
     employees: [
       {
         name: "Senada Milanović",
@@ -71,7 +104,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv matematike, fizike i informatike", id: 4 },
+    group: { ...GroupEnum.AktivMatematikeFizikeInformatike },
     employees: [
       {
         name: "Ermina Musić",
@@ -106,7 +139,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv hemije i biologije", id: 5 },
+    group: { ...GroupEnum.AktivHemijeIBiologije },
     employees: [
       {
         name: "Dina Tica",
@@ -141,7 +174,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv stranih jezika", id: 6 },
+    group: { ...GroupEnum.AktivStranihJezika },
     employees: [
       {
         name: "Emina Kurbegović",
@@ -171,7 +204,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv historije i geografije", id: 7 },
+    group: { ...GroupEnum.AktivHistorijeIGeografije },
     employees: [
       {
         name: "Mirsad Bušatlija",
@@ -201,7 +234,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv društvene grupe predmeta", id: 8 },
+    group: { ...GroupEnum.AktivDrustveneGrupePredmeta },
     employees: [
       {
         name: "Alma Terzić",
@@ -231,7 +264,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv tjelesnog i zdravstvenog odgoja", id: 9 },
+    group: { ...GroupEnum.AktivTjelesnogIZdravstvenogOdgoja },
     employees: [
       {
         name: "Samir Haljeta",
@@ -251,7 +284,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv umjetnosti", id: 10 },
+    group: { ...GroupEnum.AktivUmjetnosti },
     employees: [
       {
         name: "Husein Šljivo",
@@ -266,7 +299,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Aktiv medicinske grupe predmeta", id: 11 },
+    group: { ...GroupEnum.AktivMedicinskeGrupePredmeta },
     employees: [
       {
         name: "Hamira Sultanović Karadža",
@@ -286,7 +319,7 @@ const employee_groups = [
     ],
   },
   {
-    group: { name: "Nenastavno osoblje", id: 12 },
+    group: { ...GroupEnum.NenastavnoOsoblje },
     employees: [
       {
         name: "Mehmed Merdžanić",
@@ -317,6 +350,26 @@ const employee_groups = [
   },
 ];
 
+async function doFetch(route, options, isJson = true) {
+  const res = await fetch(`${process.env.PUBLIC_GMNZ_API_URL}/api/${route}`, {
+    ...options,
+    headers: {
+      ...(isJson ? { "Content-Type": "application/json" } : {}),
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      ...options?.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(
+      `${res.status}: ${res.statusText}. Error:\n${JSON.stringify(data, null, 2)}`,
+    );
+  }
+
+  return res.json();
+}
+
 async function main() {
   if (!process.env.STRAPI_TOKEN) {
     throw new Error("Missing STRAPI_TOKEN");
@@ -326,33 +379,47 @@ async function main() {
     throw new Error("Missing PUBLIC_GMNZ_API_URL");
   }
 
-  for (const group of employee_groups) {
-    for (const employee of group.employees) {
-      const res = await fetch(
-        `${process.env.PUBLIC_GMNZ_API_URL}/api/employees`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+  let { data: employee_res } = await doFetch(
+    "employee-groups?pagination[limit]=100",
+    {
+      method: "GET",
+    },
+  );
+
+  if (employee_res.length === 0) {
+    for (const group of Object.values(GroupEnum)) {
+      const res = await doFetch("employee-groups", {
+        method: "POST",
+        body: JSON.stringify({
+          data: {
+            name: group.name,
           },
-          body: JSON.stringify({
-            data: {
-              name: employee.name,
-              title: employee.title,
-              group: group.group.id,
-            },
-          }),
-        },
-      );
+        }),
+      });
+      employee_res.push(res.data);
+    }
+  }
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(
-          `Failed to create employee ${employee.name}. Status: ${res.status}, ${res.statusText}. Error: ${JSON.stringify(data)}`,
-        );
-      }
+  for (const employee_group of employee_groups) {
+    for (const employee of employee_group.employees) {
+      console.log("-------employee-------");
+      console.log(employee);
+      console.log("-------employee-------\n");
+      console.log("-------emplyoee_group-------");
+      console.log(employee_group);
+      console.log("-------emplyoee_group-------\n");
+      const data = await doFetch("employees", {
+        method: "POST",
+        body: JSON.stringify({
+          data: {
+            name: employee.name,
+            title: employee.title,
+            group: `${
+              employee_res.find((g) => g.name === employee_group.group.name).id
+            }`,
+          },
+        }),
+      });
 
       if (fs.existsSync(employee.picture)) {
         const file = await blobFrom(employee.picture, "image/jpeg");
@@ -363,23 +430,14 @@ async function main() {
         form.append("ref", "api::employee.employee");
         form.append("field", "picture");
 
-        const response = await fetch(
-          `${process.env.PUBLIC_GMNZ_API_URL}/api/upload`,
+        await doFetch(
+          "upload",
           {
-            method: "post",
+            method: "POST",
             body: form,
-            headers: {
-              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-            },
           },
+          false,
         );
-
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(
-            `Failed to upload image for ${employee.name}. Status: ${response.status}, ${response.statusText}. Error: ${JSON.stringify(data)}`,
-          );
-        }
       }
     }
   }
