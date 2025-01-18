@@ -1,3 +1,6 @@
 **/node_modules
 **/dist
+**/build
+dashboard/public/uploads/*
+!dashboard/public/uploads/.gitkeep
 .git

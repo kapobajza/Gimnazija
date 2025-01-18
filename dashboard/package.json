@@ -7,7 +7,7 @@
     "build": "strapi build",
     "deploy": "strapi deploy",
     "dev": "strapi develop",
-    "start": "strapi start",
+    "start": "node -e 'console.log(\"process.env\", process.env);' && strapi start",
     "strapi": "strapi"
   },
   "dependencies": {

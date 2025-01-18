@@ -21,7 +21,7 @@ const PostCard = ({ post }: Props) => {
         >
           {post.cover ? (
             <img
-              src={post.cover.formats.medium.url}
+              src={post.cover.formats.medium?.relativeUrl}
               alt={post.cover.alternativeText || `Obavijest ${post.title}`}
               className="h-[330px] w-full object-cover transition-transform duration-1600 will-change-transform group-hover:scale-105"
             />

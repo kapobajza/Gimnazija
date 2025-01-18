@@ -6,7 +6,7 @@
   "scripts": {
     "dashboard:dev": "pnpm --filter dashboard dev",
     "dashboard:build": "pnpm --filter dashboard build",
-    "dashboard:start": "pnpm --filter dashboard start",
+    "dashboard:start": "NODE_ENV=production pnpm --filter dashboard start",
     "web:dev": "pnpm --filter web dev"
   },
   "devDependencies": {

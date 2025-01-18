@@ -1,6 +1,7 @@
 export type ImageFormat = {
   ext: string;
-  url: string;
+  relativeUrl: string | undefined;
+  url: string | undefined;
   hash: string;
   mime: string;
   name: string;
@@ -11,11 +12,12 @@ export type ImageFormat = {
 };
 
 export type ImageMedia = {
-  url: string;
+  relativeUrl: string | undefined;
+  url: string | undefined;
   alternativeText: string;
-  formats: {
+  formats: Partial<{
     thumbnail: ImageFormat;
     small: ImageFormat;
     medium: ImageFormat;
-  };
+  }>;
 };

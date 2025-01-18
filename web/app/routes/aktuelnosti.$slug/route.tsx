@@ -29,7 +29,7 @@ export const meta = ({ data }: { data: { post: PostDTO | undefined } }) => {
     return generateCommonMetaTags({
       title: post.title,
       description: post.excerpt,
-      image: post.cover?.formats.medium.url,
+      image: post.cover?.formats.medium?.url,
       url: `${siteConfig.url}${MainNavEnum.Aktuelnosti.href}/${post.slug}`,
     });
   }

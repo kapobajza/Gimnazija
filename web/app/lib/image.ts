@@ -1,4 +1,4 @@
-import type { ImageMedia } from "@/types/api/media.types";
+import type { ImageFormat, ImageMedia } from "@/types/api/media.types";
 
 export const generateImgSrcSet = (
   baseSrc: string,
@@ -16,26 +16,46 @@ export const generateImgSrcSet = (
   return `${quote}${baseSrc}${quote} 1x, ${quote}${baseName}@2x.${extension}${quote} 2x, ${quote}${baseName}@3x.${extension}${quote} 3x`;
 };
 
+function generateImageFormatUrl(
+  format: ImageFormat | undefined,
+  baseUrl: string,
+  route: string | undefined,
+): ImageFormat | undefined {
+  if (!format || !route) {
+    return undefined;
+  }
+
+  return {
+    ...format,
+    relativeUrl: `/images?src=${baseUrl}${route}`,
+    url: `${baseUrl}${route}`,
+  };
+}
+
 export function generateImageWithBaseUrl(
   baseUrl: string,
   media: ImageMedia,
 ): ImageMedia {
   return {
     ...media,
-    url: `/images?src=${baseUrl}${media.url}`,
+    relativeUrl: media.url ? `/images?src=${baseUrl}${media.url}` : undefined,
+    url: media.url ? `${baseUrl}${media.url}` : undefined,
     formats: {
-      thumbnail: {
-        ...media.formats.thumbnail,
-        url: `/images?src=${baseUrl}${media.formats.thumbnail.url}`,
-      },
-      small: {
-        ...media.formats.small,
-        url: `/images?src=${baseUrl}${media.formats.small.url}&w=${media.formats.small.width}`,
-      },
-      medium: {
-        ...media.formats.medium,
-        url: `/images?src=${baseUrl}${media.formats.medium.url}&w=${media.formats.medium.width}`,
-      },
+      thumbnail: generateImageFormatUrl(
+        media.formats.thumbnail,
+        baseUrl,
+        media.formats.thumbnail?.url,
+      ),
+      small: generateImageFormatUrl(
+        media.formats.small,
+        baseUrl,
+        media.formats.small?.url,
+      ),
+      medium: generateImageFormatUrl(
+        media.formats.medium,
+        baseUrl,
+        media.formats.medium?.url,
+      ),
     },
   };
 }

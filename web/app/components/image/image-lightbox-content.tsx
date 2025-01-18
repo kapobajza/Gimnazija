@@ -114,7 +114,7 @@ export default function ImageLightboxContent({
       </VisuallyHidden>
       <AspectRatio ratio={16 / 4} className="mx-auto size-full max-w-5xl">
         <img
-          src={images[currentIndex]?.url}
+          src={images[currentIndex]?.relativeUrl}
           alt={
             images[currentIndex]?.alternativeText ??
             `Gallery image ${currentIndex + 1}`

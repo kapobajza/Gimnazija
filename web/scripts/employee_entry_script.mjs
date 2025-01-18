@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import fetch, { blobFrom } from "node-fetch";
 
-const imagePath = "public/team";
+const imagePath = "scripts/team";
 
 const GroupEnum = {
   UpravaSkole: { name: "Uprava škole", id: 1 },
@@ -402,12 +402,6 @@ async function main() {
 
   for (const employee_group of employee_groups) {
     for (const employee of employee_group.employees) {
-      console.log("-------employee-------");
-      console.log(employee);
-      console.log("-------employee-------\n");
-      console.log("-------emplyoee_group-------");
-      console.log(employee_group);
-      console.log("-------emplyoee_group-------\n");
       const data = await doFetch("employees", {
         method: "POST",
         body: JSON.stringify({

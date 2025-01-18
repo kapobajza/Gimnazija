@@ -3,6 +3,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import sharp from "sharp";
 
 import { HttpError } from "@/networking/error";
+import { logger } from "@/lib/logger.server";
 
 const BadImageResponse = () => {
   const buffer = Buffer.from(
@@ -56,7 +57,9 @@ export const loader: LoaderFunction = async ({ request }) => {
         "Content-Length": resizedImage.length.toFixed(0),
       },
     });
-  } catch {
+  } catch (err) {
+    const stack = (err as Error | undefined)?.stack;
+    logger.error(err as string, stack ?? "");
     return BadImageResponse();
   }
 };

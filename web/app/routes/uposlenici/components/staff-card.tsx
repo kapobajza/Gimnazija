@@ -22,7 +22,7 @@ export default function StaffCard({
           <figure className="relative h-full overflow-hidden">
             <div className="group">
               <img
-                src={member.picture.formats.small.url}
+                src={member.picture.formats.small?.relativeUrl}
                 alt={member.name}
                 className="h-full w-full transition-transform duration-1600 will-change-transform group-hover:scale-105"
               />

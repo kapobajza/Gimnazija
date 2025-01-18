@@ -43,7 +43,7 @@ export default function SingleNews({ slug }: { slug: string }) {
         <div className="relative flex flex-col items-center justify-center px-4 py-20 before:absolute before:inset-0 before:z-[1] before:bg-foreground/65 sm:h-96 lg:h-[30rem]">
           {post.cover ? (
             <img
-              src={post.cover.url}
+              src={post.cover.relativeUrl}
               alt={post.cover.alternativeText}
               className="absolute bottom-0 left-0 right-0 top-0 mb-6 h-full w-full object-cover"
             />
@@ -75,7 +75,7 @@ export default function SingleNews({ slug }: { slug: string }) {
                   >
                     {post.images.slice(0, 4).map((img, index) => (
                       <DialogTrigger
-                        key={`${img.url}-${index}`}
+                        key={`${img.relativeUrl}-${index}`}
                         onClick={() => {
                           setCurrentIndex(index);
                         }}
@@ -92,7 +92,7 @@ export default function SingleNews({ slug }: { slug: string }) {
                         >
                           <AspectRatio ratio={1}>
                             <img
-                              src={img.formats.medium.url}
+                              src={img.formats.medium?.relativeUrl}
                               alt="Gallery image"
                               className="absolute inset-0 h-full w-full rounded-md object-cover"
                             />
