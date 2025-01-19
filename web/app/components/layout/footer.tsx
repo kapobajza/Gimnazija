@@ -37,6 +37,7 @@ const Footer = () => {
               className="col-span-4 block cursor-pointer lg:col-span-3"
               href="https://maps.app.goo.gl/oySPXfXs6SZEy23f9"
               target="_blank"
+              rel="noreferrer"
             >
               <div className="flex space-x-4">
                 <Address width="32" height="32" className="h-8 w-8" />

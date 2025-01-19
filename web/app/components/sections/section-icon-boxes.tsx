@@ -7,7 +7,7 @@ import {
 import IconBox from "@/components/icon-box";
 import FadeInItem from "@/components/fade-in-item";
 
-export const iconBoxes = [
+const iconBoxes = [
   {
     icon: <UserGroupIcon className="size-8 fill-primary-200" />,
     iconBase: "bg-[#FEE8E8]",

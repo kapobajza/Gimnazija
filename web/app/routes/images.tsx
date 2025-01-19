@@ -77,6 +77,11 @@ export const RemoteImage = (
       `/images?src=${props.src}&w=${width}&q=${DEFAULT_QUALITY} ${width}w`,
   );
   return (
-    <img {...props} srcSet={srcSetParts.join(", ")} src={srcSetParts[0]} />
+    <img
+      {...props}
+      srcSet={srcSetParts.join(", ")}
+      src={srcSetParts[0]}
+      alt="Remote"
+    />
   );
 };

@@ -1,7 +1,7 @@
 import { useId } from "react";
 
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/providers/theme-provider";
+import { useTheme } from "@/providers/theme/util";
 
 type IconProps = {
   className?: string;

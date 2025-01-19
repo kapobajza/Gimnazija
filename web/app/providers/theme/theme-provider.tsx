@@ -1,17 +1,12 @@
-import React, { createContext, useContext, useMemo } from "react";
+import type React from "react";
+import { useMemo } from "react";
 import resolveTailwindConfig from "tailwindcss/resolveConfig";
+
+import { ThemeContext } from "./util";
 
 import defaultTwConfig from "$/tailwind.config";
 
 const twConfig = resolveTailwindConfig(defaultTwConfig);
-
-type ThemeContextType = {
-  theme: {
-    colors: typeof twConfig.theme.colors;
-  };
-};
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const contextValue = useMemo(
@@ -28,14 +23,4 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </ThemeContext.Provider>
   );
-};
-
-export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
-
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-
-  return context;
 };

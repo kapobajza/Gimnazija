@@ -19,7 +19,7 @@ import {
 
 import { envSchema } from "@/env/env-schema";
 import { useDehydratedState } from "@/hooks/use-dehydrated-state";
-import { ThemeProvider } from "@/providers/theme-provider";
+import { ThemeProvider } from "@/providers/theme/theme-provider";
 
 import type { Route } from "./+types/root";
 import { ClientHintCheck } from "./components/client-hint-check";

@@ -1,31 +1,68 @@
 import { useMutation } from "@tanstack/react-query";
 import { useFetcher } from "react-router";
+import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { ThemeAppearance } from "@/types/theme";
 
-function getCookieTheme() {
-  const cookieTheme = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("theme="))
-    ?.split("=")[1];
-
-  return cookieTheme === ThemeAppearance.Light
-    ? ThemeAppearance.Dark
-    : ThemeAppearance.Light;
+function updateDomTheme(theme: ThemeAppearance) {
+  document.documentElement.classList.remove(
+    ThemeAppearance.Light,
+    ThemeAppearance.Dark,
+  );
+  document.documentElement.classList.add(theme);
 }
 
 export const DarkModeSwitch = ({ className }: { className?: string }) => {
   const fetcher = useFetcher();
+
+  function getCookieTheme() {
+    const cookieTheme = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("theme="))
+      ?.split("=")[1];
+
+    return cookieTheme as ThemeAppearance | undefined;
+  }
+
+  useEffect(() => {
+    const onChange = (event: MediaQueryListEvent) => {
+      const cookieTheme = getCookieTheme();
+
+      if (!cookieTheme) {
+        updateDomTheme(
+          event.matches ? ThemeAppearance.Dark : ThemeAppearance.Light,
+        );
+      }
+    };
+
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", onChange);
+
+    return () => {
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .removeEventListener("change", onChange);
+    };
+  }, []);
+
   const { mutate: toggle, isPending } = useMutation({
     async mutationFn() {
-      const newTheme = getCookieTheme();
+      let newTheme = getCookieTheme();
 
-      document.documentElement.classList.remove(
-        ThemeAppearance.Light,
-        ThemeAppearance.Dark,
-      );
-      document.documentElement.classList.add(newTheme);
+      if (!newTheme) {
+        newTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? ThemeAppearance.Dark
+          : ThemeAppearance.Light;
+      }
+
+      newTheme =
+        newTheme === ThemeAppearance.Dark
+          ? ThemeAppearance.Light
+          : ThemeAppearance.Dark;
+
+      updateDomTheme(newTheme);
 
       return fetcher.submit(
         {
@@ -40,11 +77,9 @@ export const DarkModeSwitch = ({ className }: { className?: string }) => {
     onError() {
       const newTheme = getCookieTheme();
 
-      document.documentElement.classList.remove(
-        ThemeAppearance.Light,
-        ThemeAppearance.Dark,
-      );
-      document.documentElement.classList.add(newTheme);
+      if (newTheme) {
+        updateDomTheme(newTheme);
+      }
     },
   });
 

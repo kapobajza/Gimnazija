@@ -1,5 +1,6 @@
 import type { ComponentProps } from "react";
-import React, { forwardRef, useEffect, useRef } from "react";
+import type React from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -90,7 +91,8 @@ export default function ImageLightboxContent({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open, handlePrevious, handleNext]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   if (imageCount === 0) {
     return null;

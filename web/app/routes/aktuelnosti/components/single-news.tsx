@@ -93,7 +93,7 @@ export default function SingleNews({ slug }: { slug: string }) {
                           <AspectRatio ratio={1}>
                             <img
                               src={img.formats.medium?.relativeUrl}
-                              alt="Gallery image"
+                              alt="Gallery"
                               className="absolute inset-0 h-full w-full rounded-md object-cover"
                             />
                           </AspectRatio>

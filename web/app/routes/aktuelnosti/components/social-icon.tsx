@@ -14,7 +14,7 @@ const SocialIcon = ({ className, url, icon }: SocialIconProps) => {
     <a
       href={url}
       target="_blank"
-      rel="noopener nofollow"
+      rel="noopener nofollow noreferrer"
       className={cn(
         "mb-2 flex size-10 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-foreground hover:text-white",
         className,

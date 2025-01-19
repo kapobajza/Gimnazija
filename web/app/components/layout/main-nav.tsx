@@ -10,9 +10,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import type { MainNavItem } from "@/types/nav";
+import { navigationMenuTriggerStyle } from "@/components/ui/util";
 
 type MainNavProps = {
   items?: MainNavItem[];
