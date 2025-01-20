@@ -15,13 +15,15 @@ services:
     build:
       context: .
       dockerfile: dashboard/Dockerfile
-      target: production
+      target: dev-local
     env_file: ./dashboard/.env
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wordpress.rule=Host(`api.gimnazija.local`)"
       - "traefik.http.routers.wordpress.entrypoints=web"
-    platform: linux/amd64
     ports:
       - "1337:1337"
 
@@ -38,12 +40,13 @@ services:
     build:
       context: .
       dockerfile: web/Dockerfile
-      target: production
-    platform: linux/amd64
+      target: dev-local
     ports:
-      - "3000"
+      - "3001:3001"
     environment:
       - HOST=0.0.0.0
+      - PORT=3001
+      - PUBLIC_GMNZ_API_URL=http://dashboard:1337
     env_file: ./web/.env
     labels:
       - "traefik.enable=true"

@@ -11,14 +11,14 @@ COPY . .
 RUN --mount=type=cache,id=pnpm-store,target=${PNPM_HOME}/store pnpm install --frozen-lockfile --filter=!web
 
 FROM base AS local
-COPY ./scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
-RUN chmod +x /usr/local/bin/update_local_hosts.sh
+# COPY ./scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
+# RUN chmod +x /usr/local/bin/update_local_hosts.sh
 
-# Set the entrypoint to run the script
-ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
+# # Set the entrypoint to run the script
+# ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
 
 FROM local AS dev-local
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "run", "dashboard:dev"]
 
 FROM local AS prod-local
 RUN pnpm --filter dashboard run build
