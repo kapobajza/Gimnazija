@@ -1,0 +1,17 @@
+version: "2"
+sql: 
+    - schema: "db/migration"
+      engine: "postgresql"
+      queries: "db/queries"
+      database:
+        uri: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@localhost:5436/${DB_NAME}?sslmode=disable"
+      gen:
+        go:
+            package: db
+            out: "db/generated"
+overrides:
+    go:
+        rename:
+            medium: Media
+            posts_medium: PostMedia
+

@@ -1,40 +1,41 @@
 services:
-  traefik:
-    image: traefik:v3.1
-    container_name: traefik
-    command:
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik/traefik_local.yml:/etc/traefik/traefik.yml"
-
-  dashboard:
+  api:
     build:
-      context: .
-      dockerfile: dashboard/Dockerfile
-      target: dev-local
-    env_file: ./dashboard/.env
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_PORT=3306
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.wordpress.rule=Host(`api.gimnazija.local`)"
-      - "traefik.http.routers.wordpress.entrypoints=web"
+      context: ./api
+      target: ${API_ENV-local}
     ports:
-      - "1337:1337"
+      - "${API_PORT}:${API_PORT}"
+      # delve debugger
+      - "40000:40000"
+    security_opt:
+      - "seccomp:unconfined"
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - ./api:/app
+    environment:
+      - GOOGLE_OAUTH_SECRET=${GOOGLE_OAUTH_SECRET}
+      - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - API_PORT=${API_PORT}
+      - SESSION_KEY=${SESSION_KEY}
+      - VALID_EMAILS=${VALID_EMAILS}
+      - SESSION_COOKIE_NAME=${SESSION_COOKIE_NAME}
 
   db:
-    image: mysql:9.1.0
-    env_file:
-      - ./dashboard/.env
+    image: postgres:17.2-alpine
     ports:
-      - "3308:3306"
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
     volumes:
-      - db-data:/var/lib/mysql
+      - db-data:/var/lib/postgresql/data
 
   web:
     build:
@@ -46,12 +47,8 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=3001
-      - PUBLIC_GMNZ_API_URL=http://dashboard:1337
+      - PUBLIC_GMNZ_API_URL=http://api:${API_PORT}
     env_file: ./web/.env
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`gimnazija.local`)"
-      - "traefik.http.routers.web.entrypoints=web"
     develop:
       watch:
         - action: rebuild
