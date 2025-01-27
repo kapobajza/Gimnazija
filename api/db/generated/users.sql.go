@@ -8,12 +8,38 @@ package db
 import (
 	"context"
 	"database/sql"
+
+	"github.com/google/uuid"
 )
+
+const getUserByEmail = `-- name: GetUserByEmail :one
+SELECT id, name, picture, email FROM users 
+WHERE email = $1
+`
+
+type GetUserByEmailRow struct {
+	ID      uuid.UUID
+	Name    sql.NullString
+	Picture sql.NullString
+	Email   string
+}
+
+func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
+	row := q.db.QueryRowContext(ctx, getUserByEmail, email)
+	var i GetUserByEmailRow
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Picture,
+		&i.Email,
+	)
+	return i, err
+}
 
 const insertOrUpdateUser = `-- name: InsertOrUpdateUser :one
 INSERT INTO users (email, picture, name)
 VALUES ($1, $2, $3)
-ON CONFLICT (email) DO UPDATE SET picture = $2, name = $3
+ON CONFLICT (email) DO UPDATE SET picture = $2, name = $3, updated_at = now()
 RETURNING id, email, picture, name, created_at, updated_at
 `
 

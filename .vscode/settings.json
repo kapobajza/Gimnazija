@@ -11,5 +11,8 @@
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
-  ]
+  ],
+  "go.testEnvVars": {
+    "SESSION_COOKIE_NAME": "my_session_cookie"
+  }
 }

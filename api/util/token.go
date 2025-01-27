@@ -1,4 +1,4 @@
-package api_token
+package util
 
 import (
 	"encoding/base64"

@@ -1,22 +1,16 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
-	"log"
-	"net/http"
 	"os"
 
-	sqlc "github.com/gimnazija_api/db/generated"
-	appRouter "github.com/gimnazija_api/modules/auth"
-	_ "github.com/lib/pq"
-
+	"github.com/gimnazija_api/bootstrap"
+	"github.com/gimnazija_api/modules/auth"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	server := gin.Default()
-	router := server.Group("")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USERNAME")
@@ -31,26 +25,15 @@ func main() {
 		dbName,
 	)
 
-	conn, err := sql.Open("postgres", dbUri)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	db, conn := bootstrap.SetupDatabase(dbUri)
 	defer conn.Close()
+	engine := gin.Default()
+	router := bootstrap.SetupRouter(engine)
 
-	db := sqlc.New(conn)
+	googleOauthConfig, sessionStore := bootstrap.SetupAppConfig()
 
-	authRouter := appRouter.NewAuthRouter(db)
-	authRouter.RegisterRoutes(router)
+	authHandler := auth.NewAuthHandler(auth.NewAuthService(googleOauthConfig), sessionStore, db)
+	authHandler.RegisterRouteHandlers(router)
 
-	router.GET("/health", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"message": "The Gimnazija API is working fine"})
-	})
-
-	server.NoRoute(func(ctx *gin.Context) {
-		ctx.JSON(http.StatusNotFound, gin.H{"status": "failed", "message": fmt.Sprintf("The specified route %s not found", ctx.Request.URL)})
-	})
-
-	log.Fatal(server.Run(":" + os.Getenv("API_PORT")))
+	engine.Run(":" + os.Getenv("API_PORT"))
 }
