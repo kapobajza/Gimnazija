@@ -11,8 +11,8 @@ services:
       - "seccomp:unconfined"
     cap_add:
       - SYS_PTRACE
-    volumes:
-      - ./api:/app
+    # volumes:
+    #   - ./api:/app
     environment:
       - GOOGLE_OAUTH_SECRET=${GOOGLE_OAUTH_SECRET}
       - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
@@ -25,6 +25,11 @@ services:
       - SESSION_KEY=${SESSION_KEY}
       - VALID_EMAILS=${VALID_EMAILS}
       - SESSION_COOKIE_NAME=${SESSION_COOKIE_NAME}
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
 
   db:
     image: postgres:17.2-alpine

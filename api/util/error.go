@@ -26,6 +26,9 @@ const (
 	ErrInvalidAuthCode         ErrorCode = "ERR_INVALID_AUTH_CODE"
 	ErrGettingSession          ErrorCode = "ERR_GETTING_SESSION"
 	ErrRetrievingUser          ErrorCode = "ERR_RETRIEVING_USER"
+	ErrCodeInvalidUUID         ErrorCode = "ERR_INVALID_UUID"
+	ErrRetrievingPosts         ErrorCode = "ERR_RETRIEVING_POSTS"
+	ErrCodeInvalidBody         ErrorCode = "ERR_INVALID_BODY"
 )
 
 func NewAppError(code string, message string) AppError {

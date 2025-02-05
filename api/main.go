@@ -6,6 +6,8 @@ import (
 
 	"github.com/gimnazija_api/bootstrap"
 	"github.com/gimnazija_api/modules/auth"
+	"github.com/gimnazija_api/modules/posts"
+	"github.com/gimnazija_api/modules/users"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -34,6 +36,12 @@ func main() {
 
 	authHandler := auth.NewAuthHandler(auth.NewAuthService(googleOauthConfig), sessionStore, db)
 	authHandler.RegisterRouteHandlers(router)
+
+	usersHandler := users.NewUsersHandler(db)
+	usersHandler.RegisterRouteHandlers(router)
+
+	postsHandler := posts.NewPostsHandler(db)
+	postsHandler.RegisterRouteHandlers(router)
 
 	engine.Run(":" + os.Getenv("API_PORT"))
 }

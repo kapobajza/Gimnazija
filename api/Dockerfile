@@ -14,5 +14,6 @@ RUN go build -gcflags "all=-N -l" -o main .
 CMD ["dlv", "--listen=:40000", "--headless=true", "--log=true", "--accept-multiclient", "--api-version=2", "exec", "./tmp/main"]
 
 FROM base AS prod
-RUN go build -o main main.go
+RUN go build -ldflags "-s -w" -o ./main main.go
+# CMD ["tail", "-f", "/dev/null"]
 CMD ["./main"]
