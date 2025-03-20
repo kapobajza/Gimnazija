@@ -6,16 +6,14 @@ WORKDIR /app
 
 RUN corepack enable
 
-COPY . .
+COPY package.json .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+COPY dashboard/package.json ./dashboard/package.json
 
 RUN --mount=type=cache,id=pnpm-store,target=${PNPM_HOME}/store pnpm install --frozen-lockfile --filter=!web
 
-FROM base AS local
-# COPY ./scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
-# RUN chmod +x /usr/local/bin/update_local_hosts.sh
-
-# # Set the entrypoint to run the script
-# ENTRYPOINT ["/usr/local/bin/update_local_hosts.sh"]
+COPY . .
 
 FROM local AS dev-local
 CMD ["pnpm", "run", "dashboard:dev"]
@@ -26,4 +24,7 @@ CMD ["pnpm", "run", "dashboard:start"]
 
 FROM base AS production
 RUN pnpm --filter dashboard run build
+COPY ./dashboard/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["pnpm", "run", "dashboard:start"]

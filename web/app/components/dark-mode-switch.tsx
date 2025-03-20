@@ -13,17 +13,17 @@ function updateDomTheme(theme: ThemeAppearance) {
   document.documentElement.classList.add(theme);
 }
 
+function getCookieTheme() {
+  const cookieTheme = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("theme="))
+    ?.split("=")[1];
+
+  return cookieTheme as ThemeAppearance | undefined;
+}
+
 export const DarkModeSwitch = ({ className }: { className?: string }) => {
   const fetcher = useFetcher();
-
-  function getCookieTheme() {
-    const cookieTheme = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("theme="))
-      ?.split("=")[1];
-
-    return cookieTheme as ThemeAppearance | undefined;
-  }
 
   useEffect(() => {
     const onChange = (event: MediaQueryListEvent) => {

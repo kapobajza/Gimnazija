@@ -2,4 +2,6 @@
 **/dist
 **/build
 .env
+.env.*
+!.env.sample
 **.log

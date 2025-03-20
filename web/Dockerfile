@@ -6,9 +6,14 @@ WORKDIR /app
 
 RUN corepack enable
 
-COPY . .
+COPY package.json .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+COPY web/package.json ./web/package.json
 
 RUN --mount=type=cache,id=pnpm-store,target=${PNPM_HOME}/store pnpm install --frozen-lockfile --filter=!dashboard
+
+COPY . .
 
 FROM base AS local
 # COPY ./web/scripts/update_local_hosts.sh /usr/local/bin/update_local_hosts.sh
