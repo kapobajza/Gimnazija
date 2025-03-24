@@ -5,6 +5,26 @@ import sharp from "sharp";
 import { HttpError } from "@/networking/error";
 import { logger } from "@/lib/logger.server";
 
+const FETCH_TIMEOUT = 20 * 1000;
+
+async function fetchWithRetry(url: string, retries = 5) {
+  try {
+    const controller = new AbortController();
+    const id = setTimeout(() => {
+      controller.abort();
+    }, FETCH_TIMEOUT);
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    if (retries > 0) {
+      logger.warn(`Fetch failed, retrying (${retries} attempts left): ${url}`);
+      return fetchWithRetry(url, retries - 1);
+    }
+    throw error;
+  }
+}
+
 const BadImageResponse = () => {
   const buffer = Buffer.from(
     "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
@@ -34,7 +54,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   try {
-    const image = await fetch(src);
+    const image = await fetchWithRetry(src);
     if (!image.ok || !image.body) {
       throw new HttpError({
         status: image.status,

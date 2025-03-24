@@ -370,6 +370,22 @@ async function doFetch(route, options, isJson = true) {
   return res.json();
 }
 
+function latinize(text) {
+  const charMap = {
+    č: "c",
+    ć: "c",
+    ž: "z",
+    š: "s",
+    đ: "d",
+    Č: "C",
+    Ć: "C",
+    Ž: "Z",
+    Š: "S",
+    Đ: "D",
+  };
+  return text.replace(/[čćžšđČĆŽŠĐ]/g, (char) => charMap[char] || char);
+}
+
 async function main() {
   if (!process.env.STRAPI_TOKEN) {
     throw new Error("Missing STRAPI_TOKEN");
@@ -402,36 +418,47 @@ async function main() {
 
   for (const employee_group of employee_groups) {
     for (const employee of employee_group.employees) {
-      const data = await doFetch("employees", {
-        method: "POST",
-        body: JSON.stringify({
-          data: {
-            name: employee.name,
-            title: employee.title,
-            group: `${
-              employee_res.find((g) => g.name === employee_group.group.name).id
-            }`,
-          },
-        }),
-      });
+      try {
+        const data = await doFetch("employees", {
+          method: "POST",
+          body: JSON.stringify({
+            data: {
+              name: employee.name,
+              title: employee.title,
+              group: `${
+                employee_res.find((g) => g.name === employee_group.group.name)
+                  .id
+              }`,
+            },
+          }),
+        });
 
-      if (fs.existsSync(employee.picture)) {
-        const file = await blobFrom(employee.picture, "image/jpeg");
-        const form = new FormData();
+        if (fs.existsSync(employee.picture)) {
+          const file = await blobFrom(employee.picture, "image/jpeg");
+          const form = new FormData();
 
-        form.append("files", file, employee.name.replace(/\s/g, "_") + ".jpeg");
-        form.append("refId", data.data.id);
-        form.append("ref", "api::employee.employee");
-        form.append("field", "picture");
+          form.append(
+            "files",
+            file,
+            latinize(employee.name).replace(/\s/g, "_") + ".jpeg",
+          );
+          form.append("refId", data.data.id);
+          form.append("ref", "api::employee.employee");
+          form.append("field", "picture");
 
-        await doFetch(
-          "upload",
-          {
-            method: "POST",
-            body: form,
-          },
-          false,
-        );
+          await doFetch(
+            "upload",
+            {
+              method: "POST",
+              body: form,
+            },
+            false,
+          );
+        }
+
+        console.log(`Added employee ${employee.name}`);
+      } catch (e) {
+        console.error(`Error with employee ${employee.name}\n${e.message}`);
       }
     }
   }

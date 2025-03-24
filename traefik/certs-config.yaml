@@ -1,4 +1,4 @@
 tls:
   certificates:
-    - certFile: /etc/certs/gimnazija.com.crt
-      keyFile: /etc/certs/gimnazija.com.key
+    - certFile: /etc/certs/gimnazija-bug.ba.crt
+      keyFile: /etc/certs/gimnazija-bug.ba.key
