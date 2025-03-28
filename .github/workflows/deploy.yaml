@@ -17,9 +17,6 @@ on:
         required: true
         description: The SSH private key of the deploy user
 
-permissions:
-  packages: write
-
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
