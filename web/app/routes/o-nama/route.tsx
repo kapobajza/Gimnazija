@@ -20,7 +20,7 @@ export default function About() {
     <>
       <Header />
       <main className="relative">
-        <SectionPageTitle subtitle="Više od pola stoljeća tradicije i obrazovanja. Mjesto gdje prošlost susreće budućnost, gdje se oblikuju generacije lidera i gdje znanje postaje temelj za životne uspjehe.">
+        <SectionPageTitle subtitle="Više od pola vijeka tradicije i obrazovanja. Mjesto gdje prošlost susreće budućnost, gdje se oblikuju generacije lidera i gdje znanje postaje temelj za životne uspjehe.">
           O nama
         </SectionPageTitle>
         <SectionChecklist />

@@ -13,7 +13,3 @@ export type Employee = {
   title: string;
   group: EmployeeGroup;
 };
-
-// export type ToRemove = {
-//   foo: string;
-// };
