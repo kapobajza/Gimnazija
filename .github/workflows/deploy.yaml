@@ -90,7 +90,9 @@ jobs:
 
     - name: create env file
       run: |
-        echo 'GIT_COMMIT_HASH=${{ github.sha }}\nDATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}\nDATABASE_NAME=${{ secrets.DATABASE_NAME }}' >> ./envfile
+        echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
+        echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> ./envfile
+        echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./envfile
 
     - name: Docker Stack Deploy
       uses: cssnr/stack-deploy-action@v1

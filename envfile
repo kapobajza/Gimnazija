@@ -1,3 +1,0 @@
-GIT_COMMIT_HASH=${{ github.sha }}
-DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
-DATABASE_NAME=${{ secrets.DATABASE_NAME }}
