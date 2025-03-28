@@ -30,6 +30,7 @@ export const createEmployeesApi = () => {
           "populate[picture][fields][0]": "url",
           "populate[picture][fields][1]": "formats",
           "populate[group][fields][0]": "name",
+          sort: "group.id",
         },
       });
 

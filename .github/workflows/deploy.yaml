@@ -1,0 +1,69 @@
+on:
+  workflow_call:
+    inputs:
+      service:
+        required: true
+        type: string
+        description: The service to deploy
+      dockerfile_dir:
+        required: true
+        type: string
+        description: The directory containing the Dockerfile
+    secrets:
+      VPS_HOST:
+        required: true
+        description: The VPS host
+      DEPLOY_SSH_PRIVATE_KEY:
+        required: true
+        description: The SSH private key of the deploy user
+
+permissions:
+  packages: write
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          file: ${{ inputs.dockerfile_dir }}/Dockerfile
+          target: production
+          platforms: linux/amd64
+          context: .
+          tags: |
+            ghcr.io/kapobajza/gimnazija_${{ inputs.service }}:prod
+            ghcr.io/kapobajza/gimnazija_${{ inputs.service }}:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-push-image
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: create env file
+      run: |
+        echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
+
+    - name: Docker Stack Deploy
+      uses: cssnr/stack-deploy-action@v1
+      with:
+        name: gimnazija
+        file: docker-stack.yaml
+        host: ${{ secrets.VPS_HOST }}
+        user: deploy
+        ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+        env_file: ./envfile

@@ -1,0 +1,20 @@
+name: Build and deploy Gimnazija web
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**/**.ts'
+      - 'web/package.json'
+      - '!web/README.md'
+
+jobs:
+  deploy_api:
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      service: web
+      dockerfile_dir: web
+    secrets:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}

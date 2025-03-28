@@ -6,6 +6,7 @@ export type EmployeeGroup = {
 };
 
 export type Employee = {
+  id: number;
   documentId: string;
   name: string;
   picture: ImageMedia | undefined;

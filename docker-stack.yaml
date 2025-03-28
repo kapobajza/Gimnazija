@@ -27,7 +27,7 @@ services:
       - /traefik/certs:/etc/certs:ro
 
   dashboard:
-    image: ghcr.io/kapobajza/gimnazija_api:prod
+    image: ghcr.io/kapobajza/gimnazija_api:${GIT_COMMIT_HASH-prod}
     env_file: ./dashboard/.env.prod
     environment:
       - DATABASE_HOST=db
@@ -71,7 +71,7 @@ services:
       - database_password
 
   web:
-    image: ghcr.io/kapobajza/gimnazija_web:prod
+    image: ghcr.io/kapobajza/gimnazija_web:${GIT_COMMIT_HASH-prod}
     ports:
       - "3000"
     environment:

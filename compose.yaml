@@ -1,18 +1,6 @@
 name: gimnazija-local
 
 services:
-  traefik:
-    image: traefik:v3.1
-    container_name: traefik
-    command:
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik/traefik_local.yml:/etc/traefik/traefik.yml"
-
   dashboard:
     build:
       context: .
@@ -21,11 +9,7 @@ services:
     env_file: ./dashboard/.env
     environment:
       - DATABASE_HOST=db
-      - DATABASE_PORT=3306
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.wordpress.rule=Host(`api.gimnazija.local`)"
-      - "traefik.http.routers.wordpress.entrypoints=web"
+      - DATABASE_PORT=5432
     ports:
       - "1337:1337"
 
@@ -50,10 +34,6 @@ services:
       - PORT=3001
       - PUBLIC_GMNZ_API_URL=http://dashboard:1337
     env_file: ./web/.env
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`gimnazija.local`)"
-      - "traefik.http.routers.web.entrypoints=web"
     develop:
       watch:
         - action: rebuild
