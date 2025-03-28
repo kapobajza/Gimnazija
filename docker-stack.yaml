@@ -28,10 +28,12 @@ services:
 
   dashboard:
     image: ghcr.io/kapobajza/gimnazija_api:${GIT_COMMIT_HASH-prod}
-    env_file: ./dashboard/.env.prod
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
+      - DATABASE_CLIENT=postgres
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.gimnazija-bug.ba`)"
@@ -61,10 +63,11 @@ services:
     image: postgres:17.2-alpine
     ports:
       - "5432"
-    env_file:
-      - ./dashboard/.env.prod
     environment:
       - POSTGRES_PASSWORD_FILE=/run/secrets/database_password
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - PGUSER=${DATABASE_USERNAME}
     volumes:
       - db-data:/var/lib/postgresql/data
     secrets:
@@ -76,7 +79,7 @@ services:
       - "3000"
     environment:
       - HOST=0.0.0.0
-    env_file: ./web/.env.prod
+      - PUBLIC_GMNZ_API_URL=https://api.gimnazija-bug.ba
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`gimnazija-bug.ba`)"

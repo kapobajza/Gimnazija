@@ -16,6 +16,12 @@ on:
       DEPLOY_SSH_PRIVATE_KEY:
         required: true
         description: The SSH private key of the deploy user
+      DATABASE_USERNAME:
+        required: true
+        description: The database username
+      DATABASE_NAME:
+        required: true
+        description: The database name
 
 jobs:
   build-and-push-image:
@@ -84,7 +90,7 @@ jobs:
 
     - name: create env file
       run: |
-        echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
+        echo "GIT_COMMIT_HASH=${{ github.sha }}\nDATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}\nDATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> ./envfile
 
     - name: Docker Stack Deploy
       uses: cssnr/stack-deploy-action@v1

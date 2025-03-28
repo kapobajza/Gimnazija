@@ -18,3 +18,5 @@ jobs:
     secrets:
       VPS_HOST: ${{ secrets.VPS_HOST }}
       DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
