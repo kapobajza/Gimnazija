@@ -10,7 +10,7 @@ on:
       - '!web/README.md'
 
 jobs:
-  deploy_api:
+  deploy_web:
     uses: ./.github/workflows/deploy.yaml
     with:
       service: web

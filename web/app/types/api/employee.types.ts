@@ -14,6 +14,6 @@ export type Employee = {
   group: EmployeeGroup;
 };
 
-// export type ToRemove = {
-//   foo: string;
-// };
+export type ToRemove = {
+  foo: string;
+};
