@@ -16,6 +16,9 @@ jobs:
   build-and-push-web:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
       - name: prepare for build
         uses: ./.github/actions/prepare_docker_build
 
@@ -34,6 +37,9 @@ jobs:
   build-and-push-dashboard:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
       - name: prepare for build
         uses: ./.github/actions/prepare_docker_build
 

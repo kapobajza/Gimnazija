@@ -2,10 +2,7 @@ name: Prepare docker build
 description: 'Prepares docker build'
 runs:
   using: 'composite'
-  steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      
+  steps:      
       - name: set up docker buildx
         uses: docker/setup-buildx-action@v3
 
