@@ -59,7 +59,7 @@ jobs:
           context: .
           tags: |
             ghcr.io/kapobajza/gimnazija_api:prod
-            ghcr.io/kapobajza/gimnazija_api:${{ github.sha }}}
+            ghcr.io/kapobajza/gimnazija_api:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
