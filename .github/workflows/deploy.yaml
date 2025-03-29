@@ -21,6 +21,9 @@ jobs:
 
       - name: prepare for build
         uses: ./.github/actions/prepare_docker_build
+        with:
+          gh_actor: ${{ github.actor }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build and push docker image
         uses: docker/build-push-action@v6
@@ -42,6 +45,9 @@ jobs:
 
       - name: prepare for build
         uses: ./.github/actions/prepare_docker_build
+        with:
+          gh_actor: ${{ github.actor }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build and push docker image
         uses: docker/build-push-action@v6

@@ -1,5 +1,12 @@
 name: Prepare docker build
 description: 'Prepares docker build'
+inputs:
+  gh_actor:
+    description: 'github actor'
+    required: true
+  gh_token:
+    description: 'github token'
+    required: true
 runs:
   using: 'composite'
   steps:      
@@ -35,5 +42,5 @@ runs:
         uses: docker/login-action@v3
         with:
           registry: https://ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.github_token }}
+          username: ${{ inputs.gh_actor }}
+          password: ${{ inputs.gh_token }}
