@@ -5,3 +5,6 @@
 .env.*
 !.env.sample
 **.log
+
+# Production secrets (file-based docker compose secrets)
+/secrets/
